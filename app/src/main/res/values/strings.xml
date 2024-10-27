@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Nasho Learn</string>
+    <string name="nasho">Nasho</string>
+    <string name="learn">Learn</string>
+    <string name="welcome">Selamat Datang</string>
+    <string name="type_your_email_and_password_to_login">Ketik email dan kata sandi untuk masuk</string>
+    <string name="email">Email</string>
+    <string name="type_here">Ketik disini</string>
+    <string name="password">Password</string>
+    <string name="forgot_password_symbol">Lupa kata sandi?</string>
+    <string name="enter">Masuk</string>
+    <string name="do_not_have_account">Belum punya akun?</string>
+    <string name="register">Daftar</string>
+    <string name="sharaf">Sharaf</string>
+    <string name="sharaf_arab">(شرف)</string>
+    <string name="dummy_desc">Berhasil menyelesaikan 4 dari 6 materi</string>
+    <string name="nahwu">Nahwu</string>
+    <string name="nahwu_arab">(نحوو)</string>
+    <string name="dummy_bab">BAB 1</string>
+    <string name="last_learn">Pembelajaran yang Terakhir di Pelajari</string>
+    <string name="welcome_material">Kuasai Tata Bahasa Arab dengan Mudah dan Cepat</string>
+</resources>
