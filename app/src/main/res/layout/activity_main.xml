@@ -30,7 +30,7 @@
             android:layout_marginStart="10dp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/nasho"
-            android:textColor="#015869"
+            android:textColor="@color/green_main_color"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_logo"
             app:layout_constraintStart_toEndOf="@+id/tv_logo"
@@ -42,7 +42,7 @@
             android:layout_marginStart="5dp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/learn"
-            android:textColor="#E57D1A"
+            android:textColor="@color/orange_main_color"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_main_title"
             app:layout_constraintStart_toEndOf="@+id/tv_main_title"
@@ -57,218 +57,174 @@
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/manrope_extrabold"
             android:text="@string/welcome_material"
-            android:textColor="#015869"
+            android:textColor="@color/green_main_color"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_logo" />
 
+
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_last"
+            android:id="@+id/cv_nahwu"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
-            app:cardBackgroundColor="#2590A5"
-            app:cardCornerRadius="32dp"
-            app:layout_constraintEnd_toEndOf="@+id/tv_title_spek_material"
-            app:layout_constraintStart_toStartOf="@+id/tv_title_spek_material"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_spek_material"
-            app:strokeWidth="0dp">
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/orange_main_color"
+            app:cardCornerRadius="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_spek_material">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_home_1">
+                android:background="@drawable/bg_home_2">
 
                 <TextView
-                    android:id="@+id/tv_category_material"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_nahwu"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="166dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/manrope_bold"
-                    android:text="@string/last_learn"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/nahwu"
+                    android:textColor="@color/white_color"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/nahwu_arab"
+                    android:textColor="@color/white_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_nahwu"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_nahwu" />
+
+                <TextView
+                    android:id="@+id/tvDescN"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/dummy_desc"
+                    android:textColor="@color/white_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_nahwu"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nahwu" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_start_lear_nahwu"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/start_learn"
+                    android:textColor="@color/blue_main_color"
+                    android:textSize="16sp"
+                    app:backgroundTint="@color/white_color"
+                    app:cornerRadius="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="-5dp"
+                    android:src="@drawable/ic_nahwu"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDescN" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_sharaf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/blue_main_color"
+            app:cardCornerRadius="36dp"
+            app:layout_constraintEnd_toEndOf="@+id/cv_nahwu"
+            app:layout_constraintStart_toStartOf="@+id/cv_nahwu"
+            app:layout_constraintTop_toBottomOf="@+id/cv_nahwu">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_home_3">
+
+                <TextView
+                    android:id="@+id/tv_sharaf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/sharaf"
+                    android:textColor="@color/white_color"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/manrope_bold"
+                    android:text="@string/sharaf_arab"
+                    android:textColor="@color/white_color"
+                    android:textSize="19sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_sharaf"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_sharaf" />
+
+                <TextView
+                    android:id="@+id/tv_desc_sharaf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/dummy_desc"
+                    android:textColor="@color/white_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_sharaf"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_sharaf" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_start_lear_sharaf"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/manrope_semibold"
+                    android:text="@string/start_learn"
+                    android:textColor="@color/blue_main_color"
+                    android:textSize="16sp"
+                    app:backgroundTint="@color/white_color"
+                    app:cornerRadius="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home_1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_last_material"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="63dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:text="@string/nahwu"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="@+id/tv_category_material"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_category_material" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="27dp"
-                    android:fontFamily="@font/manrope_bold"
-                    android:text="@string/dummy_bab"
-                    android:textColor="#FFFFFF"
-                    android:textSize="36sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/tv_last_material"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_last_material" />
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_sharaf"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_desc_sharaf" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="278dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_last">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cvNahwu"
-                android:layout_width="160dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="3dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="#E57D1A"
-                app:cardCornerRadius="36dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_home_2">
-
-                    <TextView
-                        android:id="@+id/tv_nahwu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="24dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/nahwu"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/nahwu_arab"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_nahwu"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_nahwu" />
-
-                    <TextView
-                        android:id="@+id/tvDescN"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/manrope_semibold"
-                        android:text="@string/dummy_desc"
-                        android:textColor="#FFFFFF"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_nahwu"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_nahwu" />
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="-5dp"
-                        android:src="@drawable/ic_nahwu"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvDescN" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cvSharaf"
-                android:layout_width="160dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="3dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="#374F75"
-                app:cardCornerRadius="36dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_home_3">
-
-                    <TextView
-                        android:id="@+id/tv_sharaf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="24dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/sharaf"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/sharaf_arab"
-                        android:textColor="#F8F8F8"
-                        android:textSize="19sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_sharaf"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_sharaf" />
-
-                    <TextView
-                        android:id="@+id/tv_desc_sharaf"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/manrope_semibold"
-                        android:text="@string/dummy_desc"
-                        android:textColor="#FFFFFF"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_sharaf"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_sharaf" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_sharaf"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_desc_sharaf" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_setting"
@@ -278,12 +234,12 @@
             android:layout_marginEnd="24dp"
             android:backgroundTint="@color/Success50"
             android:drawableEnd="@drawable/ic_settings"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
             android:paddingStart="6dp"
             android:paddingEnd="12dp"
-            android:insetBottom="0dp"
-            android:insetTop="0dp"
-            android:insetLeft="0dp"
-            android:insetRight="0dp"
             app:cornerRadius="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

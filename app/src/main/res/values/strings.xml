@@ -13,7 +13,7 @@
     <string name="register">Daftar</string>
     <string name="sharaf">Sharaf</string>
     <string name="sharaf_arab">(شرف)</string>
-    <string name="dummy_desc">Berhasil menyelesaikan 4 dari 6 materi</string>
+    <string name="dummy_desc">Nahwu adalah ilmu yang mempelajari struktur kalimat dalam bahasa Arab.</string>
     <string name="nahwu">Nahwu</string>
     <string name="nahwu_arab">(نحوو)</string>
     <string name="dummy_bab">BAB 1</string>
@@ -28,4 +28,5 @@
     <string name="sharaf_desc">Sharaf adalah salah satu cabang penting dalam ilmu bahasa Arab yang fokus pada morfologi atau struktur kata. Sharaf mempelajari bentuk-bentuk kata, perubahan bentuk kata, dan bagaimana kata-kata itu diubah untuk menciptakan makna yang berbeda.</string>
     <string name="sharaf_text_arab">Sharaf (شرف)</string>
     <string name="learn_sharaf">Yuk, Belajar Sharaf!</string>
+    <string name="start_learn">Mulai belajar</string>
 </resources>
