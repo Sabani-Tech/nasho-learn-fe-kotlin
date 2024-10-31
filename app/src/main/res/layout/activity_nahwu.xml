@@ -10,8 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/img_back"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_title" />
+
         <TextView
-            android:id="@+id/textView26"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
@@ -26,137 +36,143 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivBackSet"
+            android:id="@+id/iv_illustration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
             android:layout_marginTop="36dp"
-            android:layout_marginEnd="55dp"
-            android:src="@drawable/img_sharaf_onboard"
+            android:src="@drawable/img_onboard_nahwu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView26" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_material_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/nahwu_text_arab"
             android:textColor="#015869"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivBackSet" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_illustration" />
 
         <TextView
-            android:id="@+id/textView28"
+            android:id="@+id/tv_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="46dp"
             android:fontFamily="@font/manrope_medium"
-            android:text="@string/nafwu_desc"
+            android:text="@string/nahwu_desc"
             android:textColor="#4D5761"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView27"
-            app:layout_constraintTop_toBottomOf="@+id/textView27" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_material_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_material_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_title" />
 
         <TextView
-            android:id="@+id/textView29"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_material_list_title_1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/material"
             android:textColor="#111927"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/textView28"
-            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_desc"
+            app:layout_constraintStart_toStartOf="@+id/tv_desc"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMateri"
+            android:id="@+id/rv_material_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:nestedScrollingEnabled="false"
-            app:layout_constraintStart_toStartOf="@+id/textView29"
-            app:layout_constraintTop_toBottomOf="@+id/textView29" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_material_list_title_1"
+            app:layout_constraintStart_toStartOf="@+id/tv_material_list_title_1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_1"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_layout_material" />
 
         <TextView
-            android:id="@+id/textView30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/manrope_bold"
-            android:text="@string/ujian"
-            android:textColor="#111927"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/rvMateri"
-            app:layout_constraintTop_toBottomOf="@+id/rvMateri" />
-
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/img_back"
-            app:layout_constraintBottom_toBottomOf="@+id/textView26"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView26" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvUjian"
+            android:id="@+id/tv_material_list_title_2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:nestedScrollingEnabled="false"
-            app:layout_constraintStart_toStartOf="@+id/textView30"
-            app:layout_constraintTop_toBottomOf="@+id/textView30" />
-
-        <TextView
-            android:id="@+id/textView31"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/material"
             android:textColor="#111927"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/rvUjian"
-            app:layout_constraintTop_toBottomOf="@+id/rvUjian" />
+            app:layout_constraintEnd_toEndOf="@+id/rv_ujian_1"
+            app:layout_constraintStart_toStartOf="@+id/rv_ujian_1"
+            app:layout_constraintTop_toBottomOf="@+id/rv_ujian_1" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMateri2"
+            android:id="@+id/rv_material_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:nestedScrollingEnabled="false"
-            app:layout_constraintStart_toStartOf="@+id/textView31"
-            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_material_list_title_2"
+            app:layout_constraintStart_toStartOf="@+id/tv_material_list_title_2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_2"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_layout_material" />
 
         <TextView
-            android:id="@+id/textView32"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_ujian_list_title_1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/ujian"
             android:textColor="#111927"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/rvMateri2"
-            app:layout_constraintTop_toBottomOf="@+id/rvMateri2" />
+            app:layout_constraintEnd_toEndOf="@+id/rv_material_1"
+            app:layout_constraintStart_toStartOf="@+id/rv_material_1"
+            app:layout_constraintTop_toBottomOf="@+id/rv_material_1" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvUjian2"
+            android:id="@+id/rv_ujian_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="43dp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/tv_ujian_list_title_1"
+            app:layout_constraintStart_toStartOf="@+id/tv_ujian_list_title_1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ujian_list_title_1"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_layout_material" />
+
+        <TextView
+            android:id="@+id/tv_ujian_list_title_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/ujian"
+            android:textColor="#111927"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/rv_material_2"
+            app:layout_constraintStart_toStartOf="@+id/rv_material_2"
+            app:layout_constraintTop_toBottomOf="@+id/rv_material_2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ujian_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="43dp"
             android:nestedScrollingEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView32"
-            app:layout_constraintTop_toBottomOf="@+id/textView32" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_ujian_list_title_2"
+            app:layout_constraintStart_toStartOf="@+id/tv_ujian_list_title_2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ujian_list_title_2"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_layout_material" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
