@@ -20,4 +20,12 @@
     <string name="last_learn">Pembelajaran yang Terakhir di Pelajari</string>
     <string name="welcome_material">Kuasai Tata Bahasa Arab dengan Mudah dan Cepat</string>
     <string name="test">test</string>
+    <string name="nafwu_desc">Nahwu adalah ilmu yang mempelajari struktur kalimat dalam bahasa Arab. Fokus utama nahwu adalah bagaimana kata-kata disusun dalam sebuah kalimat agar sesuai dengan kaidah tata bahasa Arab. Nahwu mencakup aturan tentang posisi dan fungsi kata dalam kalimat, serta perubahan yang terjadi pada akhir kata karena posisi tersebut.</string>
+    <string name="material">Materi</string>
+    <string name="ujian">Ujian</string>
+    <string name="learn_nahwu">Yuk, Belajar Nahwu!</string>
+    <string name="nahwu_text_arab">Nahwu (نحوو)</string>
+    <string name="sharaf_desc">Sharaf adalah salah satu cabang penting dalam ilmu bahasa Arab yang fokus pada morfologi atau struktur kata. Sharaf mempelajari bentuk-bentuk kata, perubahan bentuk kata, dan bagaimana kata-kata itu diubah untuk menciptakan makna yang berbeda.</string>
+    <string name="sharaf_text_arab">Sharaf (شرف)</string>
+    <string name="learn_sharaf">Yuk, Belajar Sharaf!</string>
 </resources>
