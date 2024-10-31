@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.views.MaterialVideoActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="WebViewLayout">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_spec_material"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/manrope_semibold"
+            android:textColor="@color/primarytrue"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_back"
+            app:layout_constraintTop_toTopOf="@+id/iv_back"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/tv_category_material"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope"
+            android:textColor="@color/primarytrue"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_title_spec_material"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_spec_material"
+            tools:text="Category" />
+
+        <WebView
+            android:id="@+id/wv_video"
+            android:layout_width="0dp"
+            android:layout_height="350dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_category_material" />
+
+        <TextView
+            android:id="@+id/tv_desc_material"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/manrope"
+            android:text="@string/nahwu_desc"
+            android:textColor="#4D5761"
+            android:textColorLink="#4D5761"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_quiz"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wv_video" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_start_quiz"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/start_quiz"
+            app:backgroundTint="@color/Success50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_desc_material"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_desc_material" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
