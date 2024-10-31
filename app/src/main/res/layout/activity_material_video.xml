@@ -64,28 +64,42 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="20dp"
             android:fontFamily="@font/manrope"
             android:text="@string/nahwu_desc"
             android:textColor="#4D5761"
             android:textColorLink="#4D5761"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_start_quiz"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wv_video" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_result_quiz"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:fontFamily="@font/manrope"
+            android:text="@string/show_result"
+            android:textColor="@color/Success50"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_quiz"
+            app:layout_constraintEnd_toEndOf="@+id/tv_desc_material"
+            app:layout_constraintStart_toStartOf="@+id/tv_desc_material"
+            app:strokeColor="@color/Success50" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_start_quiz"
             android:layout_width="0dp"
             android:layout_height="58dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/manrope"
             android:text="@string/start_quiz"
+            android:textSize="14sp"
             app:backgroundTint="@color/Success50"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tv_desc_material"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_desc_material" />
+            app:layout_constraintEnd_toEndOf="@+id/btn_result_quiz"
+            app:layout_constraintStart_toStartOf="@+id/btn_result_quiz"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc_material" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

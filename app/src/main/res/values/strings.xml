@@ -33,4 +33,5 @@
     <string name="dummy_material_desc">Teori Dasar Nahwu</string>
     <string name="lock_desc">Selesaikan terlebih dahulu bab sebelumnya</string>
     <string name="start_quiz">Mengerjakan Kuis</string>
+    <string name="show_result">Lihat Hasil Quiz</string>
 </resources>
