@@ -34,4 +34,8 @@
     <string name="lock_desc">Selesaikan terlebih dahulu bab sebelumnya</string>
     <string name="start_quiz">Mengerjakan Kuis</string>
     <string name="show_result">Lihat Hasil Quiz</string>
+    <string name="quiz">Kuis</string>
+    <string name="question_title">Soal:</string>
+    <string name="true_text">Benar</string>
+    <string name="false_text">Salah</string>
 </resources>
