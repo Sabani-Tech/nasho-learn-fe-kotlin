@@ -38,4 +38,12 @@
     <string name="question_title">Soal:</string>
     <string name="true_text">Benar</string>
     <string name="false_text">Salah</string>
+    <string name="show_discussion">Lihat Pembahasan</string>
+    <string name="back_to_material">Kembali ke materi</string>
+    <string name="quiz_result">Hasil Kuis</string>
+    <string name="motivational_sentences_1">Kamu Hebat!!!</string>
+    <string name="default_counter">0</string>
+    <string name="grade_max">/100</string>
+    <string name="motivational_sentences_2">Teteap Pertahankan\nSemangatmu ya.</string>
+    <string name="zero_question">0 Soal</string>
 </resources>
