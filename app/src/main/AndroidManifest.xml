@@ -13,6 +13,9 @@
         android:theme="@style/Theme.NashoLearn"
         tools:targetApi="31">
         <activity
+            android:name=".ui.views.AboutUsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.views.SettingsActivity"
             android:exported="false" />
         <activity
