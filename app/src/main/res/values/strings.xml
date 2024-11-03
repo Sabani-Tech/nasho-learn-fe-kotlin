@@ -49,4 +49,6 @@
     <string name="logout">Keluar Akun</string>
     <string name="about_us">Tentang kami</string>
     <string name="our_vision">Visi Kami</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="password_confirm">Konfirmasi Kata Sandi</string>
 </resources>
