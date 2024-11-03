@@ -11,40 +11,11 @@
         android:layout_height="wrap_content"
         tools:ignore="WebViewLayout">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_title_spec_material"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/manrope_semibold"
-            android:textColor="@color/primarytrue"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_back"
-            app:layout_constraintTop_toTopOf="@+id/iv_back"
-            tools:text="Title" />
-
-        <TextView
-            android:id="@+id/tv_category_material"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/manrope"
-            android:textColor="@color/primarytrue"
-            android:textSize="11sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_title_spec_material"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_spec_material"
-            tools:text="Category" />
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/custom_app_bar_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <WebView
             android:id="@+id/wv_video"
@@ -55,7 +26,7 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category_material" />
+            app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
         <TextView
             android:id="@+id/tv_desc_material"
