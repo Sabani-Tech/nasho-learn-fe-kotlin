@@ -51,4 +51,11 @@
     <string name="our_vision">Visi Kami</string>
     <string name="full_name">Nama Lengkap</string>
     <string name="password_confirm">Konfirmasi Kata Sandi</string>
+    <string name="no">Tidak</string>
+    <string name="yes_of_course">Ya, Tentu</string>
+    <string name="title_quiz_warning">Kamu Belum Bisa Nih</string>
+    <string name="desc_quiz_warning">Yuk lanjutkan pembelajaran materimu terlebih dahulu sebelum mengerjakan kuis</string>
+    <string name="learn_again">Belajar Materi</string>
+    <string name="desc_logout">Apakah anda yakin ingin keluar?</string>
+    <string name="title_logout">Keluar Akun?</string>
 </resources>
