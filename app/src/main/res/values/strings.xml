@@ -46,4 +46,6 @@
     <string name="grade_max">/100</string>
     <string name="motivational_sentences_2">Teteap Pertahankan\nSemangatmu ya.</string>
     <string name="zero_question">0 Soal</string>
+    <string name="logout">Keluar Akun</string>
+    <string name="about_us">Tentang kami</string>
 </resources>
