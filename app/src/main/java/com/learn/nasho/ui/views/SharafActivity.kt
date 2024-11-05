@@ -10,11 +10,19 @@ import com.learn.nasho.databinding.ActivitySharafBinding
 
 class SharafActivity : AppCompatActivity() {
 
-    private lateinit var binding :ActivitySharafBinding
+    private lateinit var binding: ActivitySharafBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivitySharafBinding.inflate(layoutInflater)
+        binding = ActivitySharafBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.appBar.apply {
+            tvTitle.text = getString(R.string.learn_sharaf)
+
+            ivBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
 }
