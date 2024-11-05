@@ -27,6 +27,9 @@ class SettingsActivity : AppCompatActivity() {
             tvNameUser.text = getString(R.string.dummy_name_user)
             tvEmailUser.text = getString(R.string.dummy_email_user)
 
+            cvAboutUs.setOnClickListener {
+                startActivity(Intent(this@SettingsActivity, AboutUsActivity::class.java))
+            }
 
             cvLogout.setOnClickListener {
                 val dialog = LogoutAlert()
