@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
                 val email = tilEmailLogin.editText?.text.toString().trim()
                 val password = tilPasswordLogin.editText?.text.toString().trim()
 
-                Toast.makeText(this@LoginActivity, "Login Berhasil! \n $email", Toast.LENGTH_SHORT)
+                Toast.makeText(this@LoginActivity, "Login Success! \n $email", Toast.LENGTH_SHORT)
                     .show()
 
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
@@ -88,8 +88,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             tvRegister.setOnClickListener {
-                Toast.makeText(this@LoginActivity, "Go to Register", Toast.LENGTH_SHORT).show()
-//                startActivity(Intent(this@LoginActivity, SignUp::class.java))
+                startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
             }
         }
     }

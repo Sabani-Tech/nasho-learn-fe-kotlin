@@ -58,4 +58,7 @@
     <string name="learn_again">Belajar Materi</string>
     <string name="desc_logout">Apakah anda yakin ingin keluar?</string>
     <string name="title_logout">Keluar Akun?</string>
+    <string name="title_sign_up">Daftar Akun</string>
+    <string name="desc_sign_up">Masukkan data diri untuk membuat akun baru</string>
+
 </resources>
