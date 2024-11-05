@@ -23,7 +23,7 @@
         app:cardCornerRadius="80dp">
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/iv_profile_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_p_default" />
@@ -38,7 +38,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/manrope_bold"
         android:textSize="16sp"
-        tools:text="Fulan Bin Fulan" />
+        tools:text="@string/dummy_name_user" />
 
     <TextView
         android:id="@+id/tv_email_user"
@@ -49,7 +49,7 @@
         android:fontFamily="@font/manrope"
         android:textColor=" #6A6A6A"
         android:textSize="16sp"
-        tools:text="fulanbinfulan@gmail.com" />
+        tools:text="@string/dummy_email_user" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_about_us"

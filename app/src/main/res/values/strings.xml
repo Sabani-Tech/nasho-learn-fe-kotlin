@@ -60,5 +60,8 @@
     <string name="title_logout">Keluar Akun?</string>
     <string name="title_sign_up">Daftar Akun</string>
     <string name="desc_sign_up">Masukkan data diri untuk membuat akun baru</string>
+    <string name="title_settings">Pengaturan</string>
+    <string name="dummy_name_user">Fulan Bin Fulan</string>
+    <string name="dummy_email_user">fulanbinfulan@gmail.com</string>
 
 </resources>
