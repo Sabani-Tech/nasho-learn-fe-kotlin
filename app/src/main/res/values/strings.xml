@@ -66,4 +66,5 @@
     <string name="about_us_data">Nasho Learn adalah sebuah aplikasi yang dapat membantu pengguna untuk memahami secara lebih mendalam mengenai tata bahasa dalam bahasa Arab.</string>
     <string name="our_vision_data">Di Nasho Learn, kami percaya bahwa memahami dasar-dasar tata bahasa Arab adalah hal yang penting bagi siapa saja yang ingin benar-benar menguasai bahasa ini. Visi kami adalah menyediakan platform yang komprehensif, interaktif, dan ramah pengguna di mana para pengguna dapat mendalami studi nahwu (sintaksis) dan sharaf (morfologi).</string>
 
+    <string name="login_failed">Gagal Masuk: %1$s</string>
 </resources>

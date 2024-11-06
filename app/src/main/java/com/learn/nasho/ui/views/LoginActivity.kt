@@ -5,12 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.lifecycleScope
 import com.learn.nasho.R
+import com.learn.nasho.data.ResultState
 import com.learn.nasho.databinding.ActivityLoginBinding
+import com.learn.nasho.ui.viewmodels.user.LoginViewModel
+import com.learn.nasho.ui.viewmodels.user.UserViewModelFactory
+import com.learn.nasho.utils.hideLoading
+import com.learn.nasho.utils.showLoading
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,6 +28,46 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val factory: UserViewModelFactory = UserViewModelFactory.getInstance(this@LoginActivity)
+        val loginViewModel: LoginViewModel by viewModels {
+            factory
+        }
+
+        lifecycleScope.launch {
+            loginViewModel.login.collect { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
+
+                        hideLoading(binding.loading)
+                        val response = resultState.data
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                getString(R.string.login_failed, response.message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            finish()
+                        }
+                    }
+
+                    is ResultState.Error -> {
+
+                        hideLoading(binding.loading)
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.login_failed, resultState.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
 
         binding.apply {
             tilEmailLogin.editText?.doOnTextChanged { text, _, _, _ ->
@@ -49,12 +97,15 @@ class LoginActivity : AppCompatActivity() {
                 val email = tilEmailLogin.editText?.text.toString().trim()
                 val password = tilPasswordLogin.editText?.text.toString().trim()
 
-                Toast.makeText(this@LoginActivity, "Login Success! \n $email", Toast.LENGTH_SHORT)
-                    .show()
+                loginViewModel.loginUser(email, password)
+                showLoading(loading)
 
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+//                Toast.makeText(this@LoginActivity, "Login Success! \n $email", Toast.LENGTH_SHORT)
+//                    .show()
+
+//                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+//                startActivity(intent)
+//                finish()
 
 
 //                authViewModel.login(email, password).observe(this@Login, Observer { result ->
