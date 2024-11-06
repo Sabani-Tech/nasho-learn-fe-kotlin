@@ -51,6 +51,24 @@ dependencies {
     // Shimmer Effect
     implementation(libs.shimmer)
 
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    // datastore
+    implementation(libs.androidx.datastore.preferences)
+
+    //coroutine support
+    implementation(libs.androidx.lifecycle.viewmodel.ktx) //viewModelScope
+    implementation(libs.androidx.lifecycle.livedata.ktx) //liveData
+
+    // Android KTX
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    // Testing Fragments in Isolation
+    debugImplementation(libs.androidx.fragment.testing)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
