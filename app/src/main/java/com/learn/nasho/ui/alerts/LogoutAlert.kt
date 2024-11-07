@@ -12,13 +12,15 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.learn.nasho.databinding.FragmentAlertLogoutBinding
+import com.learn.nasho.ui.viewmodels.user.LogoutViewModel
 import com.learn.nasho.ui.views.LoginActivity
 
 
-class LogoutAlert : DialogFragment() {
+class LogoutAlert(logoutViewModel: LogoutViewModel) : DialogFragment() {
 
     private var _binding: FragmentAlertLogoutBinding? = null
     private val binding get() = _binding!!
+    private var viewModel = logoutViewModel
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -51,15 +53,21 @@ class LogoutAlert : DialogFragment() {
         }
 
         binding.btnYes.setOnClickListener {
+            viewModel.logoutUser()
+
+/*            // Dismiss the dialog
+            dismiss()
+
             // Clear access token from SharedPreferences
             clearAccessToken()
 
-            // Dismiss the dialog
-            dismiss()
-
             // Start login activity
-            startLoginActivity()
+            startLoginActivity()*/
         }
+    }
+
+    fun dismissDialog() {
+        dismiss()
     }
 
     private fun clearAccessToken() {
