@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            loginViewModel.login.collect { resultState ->
+            loginViewModel.login.observe(this@LoginActivity) { resultState ->
                 when (resultState) {
                     is ResultState.Success -> {
 
@@ -99,43 +99,6 @@ class LoginActivity : AppCompatActivity() {
 
                 loginViewModel.loginUser(email, password)
                 showLoading(loading)
-
-//                Toast.makeText(this@LoginActivity, "Login Success! \n $email", Toast.LENGTH_SHORT)
-//                    .show()
-
-//                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-//                startActivity(intent)
-//                finish()
-
-
-//                authViewModel.login(email, password).observe(this@Login, Observer { result ->
-//                    when (result) {
-//                        is Result.Loading -> {
-//                            // Show loading indicator
-//                        }
-//
-//                        is Result.Success -> {
-//                            sPref.putString("token", result.data.data.accessToken)
-//                            Log.d("Token", "token: ${result.data.data.accessToken}")
-//                            sPref.apply()
-//                            Toast.makeText(this@Login, "Login successful!", Toast.LENGTH_SHORT)
-//                                .show()
-//                            val intent = Intent(this@Login, Home::class.java)
-//                            startActivity(intent)
-//                            finish()
-//                        }
-//
-//                        is Result.Error -> {
-//
-//                            Toast.makeText(this@Login, result.errorMessage, Toast.LENGTH_SHORT)
-//                                .show()
-//                        }
-//
-//                        else -> {
-//                            // Handle other cases if needed
-//                        }
-//                    }
-//                })
             }
 
             tvRegister.setOnClickListener {
