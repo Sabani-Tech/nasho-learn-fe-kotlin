@@ -11,6 +11,7 @@ import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.databinding.ActivityLoginBinding
 import com.learn.nasho.ui.viewmodels.user.LoginViewModel
+import com.learn.nasho.ui.viewmodels.user.ProfileViewModel
 import com.learn.nasho.ui.viewmodels.user.UserViewModelFactory
 import com.learn.nasho.utils.hideLoading
 import com.learn.nasho.utils.showLoading
@@ -29,41 +30,49 @@ class LoginActivity : AppCompatActivity() {
         val loginViewModel: LoginViewModel by viewModels {
             factory
         }
+        val profileViewModel: ProfileViewModel by viewModels {
+            factory
+        }
 
-        lifecycleScope.launch {
-            loginViewModel.login.observe(this@LoginActivity) { resultState ->
-                when (resultState) {
-                    is ResultState.Success -> {
-
-                        hideLoading(binding.loading)
-                        val response = resultState.data
-//                        if (response.error == true) {
-//                            Toast.makeText(
-//                                this@LoginActivity,
-//                                getString(R.string.login_failed, response.message),
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        } else {
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                            finish()
-//                        }
-                    }
-
-                    is ResultState.Error -> {
-
-                        hideLoading(binding.loading)
-                        Toast.makeText(
-                            this@LoginActivity,
-                            getString(R.string.login_failed, resultState.message),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-
-                    else -> {}
+        loginViewModel.login.observe(this) { resultState ->
+            when (resultState) {
+                is ResultState.Success -> {
+                    profileViewModel.getProfileUser()
                 }
+
+                is ResultState.Error -> {
+                    hideLoading(binding.loading)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.login_failed, resultState.message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {}
             }
         }
 
+        profileViewModel.profile.observe(this) { resultState ->
+            when (resultState) {
+                is ResultState.Success -> {
+                    hideLoading(binding.loading)
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+
+                is ResultState.Error -> {
+                    hideLoading(binding.loading)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.login_failed, resultState.message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {}
+            }
+        }
 
         binding.apply {
             tilEmailLogin.editText?.doOnTextChanged { text, _, _, _ ->
@@ -90,11 +99,13 @@ class LoginActivity : AppCompatActivity() {
             }
 
             btnLogin.setOnClickListener {
-                val email = tilEmailLogin.editText?.text.toString().trim()
-                val password = tilPasswordLogin.editText?.text.toString().trim()
+                lifecycleScope.launch {
+                    val email = tilEmailLogin.editText?.text.toString().trim()
+                    val password = tilPasswordLogin.editText?.text.toString().trim()
 
-                loginViewModel.loginUser(email, password)
-                showLoading(loading)
+                    loginViewModel.loginUser(email, password)
+                    showLoading(loading)
+                }
             }
 
             tvRegister.setOnClickListener {
