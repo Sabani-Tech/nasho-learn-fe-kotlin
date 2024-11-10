@@ -24,4 +24,6 @@ interface UserRepository {
 
     suspend fun clearTokenData(): Flow<Boolean>
     suspend fun setLogout(isLogout : Boolean): Flow<Boolean>
+
+    fun getProfileUserData(): Flow<String>
 }

@@ -8,6 +8,7 @@ import com.learn.nasho.data.remote.api.ApiService
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
+import com.learn.nasho.utils.convertToJsonString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
@@ -106,8 +107,14 @@ class UserRepositoryImpl(
                         clientKey
                     )
                 if (response.isSuccessful) {
-                    response.body()?.let {
-                        emit(ResultState.Success(it))
+                    response.body()?.let { data ->
+                        saveUserProfileData(convertToJsonString(data)).collect { isSaved ->
+                            if (isSaved) {
+                                emit(ResultState.Success(data))
+                            } else {
+                                emit(ResultState.Error("Failed to save profile data"))
+                            }
+                        }
                     } ?: run {
                         clearTokenData().collect()
                         emit(ResultState.Error("Unknown error"))
@@ -143,5 +150,13 @@ class UserRepositoryImpl(
 
     private suspend fun saveUserTokenAccess(token: String): Flow<Boolean> {
         return dataStorePref.saveUserTokenAccess(token)
+    }
+
+    override fun getProfileUserData(): Flow<String> {
+        return dataStorePref.getUserProfileData()
+    }
+
+    private suspend fun saveUserProfileData(data: String): Flow<Boolean> {
+        return dataStorePref.saveUserProfileData(data)
     }
 }

@@ -54,4 +54,19 @@ class DataStorePreferencesImpl(private val dataStore: DataStore<Preferences>) :
             it[Constants.USER_LOGOUT] ?: false
         }
     }
+
+    override suspend fun saveUserProfileData(data: String): Flow<Boolean> = flow {
+        dataStore.edit {
+            it[Constants.USER_PROFILE_DATA] = data
+        }
+        emit(true)
+    }.catch {
+        emit(false)
+    }
+
+    override fun getUserProfileData(): Flow<String> {
+        return dataStore.data.map {
+            it[Constants.USER_PROFILE_DATA] ?: ""
+        }
+    }
 }

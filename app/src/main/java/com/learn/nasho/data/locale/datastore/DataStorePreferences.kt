@@ -9,4 +9,7 @@ interface DataStorePreferences {
     suspend fun clearTokenData(): Flow<Boolean>
     suspend fun setLogout(isLogout: Boolean): Flow<Boolean>
     fun getUserLogout(): Flow<Boolean>
+
+    suspend fun saveUserProfileData(data: String): Flow<Boolean>
+    fun getUserProfileData(): Flow<String>
 }
