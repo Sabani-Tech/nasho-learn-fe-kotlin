@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import com.learn.nasho.R
 import com.learn.nasho.databinding.ActivitySettingsBinding
 import com.learn.nasho.ui.alerts.LogoutAlert
@@ -56,7 +57,7 @@ class SettingsActivity : AppCompatActivity() {
 
 
         lifecycleScope.launch {
-            logoutViewModel.logout.collect { isSuccess ->
+            logoutViewModel.logout.observe(this@SettingsActivity) { isSuccess ->
                 if (isSuccess != null) {
                     if (isSuccess == true) {
                         isLogout.value = true
