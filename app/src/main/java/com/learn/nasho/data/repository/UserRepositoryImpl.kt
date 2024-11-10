@@ -3,11 +3,14 @@ package com.learn.nasho.data.repository
 import com.google.gson.Gson
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.locale.datastore.DataStorePreferences
+import com.learn.nasho.data.remote.api.ApiConfig
 import com.learn.nasho.data.remote.api.ApiService
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
+import com.learn.nasho.data.remote.response.ProfileResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 class UserRepositoryImpl(
@@ -54,14 +57,19 @@ class UserRepositoryImpl(
         try {
             val response = apiService.loginUser(email, password)
             if (response.isSuccessful) {
-                response.body()?.let {
-//                    if (it.error == true) {
-//                        emit(ResultState.Error(it.message ?: "Unknown error"))
+                response.body()?.let { resp ->
+//                    if (resp.error == true) {
+//                        emit(ResultState.Error(resp.message ?: "Unknown error"))
 //                    } else {
-                        emit(ResultState.Success(it))
-                        val token = it.data?.token
-                        saveUserTokenAccess(token.toString()).collect {
-                            setLogout(false).collect()
+                        val token = resp.data?.token
+                        saveUserTokenAccess(token.toString()).collect { isSaved ->
+                            if (isSaved) {
+                                setLogout(false).collect {
+                                    emit(ResultState.Success(resp))
+                                }
+                            } else {
+                                emit(ResultState.Error("Failed to save token"))
+                            }
                         }
 //                    }
                 } ?: run {
@@ -75,6 +83,46 @@ class UserRepositoryImpl(
                 emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
             }
         } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ResultState.Error(e.message.toString()))
+        }
+    }
+
+    override suspend fun getProfileUser(): Flow<ResultState<ProfileResponse>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val token = getTokenAccess().first()
+            if (token.isBlank()) {
+                emit(ResultState.Error("Token is empty, Re-Login"))
+            } else {
+                val platform = "mobile"
+                val version = "1.0"
+                val clientKey = "53a9cd0f-3902-4271-9fc4-7e53bc61bf34"
+                val response =
+                    apiService.getProfileUser(
+                        ApiConfig.getAuthHeader(token),
+                        platform,
+                        version,
+                        clientKey
+                    )
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        emit(ResultState.Success(it))
+                    } ?: run {
+                        clearTokenData().collect()
+                        emit(ResultState.Error("Unknown error"))
+                    }
+                } else {
+                    clearTokenData().collect()
+                    val errorBody = response.errorBody()?.string()
+                    val errorResponse = errorBody?.let {
+                        Gson().fromJson(it, GeneralResponse::class.java)
+                    }
+                    emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
+                }
+            }
+        } catch (e: Exception) {
+            clearTokenData().collect()
             e.printStackTrace()
             emit(ResultState.Error(e.message.toString()))
         }

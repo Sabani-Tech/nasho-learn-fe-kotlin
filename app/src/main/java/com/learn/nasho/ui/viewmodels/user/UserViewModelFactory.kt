@@ -32,6 +32,9 @@ class UserViewModelFactory(private var userRepository: UserRepository) :
             modelClass.isAssignableFrom(LogoutViewModel::class.java) ->
                 LogoutViewModel(userRepository) as T
 
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) ->
+                ProfileViewModel(userRepository) as T
+
             else -> throw IllegalArgumentException("unknown viewmodel class: ${modelClass.name}")
         }
     }

@@ -2,9 +2,12 @@ package com.learn.nasho.data.remote.api
 
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
+import com.learn.nasho.data.remote.response.ProfileResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
@@ -24,8 +27,14 @@ interface ApiService {
         @Field("password") password: String
     ): Response<LoginResponse>
 
+    @GET("v1/user/profil")
+    suspend fun getProfileUser(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String
+    ): Response<ProfileResponse>
 
-//
 //    @GET("v1/stories")
 //    suspend fun getStoriesWithLocation(
 //        @Header("Authorization") token: String,
