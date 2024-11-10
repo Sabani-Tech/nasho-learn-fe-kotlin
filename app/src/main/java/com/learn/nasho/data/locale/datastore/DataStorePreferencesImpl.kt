@@ -27,7 +27,9 @@ class DataStorePreferencesImpl(private val dataStore: DataStore<Preferences>) :
             it[Constants.USER_TOKEN] = token
         }
         emit(true)
-    }.catch { emit(false) }
+    }.catch {
+        emit(false)
+    }
 
     override suspend fun clearTokenData(): Flow<Boolean> = flow {
         dataStore.edit {
