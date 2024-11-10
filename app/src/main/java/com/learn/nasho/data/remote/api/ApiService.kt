@@ -18,11 +18,13 @@ interface ApiService {
     ): Response<GeneralResponse>
 
     @FormUrlEncoded
-    @POST("v1/login")
+    @POST("v1/user/auth/login")
     suspend fun loginUser(
-        @Field("email") email: String,
+        @Field("umail") email: String,
         @Field("password") password: String
     ): Response<LoginResponse>
+
+
 //
 //    @GET("v1/stories")
 //    suspend fun getStoriesWithLocation(

@@ -15,7 +15,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/\"")
+        buildConfigField("String", "BASE_URL", "\"https://dev-api.nasholearn.com/api/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

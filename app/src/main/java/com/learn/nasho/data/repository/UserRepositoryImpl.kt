@@ -55,15 +55,15 @@ class UserRepositoryImpl(
             val response = apiService.loginUser(email, password)
             if (response.isSuccessful) {
                 response.body()?.let {
-                    if (it.error == true) {
-                        emit(ResultState.Error(it.message ?: "Unknown error"))
-                    } else {
+//                    if (it.error == true) {
+//                        emit(ResultState.Error(it.message ?: "Unknown error"))
+//                    } else {
                         emit(ResultState.Success(it))
-                        val token = it.loginResult?.token
+                        val token = it.data?.token
                         saveUserTokenAccess(token.toString()).collect {
                             setLogout(false).collect()
                         }
-                    }
+//                    }
                 } ?: run {
                     emit(ResultState.Error("Unknown error"))
                 }

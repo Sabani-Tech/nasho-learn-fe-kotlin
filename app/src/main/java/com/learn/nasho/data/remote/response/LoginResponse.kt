@@ -5,12 +5,15 @@ import com.learn.nasho.data.remote.dto.LoginDto
 
 data class LoginResponse(
 
-    @field:SerializedName("error")
-    val error: Boolean? = null,
+//    @field:SerializedName("error")
+//    val error: Boolean? = null,
+
+    @field:SerializedName("statusCode")
+    val statusCode: Int? = null,
 
     @field:SerializedName("message")
     val message: String? = null,
 
-    @field:SerializedName("loginResult")
-    val loginResult: LoginDto? = null
+    @field:SerializedName("data")
+    val data: LoginDto? = null
 )

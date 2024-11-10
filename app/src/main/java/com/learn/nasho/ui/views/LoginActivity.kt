@@ -2,13 +2,9 @@ package com.learn.nasho.ui.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.learn.nasho.R
@@ -41,16 +37,16 @@ class LoginActivity : AppCompatActivity() {
 
                         hideLoading(binding.loading)
                         val response = resultState.data
-                        if (response.error == true) {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                getString(R.string.login_failed, response.message),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        } else {
+//                        if (response.error == true) {
+//                            Toast.makeText(
+//                                this@LoginActivity,
+//                                getString(R.string.login_failed, response.message),
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        } else {
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
-                        }
+//                        }
                     }
 
                     is ResultState.Error -> {
