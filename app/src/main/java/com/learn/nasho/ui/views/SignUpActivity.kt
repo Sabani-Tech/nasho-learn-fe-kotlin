@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
 import androidx.core.widget.doOnTextChanged
 import com.learn.nasho.R
@@ -27,24 +28,24 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.apply {
-            btnSignUp.isEnabled = false
-
-            tilFullName.editText?.doOnTextChanged { _, _, _, _ ->
-                if (tilFullName.isNotEmpty()) {
+            tilFullName.editText?.doOnTextChanged { text, _, _, _ ->
+                val fullName = text.toString()
+                if (tilFullName.isEmpty()) {
                     tilFullName.isErrorEnabled = false
                 } else {
                     tilFullName.isErrorEnabled = true
-                    tilFullName.error = ""
+                    tilFullName.error = "*Nama Lengkap tidak boleh kosong"
                 }
                 validateInput()
             }
 
-            tilEmail.editText?.doOnTextChanged { _, _, _, _ ->
-                if (tilEmail.isNotEmpty()) {
+            tilEmail.editText?.doOnTextChanged { text, _, _, _ ->
+                val email = text.toString()
+                if (validateEmail(email) || email.isEmpty()) {
                     tilEmail.isErrorEnabled = false
                 } else {
                     tilEmail.isErrorEnabled = true
-                    tilEmail.error = ""
+                    tilEmail.error = "*Email harus sesuai format penulisan"
                 }
                 validateInput()
             }
@@ -60,9 +61,9 @@ class SignUpActivity : AppCompatActivity() {
                 } else {
                     tilPassword.isErrorEnabled = true
                     if (password.isNotEmpty() && password.length < 8) {
-                        tilPassword.error = "Kata sandi harus minimal 8 karakter"
+                        tilPassword.error = "*Kata sandi harus minimal 8 karakter"
                     } else {
-                        tilPassword.error = "Kata sandi harus terdiri dari huruf dan karakter"
+                        tilPassword.error = "*Kata sandi harus terdiri dari huruf dan karakter"
                     }
                 }
                 validateInput()
@@ -75,7 +76,7 @@ class SignUpActivity : AppCompatActivity() {
                     tilPasswordConfirm.isErrorEnabled = false
                 } else {
                     tilPasswordConfirm.isErrorEnabled = true
-                    tilPasswordConfirm.error = "Kata sandi tidak sama"
+                    tilPasswordConfirm.error = "*Kata sandi tidak sama"
                 }
                 validateInput()
             }
@@ -134,18 +135,20 @@ class SignUpActivity : AppCompatActivity() {
         val isEmailValid = validateEmail(email)
         val isPasswordValid = validatePassword(password)
         val isConfirmValid = confirm == password
-        val isName = validateName(name)
+        val isName = name.isNotEmpty()
 
         binding.btnSignUp.isEnabled = isEmailValid && isPasswordValid && isConfirmValid && isName
     }
 
-    private fun validateName(name: String): Boolean = name.length in 6..30
+//    private fun validateName(name: String): Boolean = name.length in 6..30
 
-    private fun validateEmail(email: String): Boolean =
-        email.contains("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex())
+    private fun validateEmail(email: String): Boolean {
+        return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex())
+    }
 
-    private fun validatePassword(password: String): Boolean =
-        password.contains("^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{8,}\$".toRegex())
+    private fun validatePassword(password: String): Boolean {
+        return password.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$".toRegex())
+    }
 
     private fun pwDigits(password: String): Boolean = password.length >= 8
 

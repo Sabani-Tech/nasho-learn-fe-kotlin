@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                     tilEmailLogin.isErrorEnabled = false
                 } else {
                     tilEmailLogin.isErrorEnabled = true
-                    tilEmailLogin.error = "Email harus sesuai format penulisan"
+                    tilEmailLogin.error = "*Email harus sesuai format penulisan"
                 }
                 validateInput()
             }
@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     tilPasswordLogin.isErrorEnabled = true
                     tilPasswordLogin.error =
-                        "Password harus mengandung huruf dan angka, dan minimal 8 karakter"
+                        "*Password harus mengandung huruf dan angka, dan minimal 8 karakter"
                 }
                 validateInput()
             }
