@@ -27,7 +27,7 @@ interface ApiService {
         @Field("password") password: String
     ): Response<LoginResponse>
 
-    @GET("v1/user/profil")
+    @GET("v1/user/profile")
     suspend fun getProfileUser(
         @Header("Authorization") token: String,
         @Header("X-PLATFORM-NASHO") platform: String,
