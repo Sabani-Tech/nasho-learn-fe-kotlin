@@ -37,7 +37,17 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.login.observe(this) { resultState ->
             when (resultState) {
                 is ResultState.Success -> {
-                    profileViewModel.getProfileUser()
+                    hideLoading(binding.loading)
+                    val response = resultState.data
+                    if (response.error == true) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.login_failed, response.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        profileViewModel.getProfileUser()
+                    }
                 }
 
                 is ResultState.Error -> {
