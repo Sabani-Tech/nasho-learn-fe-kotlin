@@ -1,8 +1,8 @@
 package com.learn.nasho.data.remote.api
 
-import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
+import com.learn.nasho.data.remote.response.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -13,12 +13,14 @@ import retrofit2.http.POST
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("v1/register")
+    @POST("v1/user/auth/register")
     suspend fun registerUser(
-        @Field("name") name: String,
+        @Field("nama_lengkap") fullName: String,
+        @Field("username") username: String,
         @Field("email") email: String,
-        @Field("password") password: String
-    ): Response<GeneralResponse>
+        @Field("password") password: String,
+        @Field("password_confirmation") passwordConfirmation: String,
+    ): Response<RegisterResponse>
 
     @FormUrlEncoded
     @POST("v1/user/auth/login")

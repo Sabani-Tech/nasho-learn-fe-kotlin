@@ -8,6 +8,7 @@ import com.learn.nasho.data.remote.api.ApiService
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
+import com.learn.nasho.data.remote.response.RegisterResponse
 import com.learn.nasho.utils.convertToJsonString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -20,13 +21,16 @@ class UserRepositoryImpl(
 ) : UserRepository {
 
     override suspend fun registerUser(
-        name: String,
+        fullName: String,
         email: String,
-        password: String
-    ): Flow<ResultState<GeneralResponse>> = flow {
+        password: String,
+        passwordConfirmation: String,
+    ): Flow<ResultState<RegisterResponse>> = flow {
         emit(ResultState.Loading)
         try {
-            val response = apiService.registerUser(name, email, password)
+            val username = fullName
+            val response =
+                apiService.registerUser(fullName, username, email, password, passwordConfirmation)
             if (response.isSuccessful) {
                 response.body()?.let {
                     if (it.error == true) {
@@ -40,7 +44,7 @@ class UserRepositoryImpl(
             } else {
                 val errorBody = response.errorBody()?.string()
                 val errorResponse = errorBody?.let {
-                    Gson().fromJson(it, GeneralResponse::class.java)
+                    Gson().fromJson(it, RegisterResponse::class.java)
                 }
                 emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
             }

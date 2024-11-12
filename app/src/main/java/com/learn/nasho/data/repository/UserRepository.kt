@@ -4,14 +4,16 @@ import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
+import com.learn.nasho.data.remote.response.RegisterResponse
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     suspend fun registerUser(
-        name: String,
+        fullName: String,
         email: String,
-        password: String
-    ): Flow<ResultState<GeneralResponse>>
+        password: String,
+        passwordConfirmation: String,
+    ): Flow<ResultState<RegisterResponse>>
 
     suspend fun loginUser(
         email: String,
