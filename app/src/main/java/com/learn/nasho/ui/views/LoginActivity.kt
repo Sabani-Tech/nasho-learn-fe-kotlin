@@ -67,8 +67,17 @@ class LoginActivity : AppCompatActivity() {
             when (resultState) {
                 is ResultState.Success -> {
                     hideLoading(binding.loading)
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    val response = resultState.data
+                    if (response.error == true) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.login_failed, response.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }
                 }
 
                 is ResultState.Error -> {

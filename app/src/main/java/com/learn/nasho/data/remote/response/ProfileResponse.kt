@@ -5,8 +5,8 @@ import com.learn.nasho.data.remote.dto.ProfileDto
 
 data class ProfileResponse(
 
-//    @field:SerializedName("error")
-//    val error: Boolean? = null,
+    @field:SerializedName("error")
+    val error: Boolean? = null,
 
     @field:SerializedName("statusCode")
     val statusCode: Int? = null,
