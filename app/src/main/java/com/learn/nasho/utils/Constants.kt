@@ -7,4 +7,5 @@ object Constants {
     val USER_TOKEN = stringPreferencesKey("token_access")
     val USER_LOGOUT = booleanPreferencesKey("user_logout")
     val USER_PROFILE_DATA = stringPreferencesKey("data_user")
+    const val MATERIAL_DATA = "data_material"
 }
