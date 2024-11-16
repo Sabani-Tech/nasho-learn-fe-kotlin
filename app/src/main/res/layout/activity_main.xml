@@ -2,9 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:scrollbars="vertical"
     tools:context=".ui.views.MainActivity">
 
@@ -69,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             app:cardBackgroundColor="@color/orange_main_color"
             app:cardCornerRadius="36dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,8 +89,8 @@
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/manrope_bold"
                     android:text="@string/nahwu"
-                    android:textColor="@color/white_color"
-                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,24 +100,25 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/manrope_bold"
                     android:text="@string/nahwu_arab"
-                    android:textColor="@color/white_color"
-                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_nahwu"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_nahwu" />
 
                 <TextView
-                    android:id="@+id/tvDescN"
+                    android:id="@+id/tv_desc_nahwu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/manrope_semibold"
-                    android:text="@string/dummy_desc"
-                    android:textColor="@color/white_color"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tv_nahwu"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_nahwu" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nahwu"
+                    tools:text="@string/dummy_desc" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_start_lear_nahwu"
@@ -125,11 +126,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
+                    android:enabled="false"
                     android:fontFamily="@font/manrope_semibold"
                     android:text="@string/start_learn"
-                    android:textColor="@color/blue_main_color"
+                    android:textColor="@color/orange_main_color"
                     android:textSize="16sp"
-                    app:backgroundTint="@color/white_color"
+                    app:backgroundTint="@color/Gray100"
                     app:cornerRadius="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -138,12 +140,11 @@
                     android:id="@+id/imageView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_marginBottom="-5dp"
                     android:src="@drawable/ic_nahwu"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDescN" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_desc_nahwu" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -171,8 +172,8 @@
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/manrope_bold"
                     android:text="@string/sharaf"
-                    android:textColor="@color/white_color"
-                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,8 +183,8 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/manrope_bold"
                     android:text="@string/sharaf_arab"
-                    android:textColor="@color/white_color"
-                    android:textSize="19sp"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_sharaf"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_sharaf" />
@@ -195,11 +196,12 @@
                     android:layout_marginTop="18dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/manrope_semibold"
-                    android:text="@string/dummy_desc"
-                    android:textColor="@color/white_color"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tv_sharaf"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_sharaf" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_sharaf"
+                    tools:text="@string/dummy_desc" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_start_lear_sharaf"
@@ -207,11 +209,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
+                    android:enabled="false"
                     android:fontFamily="@font/manrope_semibold"
                     android:text="@string/start_learn"
                     android:textColor="@color/blue_main_color"
                     android:textSize="16sp"
-                    app:backgroundTint="@color/white_color"
+                    app:backgroundTint="@color/Gray100"
                     app:cornerRadius="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -219,7 +222,6 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:src="@drawable/ic_sharaf"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_desc_sharaf" />
