@@ -48,13 +48,13 @@ class MainActivity : AppCompatActivity() {
                         response.data?.forEach { category ->
                             with(binding) {
                                 Log.d("TAG", "onCreate: category type: ${category.type}")
-                                if (category.type == getString(R.string.sharaf).lowercase()) {
+                                if (category.type?.lowercase() == getString(R.string.sharaf).lowercase()) {
                                     sharaf = category
                                     tvDescSharaf.text = sharaf.desc
                                     btnStartLearSharaf.isEnabled = true
                                 }
 
-                                if (category.type == getString(R.string.nahwu).lowercase()) {
+                                if (category.type?.lowercase() == getString(R.string.nahwu).lowercase()) {
                                     nahwu = category
                                     tvDescNahwu.text = nahwu.desc
                                     btnStartLearNahwu.isEnabled = true
