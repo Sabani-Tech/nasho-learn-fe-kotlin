@@ -9,6 +9,7 @@ import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
 import com.learn.nasho.data.remote.response.RegisterResponse
+import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.convertToJsonString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -28,9 +29,8 @@ class UserRepositoryImpl(
     ): Flow<ResultState<RegisterResponse>> = flow {
         emit(ResultState.Loading)
         try {
-            val username = fullName
             val response =
-                apiService.registerUser(fullName, username, email, password, passwordConfirmation)
+                apiService.registerUser(fullName, email, password, passwordConfirmation)
             if (response.isSuccessful) {
                 response.body()?.let {
                     if (it.error == true) {
@@ -100,15 +100,12 @@ class UserRepositoryImpl(
             if (token.isBlank()) {
                 emit(ResultState.Error("Token is empty, Re-Login"))
             } else {
-                val platform = "mobile"
-                val version = "1.0"
-                val clientKey = "53a9cd0f-3902-4271-9fc4-7e53bc61bf34"
                 val response =
                     apiService.getProfileUser(
                         ApiConfig.getAuthHeader(token),
-                        platform,
-                        version,
-                        clientKey
+                        Constants.PLATFORM,
+                        Constants.VERSION,
+                        Constants.CLIENT_KEY
                     )
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
