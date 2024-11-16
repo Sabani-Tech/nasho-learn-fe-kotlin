@@ -6,6 +6,8 @@ import com.learn.nasho.data.locale.datastore.DataStorePreferencesImpl
 import com.learn.nasho.data.locale.datastore.dataStore
 import com.learn.nasho.data.remote.api.ApiConfig
 import com.learn.nasho.data.remote.api.ApiService
+import com.learn.nasho.data.repository.MaterialRepository
+import com.learn.nasho.data.repository.MaterialRepositoryImpl
 import com.learn.nasho.data.repository.UserRepository
 import com.learn.nasho.data.repository.UserRepositoryImpl
 
@@ -19,5 +21,11 @@ object Injection {
         val apiService = provideApiService()
         val dataStorePreferences = provideDataStorePref(context)
         return UserRepositoryImpl(apiService, dataStorePreferences)
+    }
+
+    fun provideMaterialRepository(context: Context): MaterialRepository {
+        val apiService = provideApiService()
+        val dataStorePreferences = provideDataStorePref(context)
+        return MaterialRepositoryImpl(apiService, dataStorePreferences)
     }
 }

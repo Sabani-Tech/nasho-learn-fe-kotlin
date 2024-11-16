@@ -1,5 +1,6 @@
 package com.learn.nasho.data.remote.api
 
+import com.learn.nasho.data.remote.response.CategoriesResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
 import com.learn.nasho.data.remote.response.RegisterResponse
@@ -36,12 +37,14 @@ interface ApiService {
         @Header("X-CLIENT-KEY-NASHO") clientKey: String
     ): Response<ProfileResponse>
 
-//    @GET("v1/stories")
-//    suspend fun getStoriesWithLocation(
-//        @Header("Authorization") token: String,
-//        @Query("location") location : Int = 1
-//    ): Response<StoryListResponse>
-//
+    @GET("v1/user/category")
+    suspend fun getCategoryList(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String
+    ): Response<CategoriesResponse>
+
 //    @GET("v1/stories")
 //    suspend fun getAllStories(
 //        @Header("Authorization") token: String,
