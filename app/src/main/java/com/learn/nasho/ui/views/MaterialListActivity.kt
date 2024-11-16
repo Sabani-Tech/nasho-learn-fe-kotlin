@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.learn.nasho.R
+import com.learn.nasho.data.remote.dto.CategoryDto
 import com.learn.nasho.databinding.ActivityMaterialListBinding
 import com.learn.nasho.utils.Constants
+import com.learn.nasho.utils.parcelable
 
 class MaterialListActivity : AppCompatActivity() {
 
@@ -18,10 +20,10 @@ class MaterialListActivity : AppCompatActivity() {
         binding = ActivityMaterialListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = intent.getStringExtra(Constants.MATERIAL_DATA)
+        val data: CategoryDto? = intent.parcelable(Constants.CATEGORY_DATA)
 
         binding.appBar.apply {
-            tvTitle.text = getString(R.string.learn_title, data)
+            tvTitle.text = getString(R.string.learn_title, data?.type)
 
             ivBack.setOnClickListener {
                 onBackPressedDispatcher.onBackPressed()
