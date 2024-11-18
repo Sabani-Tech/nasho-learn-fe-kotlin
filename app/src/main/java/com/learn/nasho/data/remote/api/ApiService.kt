@@ -2,6 +2,7 @@ package com.learn.nasho.data.remote.api
 
 import com.learn.nasho.data.remote.response.CategoriesResponse
 import com.learn.nasho.data.remote.response.LoginResponse
+import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
 import com.learn.nasho.data.remote.response.RegisterResponse
 import retrofit2.Response
@@ -10,6 +11,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -44,6 +46,15 @@ interface ApiService {
         @Header("X-VERSION-NASHO") version: String,
         @Header("X-CLIENT-KEY-NASHO") clientKey: String
     ): Response<CategoriesResponse>
+
+    @GET("v1/user/category/{id}/materi")
+    suspend fun getMaterialListByCategory(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("id") categoryId: String
+    ): Response<MaterialsResponse>
 
 //    @GET("v1/stories")
 //    suspend fun getAllStories(
