@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Get category
         val factory: MaterialViewModelFactory =
             MaterialViewModelFactory.getInstance(this@MainActivity)
         val categoryListViewModel: CategoryListViewModel by viewModels {
