@@ -35,6 +35,9 @@ class UserViewModelFactory(private var userRepository: UserRepository) :
             modelClass.isAssignableFrom(ProfileViewModel::class.java) ->
                 ProfileViewModel(userRepository) as T
 
+            modelClass.isAssignableFrom(ProfileUserViewModel::class.java) ->
+                ProfileUserViewModel(userRepository) as T
+
             else -> throw IllegalArgumentException("unknown viewmodel class: ${modelClass.name}")
         }
     }
