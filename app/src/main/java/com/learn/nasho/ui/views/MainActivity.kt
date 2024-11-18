@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
+import com.learn.nasho.data.enums.CategoryType
 import com.learn.nasho.data.remote.dto.CategoryDto
 import com.learn.nasho.databinding.ActivityMainBinding
 import com.learn.nasho.ui.viewmodels.material.CategoryListViewModel
@@ -48,13 +49,13 @@ class MainActivity : AppCompatActivity() {
                         response.data?.forEach { category ->
                             with(binding) {
                                 Log.d("TAG", "onCreate: category type: ${category.type}")
-                                if (category.type?.lowercase() == getString(R.string.sharaf).lowercase()) {
+                                if (category.type == CategoryType.SHARAF.type.lowercase()) {
                                     sharaf = category
                                     tvDescSharaf.text = sharaf.desc
                                     btnStartLearSharaf.isEnabled = true
                                 }
 
-                                if (category.type?.lowercase() == getString(R.string.nahwu).lowercase()) {
+                                if (category.type == CategoryType.NAHWU.type.lowercase()) {
                                     nahwu = category
                                     tvDescNahwu.text = nahwu.desc
                                     btnStartLearNahwu.isEnabled = true
