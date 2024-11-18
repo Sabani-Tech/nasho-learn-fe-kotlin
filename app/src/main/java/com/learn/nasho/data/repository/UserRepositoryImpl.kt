@@ -108,13 +108,13 @@ class UserRepositoryImpl(
                         Constants.CLIENT_KEY
                     )
                 if (response.isSuccessful) {
-                    response.body()?.let { data ->
-                        if (data.error == true) {
-                            emit(ResultState.Error(data.message ?: "Unknown error"))
+                    response.body()?.let { resp ->
+                        if (resp.error == true) {
+                            emit(ResultState.Error(resp.message ?: "Unknown error"))
                         } else {
-                            saveUserProfileData(convertToJsonString(data)).collect { isSaved ->
+                            saveUserProfileData(convertToJsonString(resp.data!!)).collect { isSaved ->
                                 if (isSaved) {
-                                    emit(ResultState.Success(data))
+                                    emit(ResultState.Success(resp))
                                 } else {
                                     emit(ResultState.Error("Failed to save profile data"))
                                 }
