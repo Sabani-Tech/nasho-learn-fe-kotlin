@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Parcelable
 import android.view.View
 import com.google.gson.Gson
+import com.learn.nasho.data.remote.dto.ProfileDto
 
 fun showLoading(loadingView: View) {
     loadingView.visibility = View.VISIBLE
@@ -17,6 +18,15 @@ fun hideLoading(loadingView: View) {
 fun convertToJsonString(data: Any): String {
     val gson = Gson()
     return gson.toJson(data)
+}
+
+fun getDataProfileFromJson(data: String): ProfileDto {
+    if (data.isNotEmpty()) {
+        val gson = Gson()
+        return gson.fromJson(data, ProfileDto::class.java)
+    } else {
+        return ProfileDto()
+    }
 }
 
 inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
