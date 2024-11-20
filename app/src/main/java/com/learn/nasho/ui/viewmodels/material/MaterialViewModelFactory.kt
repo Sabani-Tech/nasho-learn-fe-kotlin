@@ -24,6 +24,9 @@ class MaterialViewModelFactory(private var materialRepository: MaterialRepositor
             modelClass.isAssignableFrom(CategoryListViewModel::class.java) ->
                 CategoryListViewModel(materialRepository) as T
 
+            modelClass.isAssignableFrom(MaterialListViewModel::class.java) ->
+                MaterialListViewModel(materialRepository) as T
+
             else -> throw IllegalArgumentException("unknown viewmodel class: ${modelClass.name}")
         }
     }
