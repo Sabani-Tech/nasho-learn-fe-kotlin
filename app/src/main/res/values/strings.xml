@@ -71,6 +71,7 @@
     <string name="login_failed">Gagal Masuk: %1$s</string>
     <string name="register_failed">Gagal Mendaftar: %1$s</string>
     <string name="category_failed">Gagal Mendapatkan Kategori: %1$s</string>
+    <string name="material_failed">Gagal Mendapatkan Materi: %1$s</string>
     <string name="profile_failed">Gagal Mendapatkan Data Profil: %1$s</string>
 
     <string name="logout_is_success">Logout is successful</string>
