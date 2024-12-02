@@ -10,6 +10,7 @@ object Constants {
 
     const val CATEGORY_DATA = "data_category"
     const val MATERIAL_DATA = "data_material"
+    const val MATERIAL_TYPE = "type_material"
 
     const val PLATFORM = "mobile"
     const val VERSION = "1.0"

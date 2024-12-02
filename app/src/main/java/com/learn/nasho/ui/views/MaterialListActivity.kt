@@ -87,7 +87,9 @@ class MaterialListActivity : AppCompatActivity() {
                     MaterialAdapter(object : RecyclerViewClickListener {
                         override fun onItemClicked(position: Int) {
                             // Handle click for Phase 1
-                            handleItemClick(position, phase = 1)
+                            data.type?.let {
+                                handleItemClick(position, phase = 1, it)
+                            }
                         }
                     })
                 rvMaterial1.setHasFixedSize(true)
@@ -100,7 +102,9 @@ class MaterialListActivity : AppCompatActivity() {
                     MaterialAdapter(object : RecyclerViewClickListener {
                         override fun onItemClicked(position: Int) {
                             // Handle click for Phase 2
-                            handleItemClick(position, phase = 2)
+                            data.type?.let {
+                                handleItemClick(position, phase = 2, it)
+                            }
                         }
                     })
                 rvMaterial2.apply {
@@ -151,7 +155,7 @@ class MaterialListActivity : AppCompatActivity() {
 //    }
 
     // Handle different list clicks based on the phase
-    private fun handleItemClick(position: Int, phase: Int) {
+    private fun handleItemClick(position: Int, phase: Int, type: String) {
         // Do something different based on phase
         when (phase) {
             1 -> {
@@ -160,7 +164,7 @@ class MaterialListActivity : AppCompatActivity() {
                     .show()
                 val material = materialAdapterPhase1.getItem(position)
                 Log.d("MaterialListActivity", "handleItemClick: data $material")
-                goToMaterialDetail(material =material)
+                goToMaterialDetail(material = material, type)
             }
 
             2 -> {
@@ -171,9 +175,10 @@ class MaterialListActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToMaterialDetail(material: MaterialDto) {
+    private fun goToMaterialDetail(material: MaterialDto, type: String) {
         val intent = Intent(this@MaterialListActivity, MaterialVideoActivity::class.java)
         intent.putExtra(Constants.MATERIAL_DATA, material)
+        intent.putExtra(Constants.MATERIAL_TYPE, type)
         startActivity(intent)
     }
 }
