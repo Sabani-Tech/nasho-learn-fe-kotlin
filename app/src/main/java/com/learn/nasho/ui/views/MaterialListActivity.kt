@@ -1,5 +1,6 @@
 package com.learn.nasho.ui.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -32,17 +33,17 @@ class MaterialListActivity : AppCompatActivity() {
     private lateinit var materialAdapterPhase1: MaterialAdapter
     private lateinit var materialAdapterPhase2: MaterialAdapter
 
-    private lateinit var factory: MaterialViewModelFactory
-    private val materialListViewModel: MaterialListViewModel by viewModels {
-        factory
-    }
+//    private lateinit var factory: MaterialViewModelFactory
+//    private val materialListViewModel: MaterialListViewModel by viewModels {
+//        factory
+//    }
 
     private val categoryId: MutableLiveData<String?> = MutableLiveData("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        factory = MaterialViewModelFactory.getInstance(this@MaterialListActivity)
+//        factory = MaterialViewModelFactory.getInstance(this@MaterialListActivity)
 
         binding = ActivityMaterialListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -108,44 +109,46 @@ class MaterialListActivity : AppCompatActivity() {
                     adapter = materialAdapterPhase2
                 }
 
+                data.material?.let { materialAdapterPhase1.setItems(it) }
+
             }
 
-            materialListViewModel.materialList.observe(this@MaterialListActivity) { resultState ->
-                when (resultState) {
-                    is ResultState.Success -> {
-                        val response = resultState.data
-                        if (response.error == true) {
-                            Toast.makeText(
-                                this@MaterialListActivity,
-                                getString(R.string.material_failed, response.message),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        } else {
-                            response.data?.let {
-                                Log.d("MaterialListActivity", "Data: ${it.size}")
-                                materialAdapterPhase1.setItems(it)
-                            }
-                        }
-                    }
-
-                    is ResultState.Error -> {
-                        Toast.makeText(
-                            this@MaterialListActivity,
-                            getString(R.string.material_failed, resultState.message),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-
-                    else -> {}
-                }
-            }
+//            materialListViewModel.materialList.observe(this@MaterialListActivity) { resultState ->
+//                when (resultState) {
+//                    is ResultState.Success -> {
+//                        val response = resultState.data
+//                        if (response.error == true) {
+//                            Toast.makeText(
+//                                this@MaterialListActivity,
+//                                getString(R.string.material_failed, response.message),
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        } else {
+//                            response.data?.let {
+//                                Log.d("MaterialListActivity", "Data: ${it.size}")
+//                                materialAdapterPhase1.setItems(it)
+//                            }
+//                        }
+//                    }
+//
+//                    is ResultState.Error -> {
+//                        Toast.makeText(
+//                            this@MaterialListActivity,
+//                            getString(R.string.material_failed, resultState.message),
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                    }
+//
+//                    else -> {}
+//                }
+//            }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        categoryId.value?.let { materialListViewModel.getMaterialListByCategory(it) }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        categoryId.value?.let { materialListViewModel.getMaterialListByCategory(it) }
+//    }
 
     // Handle different list clicks based on the phase
     private fun handleItemClick(position: Int, phase: Int) {
@@ -155,6 +158,9 @@ class MaterialListActivity : AppCompatActivity() {
                 // Handle click for Phase 1 item
                 Toast.makeText(this, "Clicked item in Phase 1: $position", Toast.LENGTH_SHORT)
                     .show()
+                val material = materialAdapterPhase1.getItem(position)
+                Log.d("MaterialListActivity", "handleItemClick: data $material")
+                goToMaterialDetail(material =material)
             }
 
             2 -> {
@@ -163,5 +169,11 @@ class MaterialListActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    private fun goToMaterialDetail(material: MaterialDto) {
+        val intent = Intent(this@MaterialListActivity, MaterialVideoActivity::class.java)
+        intent.putExtra(Constants.MATERIAL_DATA, material)
+        startActivity(intent)
     }
 }
