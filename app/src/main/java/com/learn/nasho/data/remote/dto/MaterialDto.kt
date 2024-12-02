@@ -22,9 +22,6 @@ data class MaterialDto(
 	@field:SerializedName("isi")
 	val content: String? = null,
 
-	@field:SerializedName("kategori_materi_id")
-	val categoryMaterialId: String? = null,
-
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 

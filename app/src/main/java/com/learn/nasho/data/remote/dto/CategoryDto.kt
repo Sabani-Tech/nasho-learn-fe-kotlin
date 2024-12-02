@@ -1,8 +1,8 @@
 package com.learn.nasho.data.remote.dto
 
+import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class CategoryDto(
@@ -21,4 +21,7 @@ data class CategoryDto(
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
+
+	@field:SerializedName("materi")
+	val material: List<MaterialDto>? = null,
 ) : Parcelable
