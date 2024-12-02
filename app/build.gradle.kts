@@ -16,6 +16,7 @@ android {
         versionName = "1.0"
 
         buildConfigField("String", "BASE_URL", "\"https://dev-api.nasholearn.com/api/\"")
+        buildConfigField("String", "BASE_URL_LOCAL", "\"http://192.168.1.16/nasho-learn-be-laravel/application/public/api/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
