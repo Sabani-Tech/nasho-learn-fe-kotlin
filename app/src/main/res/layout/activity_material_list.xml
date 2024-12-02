@@ -79,6 +79,30 @@
             tools:listitem="@layout/item_layout_material" />
 
         <TextView
+            android:id="@+id/tv_ujian_list_title_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/ujian"
+            android:textColor="#111927"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/rv_material_1"
+            app:layout_constraintStart_toStartOf="@+id/rv_material_1"
+            app:layout_constraintTop_toBottomOf="@+id/rv_material_1" />
+
+        <include
+            android:id="@+id/layout_exam_1"
+            layout="@layout/item_layout_exam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="43dp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_ujian_list_title_1"
+            app:layout_constraintStart_toStartOf="@+id/tv_ujian_list_title_1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ujian_list_title_1" />
+
+        <TextView
             android:id="@+id/tv_material_list_title_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -102,30 +126,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_2"
             tools:itemCount="2"
             tools:listitem="@layout/item_layout_material" />
-
-        <TextView
-            android:id="@+id/tv_ujian_list_title_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/manrope_bold"
-            android:text="@string/ujian"
-            android:textColor="#111927"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/rv_material_1"
-            app:layout_constraintStart_toStartOf="@+id/rv_material_1"
-            app:layout_constraintTop_toBottomOf="@+id/rv_material_1" />
-
-        <include
-            android:id="@+id/layout_exam_1"
-            layout="@layout/item_layout_exam"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="43dp"
-            app:layout_constraintEnd_toEndOf="@+id/tv_ujian_list_title_1"
-            app:layout_constraintStart_toStartOf="@+id/tv_ujian_list_title_1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_ujian_list_title_1" />
 
         <TextView
             android:id="@+id/tv_ujian_list_title_2"
