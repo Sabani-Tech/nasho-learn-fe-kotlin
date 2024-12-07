@@ -168,6 +168,9 @@ class MaterialListActivity : AppCompatActivity() {
                                 binding.tvEmptyMaterial2.visibility = View.VISIBLE
                             }
 
+                            binding.layoutExam1.ivLearnStatus.visibility = if (resultData.exam1Status == true) View.VISIBLE else View.GONE
+                            binding.layoutExam2.ivLearnStatus.visibility = if (resultData.exam2Status == true) View.VISIBLE else View.GONE
+
                             when (resultData.status) {
                                 Status.MATERIAL1.type -> {
                                     lockExam(binding.layoutExam1, true)

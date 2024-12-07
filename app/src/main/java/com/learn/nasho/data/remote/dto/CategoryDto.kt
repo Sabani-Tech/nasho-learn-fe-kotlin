@@ -28,6 +28,12 @@ data class CategoryDto(
 	@field:SerializedName("status")
 	val status: String? = null,
 
+	@field:SerializedName("exam1")
+	val exam1Status: Boolean? = null,
+
+	@field:SerializedName("exam2")
+	val exam2Status: Boolean? = null,
+
 	@field:SerializedName("materi_phase1")
 	val materialPhase1: List<MaterialDto>? = null,
 

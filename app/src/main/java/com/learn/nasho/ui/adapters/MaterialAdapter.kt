@@ -66,12 +66,10 @@ class MaterialAdapter(
 
     fun setReadStepStatus(step: Int) {
         readStep = step
-        notifyDataSetChanged()
     }
 
     fun setLockItem(lock: Boolean) {
         lockItem = lock
-        notifyDataSetChanged()
     }
 
     fun setItems(newList: List<MaterialDto>) {
