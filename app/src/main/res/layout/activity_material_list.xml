@@ -66,17 +66,36 @@
             app:layout_constraintStart_toStartOf="@+id/tv_desc"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_material_1"
+        <LinearLayout
+            android:id="@+id/ll_material_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@+id/tv_material_list_title_1"
             app:layout_constraintStart_toStartOf="@+id/tv_material_list_title_1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_1"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_layout_material" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_material_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_layout_material" />
+
+            <TextView
+                android:id="@+id/tv_empty_material_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:text="@string/empty_data"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_ujian_list_title_1"
@@ -87,9 +106,9 @@
             android:text="@string/ujian"
             android:textColor="#111927"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/rv_material_1"
-            app:layout_constraintStart_toStartOf="@+id/rv_material_1"
-            app:layout_constraintTop_toBottomOf="@+id/rv_material_1" />
+            app:layout_constraintEnd_toEndOf="@+id/ll_material_1"
+            app:layout_constraintStart_toStartOf="@+id/ll_material_1"
+            app:layout_constraintTop_toBottomOf="@+id/ll_material_1" />
 
         <include
             android:id="@+id/layout_exam_1"
@@ -115,17 +134,35 @@
             app:layout_constraintStart_toStartOf="@+id/layout_exam_1"
             app:layout_constraintTop_toBottomOf="@+id/layout_exam_1" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_material_2"
+        <LinearLayout
+            android:id="@+id/ll_material_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@+id/tv_material_list_title_2"
             app:layout_constraintStart_toStartOf="@+id/tv_material_list_title_2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_2"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_layout_material" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_material_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_layout_material" />
+
+            <TextView
+                android:id="@+id/tv_empty_material_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:text="@string/empty_data"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_ujian_list_title_2"
@@ -136,9 +173,9 @@
             android:text="@string/ujian"
             android:textColor="#111927"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/rv_material_2"
-            app:layout_constraintStart_toStartOf="@+id/rv_material_2"
-            app:layout_constraintTop_toBottomOf="@+id/rv_material_2" />
+            app:layout_constraintEnd_toEndOf="@+id/ll_material_2"
+            app:layout_constraintStart_toStartOf="@+id/ll_material_2"
+            app:layout_constraintTop_toBottomOf="@+id/ll_material_2" />
 
         <include
             android:id="@+id/layout_exam_2"

@@ -1,6 +1,7 @@
 package com.learn.nasho.data.remote.api
 
 import com.learn.nasho.data.remote.response.CategoriesResponse
+import com.learn.nasho.data.remote.response.CategoryDetailResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
@@ -46,6 +47,15 @@ interface ApiService {
         @Header("X-VERSION-NASHO") version: String,
         @Header("X-CLIENT-KEY-NASHO") clientKey: String
     ): Response<CategoriesResponse>
+
+    @GET("v1/user/category/{id}/materi")
+    suspend fun getCategoryDetailById(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("id") categoryId: String
+    ): Response<CategoryDetailResponse>
 
     @GET("v1/user/category/{id}/materi")
     suspend fun getMaterialListByCategory(

@@ -50,12 +50,14 @@ class MainActivity : AppCompatActivity() {
                                 Log.d("TAG", "onCreate: category type: ${category.type}")
                                 if (category.type == CategoryType.SHARAF.type) {
                                     sharaf = category
+                                    tvSharafArab.text = sharaf.typeArab
                                     tvDescSharaf.text = sharaf.desc
                                     btnStartLearSharaf.isEnabled = true
                                 }
 
                                 if (category.type == CategoryType.NAHWU.type) {
                                     nahwu = category
+                                    tvNahwuArab.text = nahwu.typeArab
                                     tvDescNahwu.text = nahwu.desc
                                     btnStartLearNahwu.isEnabled = true
                                 }

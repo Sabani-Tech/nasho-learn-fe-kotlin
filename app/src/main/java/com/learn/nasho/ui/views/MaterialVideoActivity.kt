@@ -11,11 +11,12 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.learn.nasho.data.remote.dto.CategoryDto
+import androidx.core.text.HtmlCompat
 import com.learn.nasho.data.remote.dto.MaterialDto
 import com.learn.nasho.databinding.ActivityMaterialVideoBinding
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
+
 
 class MaterialVideoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMaterialVideoBinding
@@ -45,7 +46,8 @@ class MaterialVideoActivity : AppCompatActivity() {
 
             binding.apply {
                 initializeWebView(wvVideo, data.embed)
-                tvDescMaterial.text = data.content
+                val content = data.content?.let { HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_COMPACT) }
+                tvDescMaterial.text = content
             }
         }
     }

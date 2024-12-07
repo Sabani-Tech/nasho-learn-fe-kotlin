@@ -95,11 +95,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tv_nahwu_arab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/manrope_bold"
-                    android:text="@string/nahwu_arab"
+                    tools:text="@string/nahwu_arab"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_nahwu"
@@ -178,11 +179,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tv_sharaf_arab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/manrope_bold"
-                    android:text="@string/sharaf_arab"
+                    tools:text="@string/sharaf_arab"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_sharaf"

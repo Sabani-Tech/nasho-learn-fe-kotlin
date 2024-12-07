@@ -76,4 +76,5 @@
 
     <string name="logout_is_success">Logout is successful</string>
     <string name="logout_is_failed">Logout is failed</string>
+    <string name="empty_data">Data anda kosong</string>
 </resources>

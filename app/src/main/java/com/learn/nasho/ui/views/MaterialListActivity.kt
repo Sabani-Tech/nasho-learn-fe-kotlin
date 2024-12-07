@@ -3,13 +3,11 @@ package com.learn.nasho.ui.views
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.learn.nasho.R
@@ -20,8 +18,7 @@ import com.learn.nasho.data.remote.dto.MaterialDto
 import com.learn.nasho.databinding.ActivityMaterialListBinding
 import com.learn.nasho.ui.adapters.MaterialAdapter
 import com.learn.nasho.ui.adapters.RecyclerViewClickListener
-import com.learn.nasho.ui.viewmodels.material.CategoryListViewModel
-import com.learn.nasho.ui.viewmodels.material.MaterialListViewModel
+import com.learn.nasho.ui.viewmodels.material.CategoryDetailViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
@@ -33,17 +30,17 @@ class MaterialListActivity : AppCompatActivity() {
     private lateinit var materialAdapterPhase1: MaterialAdapter
     private lateinit var materialAdapterPhase2: MaterialAdapter
 
-//    private lateinit var factory: MaterialViewModelFactory
-//    private val materialListViewModel: MaterialListViewModel by viewModels {
-//        factory
-//    }
+    private lateinit var factory: MaterialViewModelFactory
+    private val categoryDetailViewModel: CategoryDetailViewModel by viewModels {
+        factory
+    }
 
     private val categoryId: MutableLiveData<String?> = MutableLiveData("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        factory = MaterialViewModelFactory.getInstance(this@MaterialListActivity)
+        factory = MaterialViewModelFactory.getInstance(this@MaterialListActivity)
 
         binding = ActivityMaterialListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -79,7 +76,7 @@ class MaterialListActivity : AppCompatActivity() {
                     )
                 }
 
-                "${data.type} (${data.id})".also { tvMaterialTitle.text = it }
+                "${data.type} (${data.typeArab})".also { tvMaterialTitle.text = it }
                 tvDesc.text = data.desc
 
                 // Setup Phase 1 Adapter
@@ -113,46 +110,56 @@ class MaterialListActivity : AppCompatActivity() {
                     adapter = materialAdapterPhase2
                 }
 
-                data.material?.let { materialAdapterPhase1.setItems(it) }
-
             }
 
-//            materialListViewModel.materialList.observe(this@MaterialListActivity) { resultState ->
-//                when (resultState) {
-//                    is ResultState.Success -> {
-//                        val response = resultState.data
-//                        if (response.error == true) {
-//                            Toast.makeText(
-//                                this@MaterialListActivity,
-//                                getString(R.string.material_failed, response.message),
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        } else {
-//                            response.data?.let {
-//                                Log.d("MaterialListActivity", "Data: ${it.size}")
-//                                materialAdapterPhase1.setItems(it)
-//                            }
-//                        }
-//                    }
-//
-//                    is ResultState.Error -> {
-//                        Toast.makeText(
-//                            this@MaterialListActivity,
-//                            getString(R.string.material_failed, resultState.message),
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                    }
-//
-//                    else -> {}
-//                }
-//            }
+            categoryDetailViewModel.categoryDetail.observe(this@MaterialListActivity) { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
+
+                        val response = resultState.data
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@MaterialListActivity,
+                                getString(R.string.material_failed, response.message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+
+                            val resultData = response.data
+                            if (resultData?.materialPhase1?.size!! > 0){
+                                resultData.materialPhase1.let { materialAdapterPhase1.setItems(it) }
+                                binding.tvEmptyMaterial1.visibility = View.GONE
+                            } else{
+                                binding.tvEmptyMaterial1.visibility = View.VISIBLE
+                            }
+
+                            if (resultData.materialPhase2?.size!! > 0){
+                                resultData.materialPhase2.let { materialAdapterPhase2.setItems(it) }
+                                binding.tvEmptyMaterial2.visibility = View.GONE
+                            } else{
+                                binding.tvEmptyMaterial2.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        Toast.makeText(
+                            this@MaterialListActivity,
+                            getString(R.string.material_failed, resultState.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {}
+                }
+            }
         }
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        categoryId.value?.let { materialListViewModel.getMaterialListByCategory(it) }
-//    }
+    override fun onResume() {
+        super.onResume()
+        categoryId.value?.let { categoryDetailViewModel.getCategoryDetailById(it) }
+    }
 
     // Handle different list clicks based on the phase
     private fun handleItemClick(position: Int, phase: Int, type: String) {
