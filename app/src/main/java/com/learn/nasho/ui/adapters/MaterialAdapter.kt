@@ -16,6 +16,8 @@ class MaterialAdapter(
 ) : RecyclerView.Adapter<MaterialAdapter.MyViewHolder>() {
 
     private var oldList = emptyList<MaterialDto>()
+    private var lockItem = false
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             ItemLayoutMaterialBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -38,9 +40,16 @@ class MaterialAdapter(
                 onItemClickCallback.onItemClicked(position)
             }
 
-            llLearLock.root.visibility = View.GONE
+            if (lockItem) {
+                itemView.isEnabled = false
+                llLearLock.root.visibility = View.VISIBLE
+                ivLearnStatus.visibility = View.GONE
+            } else {
+                itemView.isEnabled = true
+                llLearLock.root.visibility = View.GONE
+                ivLearnStatus.visibility = View.VISIBLE
+            }
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -49,6 +58,11 @@ class MaterialAdapter(
 
     fun getItem(index: Int): MaterialDto {
         return oldList[index]
+    }
+
+    fun setLockItem(lock: Boolean) {
+        lockItem = lock
+        notifyDataSetChanged()
     }
 
     fun setItems(newList: List<MaterialDto>) {

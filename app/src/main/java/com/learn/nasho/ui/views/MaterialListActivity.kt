@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.CategoryType
+import com.learn.nasho.data.enums.Status
 import com.learn.nasho.data.remote.dto.CategoryDto
 import com.learn.nasho.data.remote.dto.MaterialDto
 import com.learn.nasho.databinding.ActivityMaterialListBinding
+import com.learn.nasho.databinding.ItemLayoutExamBinding
 import com.learn.nasho.ui.adapters.MaterialAdapter
 import com.learn.nasho.ui.adapters.RecyclerViewClickListener
 import com.learn.nasho.ui.viewmodels.material.CategoryDetailViewModel
@@ -110,6 +112,16 @@ class MaterialListActivity : AppCompatActivity() {
                     adapter = materialAdapterPhase2
                 }
 
+                layoutExam1.itemView.setOnClickListener {
+                    Toast.makeText(this@MaterialListActivity, "Go to exam 1", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                layoutExam2.itemView.setOnClickListener {
+                    Toast.makeText(this@MaterialListActivity, "Go to exam 2", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
             }
 
             categoryDetailViewModel.categoryDetail.observe(this@MaterialListActivity) { resultState ->
@@ -126,18 +138,54 @@ class MaterialListActivity : AppCompatActivity() {
                         } else {
 
                             val resultData = response.data
-                            if (resultData?.materialPhase1?.size!! > 0){
+                            if (resultData?.materialPhase1?.size!! > 0) {
                                 resultData.materialPhase1.let { materialAdapterPhase1.setItems(it) }
                                 binding.tvEmptyMaterial1.visibility = View.GONE
-                            } else{
+                            } else {
                                 binding.tvEmptyMaterial1.visibility = View.VISIBLE
                             }
 
-                            if (resultData.materialPhase2?.size!! > 0){
+                            if (resultData.materialPhase2?.size!! > 0) {
                                 resultData.materialPhase2.let { materialAdapterPhase2.setItems(it) }
                                 binding.tvEmptyMaterial2.visibility = View.GONE
-                            } else{
+                            } else {
                                 binding.tvEmptyMaterial2.visibility = View.VISIBLE
+                            }
+
+                            when (resultData.status) {
+                                Status.MATERIAL1.type -> {
+                                    lockExam(binding.layoutExam1, true)
+                                    materialAdapterPhase2.setLockItem(true)
+                                    lockExam(binding.layoutExam2, true)
+
+                                }
+
+                                Status.EXAM1.type -> {
+                                    lockExam(binding.layoutExam1, false)
+                                    materialAdapterPhase2.setLockItem(true)
+                                    lockExam(binding.layoutExam2, true)
+
+                                }
+
+                                Status.MATERIAL2.type -> {
+                                    lockExam(binding.layoutExam1, false)
+                                    materialAdapterPhase2.setLockItem(false)
+                                    lockExam(binding.layoutExam2, true)
+
+                                }
+
+                                Status.EXAM2.type -> {
+                                    lockExam(binding.layoutExam1, false)
+                                    materialAdapterPhase2.setLockItem(false)
+                                    lockExam(binding.layoutExam2, false)
+                                }
+
+                                else -> {
+                                    materialAdapterPhase1.setLockItem(true)
+                                    lockExam(binding.layoutExam1, true)
+                                    materialAdapterPhase2.setLockItem(true)
+                                    lockExam(binding.layoutExam2, true)
+                                }
                             }
                         }
                     }
@@ -167,17 +215,16 @@ class MaterialListActivity : AppCompatActivity() {
         when (phase) {
             1 -> {
                 // Handle click for Phase 1 item
-                Toast.makeText(this, "Clicked item in Phase 1: $position", Toast.LENGTH_SHORT)
-                    .show()
-                val material = materialAdapterPhase1.getItem(position)
-                Log.d("MaterialListActivity", "handleItemClick: data $material")
-                goToMaterialDetail(material = material, type)
+                val data = materialAdapterPhase1.getItem(position)
+                goToMaterialDetail(material = data, type =  type)
+                Log.d("MaterialListActivity", "handleItemClick: phase: $phase data: $data")
             }
 
             2 -> {
                 // Handle click for Phase 2 item
-                Toast.makeText(this, "Clicked item in Phase 2: $position", Toast.LENGTH_SHORT)
-                    .show()
+                val data = materialAdapterPhase2.getItem(position)
+                goToMaterialDetail(material = data,type= type)
+                Log.d("MaterialListActivity", "handleItemClick: phase: $phase data: $data")
             }
         }
     }
@@ -187,5 +234,17 @@ class MaterialListActivity : AppCompatActivity() {
         intent.putExtra(Constants.MATERIAL_DATA, material)
         intent.putExtra(Constants.MATERIAL_TYPE, type)
         startActivity(intent)
+    }
+
+    private fun lockExam(item: ItemLayoutExamBinding, lock: Boolean) {
+        if (lock) {
+            item.llLearLock.root.visibility = View.VISIBLE
+            item.itemView.isEnabled = false
+            item.ivLearnStatus.visibility = View.GONE
+        } else {
+            item.llLearLock.root.visibility = View.GONE
+            item.itemView.isEnabled = true
+            item.ivLearnStatus.visibility = View.VISIBLE
+        }
     }
 }
