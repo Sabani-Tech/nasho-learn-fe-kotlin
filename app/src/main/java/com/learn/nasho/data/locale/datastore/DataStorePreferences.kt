@@ -12,4 +12,10 @@ interface DataStorePreferences {
 
     suspend fun saveUserProfileData(data: String): Flow<Boolean>
     fun getUserProfileData(): Flow<String>
+
+    suspend fun setMaterial1ReadStep(step: Int): Flow<Boolean>
+    fun getMaterial1ReadStep(): Flow<Int>
+
+    suspend fun setMaterial2ReadStep(step: Int): Flow<Boolean>
+    fun getMaterial2ReadStep(): Flow<Int>
 }

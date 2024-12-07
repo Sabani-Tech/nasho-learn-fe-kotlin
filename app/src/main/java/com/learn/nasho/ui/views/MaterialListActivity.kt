@@ -21,6 +21,7 @@ import com.learn.nasho.databinding.ItemLayoutExamBinding
 import com.learn.nasho.ui.adapters.MaterialAdapter
 import com.learn.nasho.ui.adapters.RecyclerViewClickListener
 import com.learn.nasho.ui.viewmodels.material.CategoryDetailViewModel
+import com.learn.nasho.ui.viewmodels.material.MaterialReadViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
@@ -34,6 +35,9 @@ class MaterialListActivity : AppCompatActivity() {
 
     private lateinit var factory: MaterialViewModelFactory
     private val categoryDetailViewModel: CategoryDetailViewModel by viewModels {
+        factory
+    }
+    private val materialReadViewModel: MaterialReadViewModel by viewModels {
         factory
     }
 
@@ -124,6 +128,18 @@ class MaterialListActivity : AppCompatActivity() {
 
             }
 
+            materialReadViewModel.getMaterialReadStep(materialNumber = 1)
+                .observe(this@MaterialListActivity) {
+                    materialAdapterPhase1.setReadStepStatus(it)
+
+                    Log.d("MaterialListActivity", "onCreate: getMaterialReadStep: $it")
+                }
+
+            materialReadViewModel.getMaterialReadStep(materialNumber = 2)
+                .observe(this@MaterialListActivity) {
+                    materialAdapterPhase2.setReadStepStatus(it)
+                }
+
             categoryDetailViewModel.categoryDetail.observe(this@MaterialListActivity) { resultState ->
                 when (resultState) {
                     is ResultState.Success -> {
@@ -211,20 +227,23 @@ class MaterialListActivity : AppCompatActivity() {
 
     // Handle different list clicks based on the phase
     private fun handleItemClick(position: Int, phase: Int, type: String) {
+
+        materialReadViewModel.setMaterialReadStep(
+            materialNumber = phase,
+            step = position + 1
+        )
         // Do something different based on phase
         when (phase) {
             1 -> {
                 // Handle click for Phase 1 item
                 val data = materialAdapterPhase1.getItem(position)
-                goToMaterialDetail(material = data, type =  type)
-                Log.d("MaterialListActivity", "handleItemClick: phase: $phase data: $data")
+                goToMaterialDetail(material = data, type = type)
             }
 
             2 -> {
                 // Handle click for Phase 2 item
                 val data = materialAdapterPhase2.getItem(position)
-                goToMaterialDetail(material = data,type= type)
-                Log.d("MaterialListActivity", "handleItemClick: phase: $phase data: $data")
+                goToMaterialDetail(material = data, type = type)
             }
         }
     }

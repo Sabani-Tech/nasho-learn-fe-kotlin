@@ -1,6 +1,5 @@
 package com.learn.nasho.data.repository
 
-import android.util.Log
 import com.google.gson.Gson
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.locale.datastore.DataStorePreferences
@@ -58,81 +57,99 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun getCategoryDetailById(categoryId: String): Flow<ResultState<CategoryDetailResponse>> = flow {
-        emit(ResultState.Loading)
-        try {
-            val token = getTokenAccess().first()
-            if (token.isBlank()) {
-                emit(ResultState.Error("Token is empty, Re-Login"))
-            } else {
-                val response =
-                    apiService.getCategoryDetailById(
-                        ApiConfig.getAuthHeader(token),
-                        Constants.PLATFORM,
-                        Constants.VERSION,
-                        Constants.CLIENT_KEY,
-                        categoryId
-                    )
-                if (response.isSuccessful) {
-                    response.body()?.let { data ->
-                        if (data.error == true) {
-                            emit(ResultState.Error(data.message ?: "Unknown error"))
-                        } else {
-                            emit(ResultState.Success(data))
-                        }
-                    } ?: run {
-                        emit(ResultState.Error("Unknown error"))
-                    }
+    override suspend fun getCategoryDetailById(categoryId: String): Flow<ResultState<CategoryDetailResponse>> =
+        flow {
+            emit(ResultState.Loading)
+            try {
+                val token = getTokenAccess().first()
+                if (token.isBlank()) {
+                    emit(ResultState.Error("Token is empty, Re-Login"))
                 } else {
-                    val errorBody = response.errorBody()?.string()
-                    val errorResponse = errorBody?.let {
-                        Gson().fromJson(it, GeneralResponse::class.java)
+                    val response =
+                        apiService.getCategoryDetailById(
+                            ApiConfig.getAuthHeader(token),
+                            Constants.PLATFORM,
+                            Constants.VERSION,
+                            Constants.CLIENT_KEY,
+                            categoryId
+                        )
+                    if (response.isSuccessful) {
+                        response.body()?.let { data ->
+                            if (data.error == true) {
+                                emit(ResultState.Error(data.message ?: "Unknown error"))
+                            } else {
+                                emit(ResultState.Success(data))
+                            }
+                        } ?: run {
+                            emit(ResultState.Error("Unknown error"))
+                        }
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        val errorResponse = errorBody?.let {
+                            Gson().fromJson(it, GeneralResponse::class.java)
+                        }
+                        emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
                     }
-                    emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(ResultState.Error(e.message.toString()))
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(ResultState.Error(e.message.toString()))
+        }
+
+    override suspend fun getMaterialListByCategory(categoryId: String): Flow<ResultState<MaterialsResponse>> =
+        flow {
+            emit(ResultState.Loading)
+            try {
+                val token = getTokenAccess().first()
+                if (token.isBlank()) {
+                    emit(ResultState.Error("Token is empty, Re-Login"))
+                } else {
+                    val response =
+                        apiService.getMaterialListByCategory(
+                            ApiConfig.getAuthHeader(token),
+                            Constants.PLATFORM,
+                            Constants.VERSION,
+                            Constants.CLIENT_KEY,
+                            categoryId
+                        )
+                    if (response.isSuccessful) {
+                        response.body()?.let { data ->
+                            if (data.error == true) {
+                                emit(ResultState.Error(data.message ?: "Unknown error"))
+                            } else {
+                                emit(ResultState.Success(data))
+                            }
+                        } ?: run {
+                            emit(ResultState.Error("Unknown error"))
+                        }
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        val errorResponse = errorBody?.let {
+                            Gson().fromJson(it, GeneralResponse::class.java)
+                        }
+                        emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(ResultState.Error(e.message.toString()))
+            }
+        }
+
+    override suspend fun setMaterialReadStep(materialNumber: Int, step: Int): Flow<Boolean> {
+        return if (materialNumber == 1) {
+            dataStorePref.setMaterial1ReadStep(step = step)
+        } else {
+            dataStorePref.setMaterial2ReadStep(step = step)
         }
     }
 
-    override suspend fun getMaterialListByCategory(categoryId: String): Flow<ResultState<MaterialsResponse>>  = flow {
-        emit(ResultState.Loading)
-        try {
-            val token = getTokenAccess().first()
-            if (token.isBlank()) {
-                emit(ResultState.Error("Token is empty, Re-Login"))
-            } else {
-                val response =
-                    apiService.getMaterialListByCategory(
-                        ApiConfig.getAuthHeader(token),
-                        Constants.PLATFORM,
-                        Constants.VERSION,
-                        Constants.CLIENT_KEY,
-                        categoryId
-                    )
-                if (response.isSuccessful) {
-                    response.body()?.let { data ->
-                        if (data.error == true) {
-                            emit(ResultState.Error(data.message ?: "Unknown error"))
-                        } else {
-                            emit(ResultState.Success(data))
-                        }
-                    } ?: run {
-                        emit(ResultState.Error("Unknown error"))
-                    }
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    val errorResponse = errorBody?.let {
-                        Gson().fromJson(it, GeneralResponse::class.java)
-                    }
-                    emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(ResultState.Error(e.message.toString()))
+    override fun getMaterialReadStep(materialNumber: Int): Flow<Int> {
+        return if (materialNumber == 1) {
+            dataStorePref.getMaterial1ReadStep()
+        } else {
+            dataStorePref.getMaterial2ReadStep()
         }
     }
 

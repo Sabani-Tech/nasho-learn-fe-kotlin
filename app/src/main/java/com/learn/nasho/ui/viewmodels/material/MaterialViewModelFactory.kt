@@ -30,6 +30,9 @@ class MaterialViewModelFactory(private var materialRepository: MaterialRepositor
             modelClass.isAssignableFrom(CategoryDetailViewModel::class.java) ->
                 CategoryDetailViewModel(materialRepository) as T
 
+            modelClass.isAssignableFrom(MaterialReadViewModel::class.java) ->
+                MaterialReadViewModel(materialRepository) as T
+
             else -> throw IllegalArgumentException("unknown viewmodel class: ${modelClass.name}")
         }
     }

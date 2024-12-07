@@ -10,4 +10,7 @@ interface MaterialRepository {
     suspend fun getCategoryList(): Flow<ResultState<CategoriesResponse>>
     suspend fun getCategoryDetailById(categoryId: String): Flow<ResultState<CategoryDetailResponse>>
     suspend fun getMaterialListByCategory(categoryId: String): Flow<ResultState<MaterialsResponse>>
+
+    suspend fun setMaterialReadStep(materialNumber: Int, step: Int): Flow<Boolean>
+    fun getMaterialReadStep(materialNumber: Int): Flow<Int>
 }

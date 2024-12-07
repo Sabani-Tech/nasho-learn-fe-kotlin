@@ -69,4 +69,34 @@ class DataStorePreferencesImpl(private val dataStore: DataStore<Preferences>) :
             it[Constants.USER_PROFILE_DATA] ?: ""
         }
     }
+
+    override suspend fun setMaterial1ReadStep(step: Int): Flow<Boolean> = flow {
+        dataStore.edit {
+            it[Constants.READ_MATERIAL1] = step
+        }
+        emit(true)
+    }.catch {
+        emit(false)
+    }
+
+    override fun getMaterial1ReadStep(): Flow<Int> {
+        return dataStore.data.map {
+            it[Constants.READ_MATERIAL1] ?: 0
+        }
+    }
+
+    override suspend fun setMaterial2ReadStep(step: Int): Flow<Boolean> = flow {
+        dataStore.edit {
+            it[Constants.READ_MATERIAL2] = step
+        }
+        emit(true)
+    }.catch {
+        emit(false)
+    }
+
+    override fun getMaterial2ReadStep(): Flow<Int> {
+        return dataStore.data.map {
+            it[Constants.READ_MATERIAL2] ?: 0
+        }
+    }
 }

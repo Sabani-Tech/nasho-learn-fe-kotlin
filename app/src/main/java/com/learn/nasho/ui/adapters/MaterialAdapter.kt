@@ -4,9 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.learn.nasho.data.remote.dto.MaterialDto
 import com.learn.nasho.databinding.ItemLayoutMaterialBinding
 
@@ -17,6 +15,7 @@ class MaterialAdapter(
 
     private var oldList = emptyList<MaterialDto>()
     private var lockItem = false
+    private var readStep = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
@@ -47,7 +46,12 @@ class MaterialAdapter(
             } else {
                 itemView.isEnabled = true
                 llLearLock.root.visibility = View.GONE
-                ivLearnStatus.visibility = View.VISIBLE
+
+                if (readStep > position) {
+                    ivLearnStatus.visibility = View.VISIBLE
+                } else {
+                    ivLearnStatus.visibility = View.GONE
+                }
             }
         }
     }
@@ -58,6 +62,11 @@ class MaterialAdapter(
 
     fun getItem(index: Int): MaterialDto {
         return oldList[index]
+    }
+
+    fun setReadStepStatus(step: Int) {
+        readStep = step
+        notifyDataSetChanged()
     }
 
     fun setLockItem(lock: Boolean) {
