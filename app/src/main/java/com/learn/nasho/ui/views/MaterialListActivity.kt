@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.CategoryType
+import com.learn.nasho.data.enums.QuestionType
 import com.learn.nasho.data.enums.Status
 import com.learn.nasho.data.remote.dto.CategoryDto
 import com.learn.nasho.data.remote.dto.MaterialDto
+import com.learn.nasho.data.remote.response.QuestionListResponse
 import com.learn.nasho.databinding.ActivityMaterialListBinding
 import com.learn.nasho.databinding.ItemLayoutExamBinding
 import com.learn.nasho.ui.adapters.MaterialAdapter
@@ -131,11 +133,13 @@ class MaterialListActivity : AppCompatActivity() {
                 layoutExam1.itemView.setOnClickListener {
                     Toast.makeText(this@MaterialListActivity, "Go to exam 1", Toast.LENGTH_SHORT)
                         .show()
+                    goToQuizPage(1)
                 }
 
                 layoutExam2.itemView.setOnClickListener {
                     Toast.makeText(this@MaterialListActivity, "Go to exam 2", Toast.LENGTH_SHORT)
                         .show()
+                    goToQuizPage(2)
                 }
 
             }
@@ -334,13 +338,6 @@ class MaterialListActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToMaterialDetail(material: MaterialDto, type: String) {
-        val intent = Intent(this@MaterialListActivity, MaterialVideoActivity::class.java)
-        intent.putExtra(Constants.MATERIAL_DATA, material)
-        intent.putExtra(Constants.MATERIAL_TYPE, type)
-        startActivity(intent)
-    }
-
     private fun lockExam(item: ItemLayoutExamBinding, lock: Boolean, status: Boolean) {
         if (lock) {
             item.llLearLock.root.visibility = View.VISIBLE
@@ -355,6 +352,20 @@ class MaterialListActivity : AppCompatActivity() {
                 item.ivLearnStatus.visibility = View.GONE
             }
         }
+    }
+
+    private fun goToMaterialDetail(material: MaterialDto, type: String) {
+        val intent = Intent(this@MaterialListActivity, MaterialVideoActivity::class.java)
+        intent.putExtra(Constants.MATERIAL_DATA, material)
+        intent.putExtra(Constants.MATERIAL_TYPE, type)
+        startActivity(intent)
+    }
+
+    private fun goToQuizPage(phase: Int) {
+        val intent = Intent(this@MaterialListActivity, QuizActivity::class.java)
+        intent.putExtra(Constants.QUESTION_TYPE, QuestionType.EXAM.type)
+        intent.putExtra(Constants.EXAM_PHASE, phase)
+        startActivity(intent)
     }
 
     companion object {

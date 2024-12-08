@@ -6,6 +6,7 @@ import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
+import com.learn.nasho.data.remote.response.QuestionListResponse
 import com.learn.nasho.data.remote.response.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Field
@@ -77,6 +78,14 @@ interface ApiService {
         @Path("category_id") categoryId: String,
         @Path("status_category") status: String,
     ): Response<GeneralResponse>
+
+    @GET("v1/user/soal")
+    suspend fun getQuestions(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String
+    ): Response<QuestionListResponse>
 
 //    @Multipart
 //    @POST("v1/stories")
