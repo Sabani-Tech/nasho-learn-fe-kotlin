@@ -122,6 +122,12 @@ class MaterialListActivity : AppCompatActivity() {
                     adapter = materialAdapterPhase2
                 }
 
+                layoutExam1.tvExamTitle.text = getString(R.string.mid_exam)
+                layoutExam1.tvExamDesc.text = getString(R.string.theory, data.type)
+
+                layoutExam2.tvExamTitle.text = getString(R.string.end_exam)
+                layoutExam2.tvExamDesc.text = getString(R.string.theory, data.type)
+
                 layoutExam1.itemView.setOnClickListener {
                     Toast.makeText(this@MaterialListActivity, "Go to exam 1", Toast.LENGTH_SHORT)
                         .show()

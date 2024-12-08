@@ -78,4 +78,7 @@
     <string name="logout_is_success">Logout is successful</string>
     <string name="logout_is_failed">Logout is failed</string>
     <string name="empty_data">Data anda kosong</string>
+    <string name="mid_exam">Ujian Tengah</string>
+    <string name="end_exam">Ujian Akhir</string>
+    <string name="theory">Teori %1$s</string>
 </resources>
