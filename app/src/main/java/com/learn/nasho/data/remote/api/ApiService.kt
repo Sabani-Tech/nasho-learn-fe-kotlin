@@ -2,6 +2,7 @@ package com.learn.nasho.data.remote.api
 
 import com.learn.nasho.data.remote.response.CategoriesResponse
 import com.learn.nasho.data.remote.response.CategoryDetailResponse
+import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
@@ -12,6 +13,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -66,13 +68,16 @@ interface ApiService {
         @Path("id") categoryId: String
     ): Response<MaterialsResponse>
 
-//    @GET("v1/stories")
-//    suspend fun getAllStories(
-//        @Header("Authorization") token: String,
-//        @Query("page") page: Int = 1,
-//        @Query("size") size: Int = 20
-//    ): Response<StoryListResponse>
-//
+    @PUT("v1/user/category/{category_id}/status/{status_category}")
+    suspend fun updateStatus(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("category_id") categoryId: String,
+        @Path("status_category") status: String,
+    ): Response<GeneralResponse>
+
 //    @Multipart
 //    @POST("v1/stories")
 //    suspend fun uploadStory(

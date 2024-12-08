@@ -137,6 +137,50 @@ class MaterialRepositoryImpl(
             }
         }
 
+    override suspend fun updateStatus(
+        categoryId: String,
+        status: String
+    ): Flow<ResultState<GeneralResponse>> =
+        flow {
+            emit(ResultState.Loading)
+            try {
+                val token = getTokenAccess().first()
+                if (token.isBlank()) {
+                    emit(ResultState.Error("Token is empty, Re-Login"))
+                } else {
+                    val response =
+                        apiService.updateStatus(
+                            ApiConfig.getAuthHeader(token),
+                            Constants.PLATFORM,
+                            Constants.VERSION,
+                            Constants.CLIENT_KEY,
+                            categoryId,
+                            status
+                        )
+                    if (response.isSuccessful) {
+                        response.body()?.let { data ->
+                            if (data.error == true) {
+                                emit(ResultState.Error(data.message ?: "Unknown error"))
+                            } else {
+                                emit(ResultState.Success(data))
+                            }
+                        } ?: run {
+                            emit(ResultState.Error("Unknown error"))
+                        }
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        val errorResponse = errorBody?.let {
+                            Gson().fromJson(it, GeneralResponse::class.java)
+                        }
+                        emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(ResultState.Error(e.message.toString()))
+            }
+        }
+
     override suspend fun setMaterialReadStep(materialNumber: Int, step: Int): Flow<Boolean> {
         return if (materialNumber == 1) {
             dataStorePref.setMaterial1ReadStep(step = step)

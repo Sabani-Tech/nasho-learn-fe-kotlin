@@ -23,6 +23,7 @@ import com.learn.nasho.ui.adapters.RecyclerViewClickListener
 import com.learn.nasho.ui.viewmodels.material.CategoryDetailViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialReadViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
+import com.learn.nasho.ui.viewmodels.material.StatusViewModel
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
 
@@ -40,8 +41,13 @@ class MaterialListActivity : AppCompatActivity() {
     private val materialReadViewModel: MaterialReadViewModel by viewModels {
         factory
     }
+    private val statusViewModel: StatusViewModel by viewModels {
+        factory
+    }
 
     private val categoryId: MutableLiveData<String?> = MutableLiveData("")
+    private val lastPositionMaterial1: MutableLiveData<Int?> = MutableLiveData(0)
+    private val lastPositionMaterial2: MutableLiveData<Int?> = MutableLiveData(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -131,13 +137,14 @@ class MaterialListActivity : AppCompatActivity() {
             materialReadViewModel.getMaterialReadStep(materialNumber = 1)
                 .observe(this@MaterialListActivity) {
                     materialAdapterPhase1.setReadStepStatus(it)
-
+                    lastPositionMaterial1.postValue(it)
                     Log.d("MaterialListActivity", "onCreate: getMaterialReadStep: $it")
                 }
 
             materialReadViewModel.getMaterialReadStep(materialNumber = 2)
                 .observe(this@MaterialListActivity) {
                     materialAdapterPhase2.setReadStepStatus(it)
+                    lastPositionMaterial2.postValue(it)
                 }
 
             categoryDetailViewModel.categoryDetail.observe(this@MaterialListActivity) { resultState ->
@@ -168,42 +175,59 @@ class MaterialListActivity : AppCompatActivity() {
                                 binding.tvEmptyMaterial2.visibility = View.VISIBLE
                             }
 
-                            binding.layoutExam1.ivLearnStatus.visibility = if (resultData.exam1Status == true) View.VISIBLE else View.GONE
-                            binding.layoutExam2.ivLearnStatus.visibility = if (resultData.exam2Status == true) View.VISIBLE else View.GONE
-
                             when (resultData.status) {
                                 Status.MATERIAL1.type -> {
-                                    lockExam(binding.layoutExam1, true)
+                                    resultData.exam1Status?.let {
+                                        lockExam(binding.layoutExam1, true, it)
+                                    }
                                     materialAdapterPhase2.setLockItem(true)
-                                    lockExam(binding.layoutExam2, true)
+                                    resultData.exam2Status?.let {
+                                        lockExam(binding.layoutExam2, true, it)
+                                    }
 
                                 }
 
                                 Status.EXAM1.type -> {
-                                    lockExam(binding.layoutExam1, false)
+                                    resultData.exam1Status?.let {
+                                        lockExam(binding.layoutExam1, false, it)
+                                    }
                                     materialAdapterPhase2.setLockItem(true)
-                                    lockExam(binding.layoutExam2, true)
+                                    resultData.exam2Status?.let {
+                                        lockExam(binding.layoutExam2, true, it)
+                                    }
 
                                 }
 
                                 Status.MATERIAL2.type -> {
-                                    lockExam(binding.layoutExam1, false)
+                                    resultData.exam1Status?.let {
+                                        lockExam(binding.layoutExam1, false, it)
+                                    }
                                     materialAdapterPhase2.setLockItem(false)
-                                    lockExam(binding.layoutExam2, true)
+                                    resultData.exam2Status?.let {
+                                        lockExam(binding.layoutExam2, true, it)
+                                    }
 
                                 }
 
                                 Status.EXAM2.type -> {
-                                    lockExam(binding.layoutExam1, false)
+                                    resultData.exam1Status?.let {
+                                        lockExam(binding.layoutExam1, false, it)
+                                    }
                                     materialAdapterPhase2.setLockItem(false)
-                                    lockExam(binding.layoutExam2, false)
+                                    resultData.exam2Status?.let {
+                                        lockExam(binding.layoutExam2, false, it)
+                                    }
                                 }
 
                                 else -> {
                                     materialAdapterPhase1.setLockItem(true)
-                                    lockExam(binding.layoutExam1, true)
+                                    resultData.exam1Status?.let {
+                                        lockExam(binding.layoutExam1, true, it)
+                                    }
                                     materialAdapterPhase2.setLockItem(true)
-                                    lockExam(binding.layoutExam2, true)
+                                    resultData.exam2Status?.let {
+                                        lockExam(binding.layoutExam2, true, it)
+                                    }
                                 }
                             }
                         }
@@ -213,6 +237,36 @@ class MaterialListActivity : AppCompatActivity() {
                         Toast.makeText(
                             this@MaterialListActivity,
                             getString(R.string.material_failed, resultState.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {}
+                }
+            }
+
+            statusViewModel.status.observe(this@MaterialListActivity) { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
+
+                        val response = resultState.data
+                        val message = response.message
+
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@MaterialListActivity,
+                                getString(R.string.update_status_failed, message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.d(TAG, "onCreate: message: $message")
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        Toast.makeText(
+                            this@MaterialListActivity,
+                            getString(R.string.update_status_failed, resultState.message),
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -231,22 +285,45 @@ class MaterialListActivity : AppCompatActivity() {
     // Handle different list clicks based on the phase
     private fun handleItemClick(position: Int, phase: Int, type: String) {
 
-        materialReadViewModel.setMaterialReadStep(
-            materialNumber = phase,
-            step = position + 1
-        )
         // Do something different based on phase
         when (phase) {
             1 -> {
                 // Handle click for Phase 1 item
                 val data = materialAdapterPhase1.getItem(position)
+                val count = materialAdapterPhase1.itemCount
                 goToMaterialDetail(material = data, type = type)
+
+                if (lastPositionMaterial1.value!! < position + 1) {
+                    materialReadViewModel.setMaterialReadStep(
+                        materialNumber = phase,
+                        step = position + 1
+                    )
+                }
+
+                if (position == count - 1) {
+                    Log.d(TAG, "handleItemClick: masuk: last")
+                    categoryId.value?.let { statusViewModel.updateStatus(it, Status.EXAM1) }
+                }
+
             }
 
             2 -> {
                 // Handle click for Phase 2 item
                 val data = materialAdapterPhase2.getItem(position)
+                val count = materialAdapterPhase2.itemCount
                 goToMaterialDetail(material = data, type = type)
+
+                if (lastPositionMaterial2.value!! < position + 1) {
+                    materialReadViewModel.setMaterialReadStep(
+                        materialNumber = phase,
+                        step = position + 1
+                    )
+                }
+
+                if (position == count - 1) {
+                    Log.d(TAG, "handleItemClick: masuk: last")
+                    categoryId.value?.let { statusViewModel.updateStatus(it, Status.EXAM2) }
+                }
             }
         }
     }
@@ -258,7 +335,7 @@ class MaterialListActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun lockExam(item: ItemLayoutExamBinding, lock: Boolean) {
+    private fun lockExam(item: ItemLayoutExamBinding, lock: Boolean, status: Boolean) {
         if (lock) {
             item.llLearLock.root.visibility = View.VISIBLE
             item.itemView.isEnabled = false
@@ -266,7 +343,15 @@ class MaterialListActivity : AppCompatActivity() {
         } else {
             item.llLearLock.root.visibility = View.GONE
             item.itemView.isEnabled = true
-            item.ivLearnStatus.visibility = View.VISIBLE
+            if (status) {
+                item.ivLearnStatus.visibility = View.VISIBLE
+            } else {
+                item.ivLearnStatus.visibility = View.GONE
+            }
         }
+    }
+
+    companion object {
+        var TAG: String = MaterialListActivity::class.java.name
     }
 }
