@@ -25,6 +25,7 @@ import com.learn.nasho.ui.adapters.RecyclerViewClickListener
 import com.learn.nasho.ui.viewmodels.material.CategoryDetailViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialReadViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
+import com.learn.nasho.ui.viewmodels.material.QuestionListViewModel
 import com.learn.nasho.ui.viewmodels.material.StatusViewModel
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
@@ -44,6 +45,9 @@ class MaterialListActivity : AppCompatActivity() {
         factory
     }
     private val statusViewModel: StatusViewModel by viewModels {
+        factory
+    }
+    private val questionListViewModel: QuestionListViewModel by viewModels {
         factory
     }
 
@@ -131,15 +135,11 @@ class MaterialListActivity : AppCompatActivity() {
                 layoutExam2.tvExamDesc.text = getString(R.string.theory, data.type)
 
                 layoutExam1.itemView.setOnClickListener {
-                    Toast.makeText(this@MaterialListActivity, "Go to exam 1", Toast.LENGTH_SHORT)
-                        .show()
-                    goToQuizPage(1)
+                    categoryId.value?.let { id -> questionListViewModel.getExamQuestions(id, 1) }
                 }
 
                 layoutExam2.itemView.setOnClickListener {
-                    Toast.makeText(this@MaterialListActivity, "Go to exam 2", Toast.LENGTH_SHORT)
-                        .show()
-                    goToQuizPage(2)
+                    categoryId.value?.let { id -> questionListViewModel.getExamQuestions(id, 2) }
                 }
 
             }
@@ -284,6 +284,37 @@ class MaterialListActivity : AppCompatActivity() {
                     else -> {}
                 }
             }
+
+            questionListViewModel.questionExamList.observe(this@MaterialListActivity) { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
+
+                        val response = resultState.data
+                        val message = response.message
+
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@MaterialListActivity,
+                                getString(R.string.question_failed, message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
+                            goToExamPage(response)
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        Toast.makeText(
+                            this@MaterialListActivity,
+                            getString(R.string.question_failed, resultState.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {}
+                }
+            }
         }
     }
 
@@ -314,7 +345,6 @@ class MaterialListActivity : AppCompatActivity() {
                     Log.d(TAG, "handleItemClick: masuk: last")
                     categoryId.value?.let { statusViewModel.updateStatus(it, Status.EXAM1) }
                 }
-
             }
 
             2 -> {
@@ -358,13 +388,14 @@ class MaterialListActivity : AppCompatActivity() {
         val intent = Intent(this@MaterialListActivity, MaterialVideoActivity::class.java)
         intent.putExtra(Constants.MATERIAL_DATA, material)
         intent.putExtra(Constants.MATERIAL_TYPE, type)
+        intent.putExtra(Constants.CATEGORY_ID, categoryId.value)
         startActivity(intent)
     }
 
-    private fun goToQuizPage(phase: Int) {
+    private fun goToExamPage(data: QuestionListResponse) {
         val intent = Intent(this@MaterialListActivity, QuizActivity::class.java)
+        intent.putExtra(Constants.QUESTION_DATA, data)
         intent.putExtra(Constants.QUESTION_TYPE, QuestionType.EXAM.type)
-        intent.putExtra(Constants.EXAM_PHASE, phase)
         startActivity(intent)
     }
 

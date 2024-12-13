@@ -11,9 +11,11 @@ object Constants {
     val READ_MATERIAL1 = intPreferencesKey("material1_read_step")
     val READ_MATERIAL2 = intPreferencesKey("material2_read_step")
 
+    const val CATEGORY_ID = "id_category"
     const val CATEGORY_DATA = "data_category"
     const val MATERIAL_DATA = "data_material"
     const val MATERIAL_TYPE = "type_material"
+    const val QUESTION_DATA = "data_question"
     const val QUESTION_TYPE = "type_question"
     const val EXAM_PHASE = "phase_exam"
 
