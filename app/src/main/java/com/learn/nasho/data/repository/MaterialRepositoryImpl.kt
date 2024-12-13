@@ -182,7 +182,9 @@ class MaterialRepositoryImpl(
             }
         }
 
-    override suspend fun getQuestions(): Flow<ResultState<QuestionListResponse>> =
+    override suspend fun getExamQuestions(
+        categoryId: String, phase: Int
+    ): Flow<ResultState<QuestionListResponse>> =
         flow {
             emit(ResultState.Loading)
             try {
@@ -191,11 +193,54 @@ class MaterialRepositoryImpl(
                     emit(ResultState.Error("Token is empty, Re-Login"))
                 } else {
                     val response =
-                        apiService.getQuestions(
+                        apiService.getExamQuestions(
                             ApiConfig.getAuthHeader(token),
                             Constants.PLATFORM,
                             Constants.VERSION,
-                            Constants.CLIENT_KEY
+                            Constants.CLIENT_KEY,
+                            categoryId, phase
+                        )
+                    if (response.isSuccessful) {
+                        response.body()?.let { data ->
+                            if (data.error == true) {
+                                emit(ResultState.Error(data.message ?: "Unknown error"))
+                            } else {
+                                emit(ResultState.Success(data))
+                            }
+                        } ?: run {
+                            emit(ResultState.Error("Unknown error"))
+                        }
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        val errorResponse = errorBody?.let {
+                            Gson().fromJson(it, GeneralResponse::class.java)
+                        }
+                        emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(ResultState.Error(e.message.toString()))
+            }
+        }
+
+    override suspend fun getQuizQuestions(
+        categoryId: String, materialId: String
+    ): Flow<ResultState<QuestionListResponse>> =
+        flow {
+            emit(ResultState.Loading)
+            try {
+                val token = getTokenAccess().first()
+                if (token.isBlank()) {
+                    emit(ResultState.Error("Token is empty, Re-Login"))
+                } else {
+                    val response =
+                        apiService.getQuizQuestions(
+                            ApiConfig.getAuthHeader(token),
+                            Constants.PLATFORM,
+                            Constants.VERSION,
+                            Constants.CLIENT_KEY,
+                            categoryId, materialId
                         )
                     if (response.isSuccessful) {
                         response.body()?.let { data ->

@@ -14,19 +14,35 @@ import kotlinx.coroutines.launch
 
 class QuestionListViewModel(private val materialRepository: MaterialRepository) : ViewModel() {
 
-    private val _questionList: MutableLiveData<ResultState<QuestionListResponse>> =
+    private val _questionExamList: MutableLiveData<ResultState<QuestionListResponse>> =
         MutableLiveData(ResultState.Loading)
-    val questionList: LiveData<ResultState<QuestionListResponse>>
-        get() = _questionList
+    val questionExamList: LiveData<ResultState<QuestionListResponse>>
+        get() = _questionExamList
 
-    fun getQuestions() {
+    private val _questionQuizList: MutableLiveData<ResultState<QuestionListResponse>> =
+        MutableLiveData(ResultState.Loading)
+    val questionQuizList: LiveData<ResultState<QuestionListResponse>>
+        get() = _questionQuizList
+
+    fun getExamQuestions(categoryId: String, phase: Int) {
         viewModelScope.launch {
-            materialRepository.getQuestions()
-                .onStart { _questionList.postValue(ResultState.Loading) }
+            materialRepository.getExamQuestions(categoryId, phase)
+                .onStart { _questionExamList.postValue(ResultState.Loading) }
                 .catch { exception ->
-                    _questionList.postValue(ResultState.Error(exception.message.toString()))
+                    _questionExamList.postValue(ResultState.Error(exception.message.toString()))
                 }
-                .collectLatest { result -> _questionList.postValue(result) }
+                .collectLatest { result -> _questionExamList.postValue(result) }
+        }
+    }
+
+    fun getQuizQuestions(categoryId: String, materialId: String) {
+        viewModelScope.launch {
+            materialRepository.getQuizQuestions(categoryId, materialId)
+                .onStart { _questionQuizList.postValue(ResultState.Loading) }
+                .catch { exception ->
+                    _questionQuizList.postValue(ResultState.Error(exception.message.toString()))
+                }
+                .collectLatest { result -> _questionQuizList.postValue(result) }
         }
     }
 }

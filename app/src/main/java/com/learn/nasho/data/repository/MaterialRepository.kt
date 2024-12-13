@@ -13,7 +13,8 @@ interface MaterialRepository {
     suspend fun getCategoryDetailById(categoryId: String): Flow<ResultState<CategoryDetailResponse>>
     suspend fun getMaterialListByCategory(categoryId: String): Flow<ResultState<MaterialsResponse>>
     suspend fun updateStatus(categoryId: String, status:String): Flow<ResultState<GeneralResponse>>
-    suspend fun getQuestions(): Flow<ResultState<QuestionListResponse>>
+    suspend fun getExamQuestions(categoryId: String, phase: Int): Flow<ResultState<QuestionListResponse>>
+    suspend fun getQuizQuestions(categoryId: String, materialId: String): Flow<ResultState<QuestionListResponse>>
 
     suspend fun setMaterialReadStep(materialNumber: Int, step: Int): Flow<Boolean>
     fun getMaterialReadStep(materialNumber: Int): Flow<Int>

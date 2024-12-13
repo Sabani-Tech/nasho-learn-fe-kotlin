@@ -16,6 +16,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -79,12 +80,24 @@ interface ApiService {
         @Path("status_category") status: String,
     ): Response<GeneralResponse>
 
-    @GET("v1/user/soal")
-    suspend fun getQuestions(
+    @GET("v1/user/category/{category_id}/exam")
+    suspend fun getExamQuestions(
         @Header("Authorization") token: String,
         @Header("X-PLATFORM-NASHO") platform: String,
         @Header("X-VERSION-NASHO") version: String,
-        @Header("X-CLIENT-KEY-NASHO") clientKey: String
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("category_id") categoryId: String,
+        @Query("phase") phase: Int
+    ): Response<QuestionListResponse>
+
+    @GET("v1/user/category/{category_id}/materi/{materi_id}/quis")
+    suspend fun getQuizQuestions(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("category_id") categoryId: String,
+        @Path("materi_id") materialId: String
     ): Response<QuestionListResponse>
 
 //    @Multipart
