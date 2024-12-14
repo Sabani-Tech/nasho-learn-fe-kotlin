@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
 import com.learn.nasho.R
 import com.learn.nasho.data.remote.dto.AnswerDto
 import com.learn.nasho.data.remote.dto.Option
@@ -119,6 +120,8 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
     private fun finishQuiz() {
         // FIXME Submit data to server
+        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
+
         Toast.makeText(
             this@QuizActivity,
             "Finish size data: ${answerList.value?.size}",
@@ -148,9 +151,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
                 val answer = AnswerDto(
                     id = currentData.id,
-                    title = currentData.title,
                     point = currentData.point,
-                    question = currentData.question,
                     answer = selected
                 )
                 addAnswerToList(answer)
