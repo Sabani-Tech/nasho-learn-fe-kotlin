@@ -56,6 +56,13 @@
     <color name="Error900">#7A0C2D</color>
 
 
+    <color name="option_activate_text">#384250</color>
+    <color name="option_activate_stroke_selected">#55C2BE</color>
+    <color name="option_activate_selected">#CEF4F1</color>
+    <color name="option_deactivate_text">#384250</color>
+    <color name="option_deactivate_stroke_selected">#D0D0D0</color>
+    <color name="option_deactivate_selected">#FCFCFD</color>
+
     <color name="bg_shimmer">#BFBFBF</color>
     <color name="bg_lock_color">#CC828282</color>
     <color name="green_main_color">#015869</color>

@@ -83,4 +83,5 @@
     <string name="end_exam">Ujian Akhir</string>
     <string name="theory">Teori %1$s</string>
     <string name="next">Lanjut</string>
+    <string name="finish">Selesai</string>
 </resources>

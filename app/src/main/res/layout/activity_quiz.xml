@@ -75,9 +75,8 @@
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
                 app:cardBackgroundColor="#F1F5F9"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -85,159 +84,118 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_counter">
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/quizShimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="204dp"
-                    android:elevation="3dp"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/shimmer_layout" />
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:id="@+id/questionContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="16dp">
 
                     <TextView
                         android:id="@+id/tvTitleSoal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="16dp"
                         android:fontFamily="@font/manrope_medium"
                         android:text="@string/question_title"
                         android:textColor="#111927"
-                        android:textSize="12sp"
-                        android:visibility="invisible"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tvSoalQuiz"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="72dp"
                         android:fontFamily="@font/manrope_semibold"
-                        android:gravity="start"
+                        android:textColor="#111927"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.498"
-                        app:layout_constraintStart_toStartOf="@+id/tvTitleSoal"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTitleSoal"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvListAnswers"
-                android:layout_width="409dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                tools:itemCount="2"
-                tools:listitem="@layout/answer_shimmer_layout" />
-
-            <FrameLayout
-                android:id="@+id/ModeTrueFalse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                tools:visibility="visible">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <Button
-                        android:id="@+id/btnTrue"
-                        android:layout_width="0dp"
-                        android:layout_height="59dp"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="24dp"
-                        android:backgroundTint="#FCFCFD"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/true_text"
-                        android:textColor="#384250"
-                        android:textSize="20sp"
-                        app:cornerRadius="12dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/btnFalse"
-                        android:layout_width="0dp"
-                        android:layout_height="59dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="6dp"
-                        android:backgroundTint="#FCFCFD"
-                        android:fontFamily="@font/manrope_bold"
-                        android:text="@string/false_text"
-                        android:textColor="#384250"
-                        android:textSize="20sp"
-                        app:cornerRadius="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/btnTrue"
-                        app:layout_constraintStart_toStartOf="@+id/btnTrue"
-                        app:layout_constraintTop_toBottomOf="@+id/btnTrue" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/quizAnswerShimmer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="3dp"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rvListAnswers"
-                tools:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/answer_shimmer_layout" />
-
-                    <include layout="@layout/answer_shimmer_layout" />
-
-                    <include layout="@layout/answer_shimmer_layout" />
-
-                    <include layout="@layout/answer_shimmer_layout" />
-
+                        tools:text="Lorem ipsum dolor sit amet consectetur. Sagittis netus enim elit at in auctor. Pellentesque faucibus lacus in mi." />
 
                 </LinearLayout>
-            </com.facebook.shimmer.ShimmerFrameLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_option_one"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/option_deactivate_text"
+                android:textSize="16sp"
+                app:backgroundTint="@color/option_deactivate_selected"
+                app:cornerRadius="12dp"
+                app:elevation="4dp"
+                app:strokeColor="@color/option_deactivate_stroke_selected"
+                app:strokeWidth="1dp"
+                tools:text="@tools:sample/lorem" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_option_two"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/option_deactivate_text"
+                android:textSize="16sp"
+                app:backgroundTint="@color/option_deactivate_selected"
+                app:cornerRadius="12dp"
+                app:elevation="4dp"
+                app:strokeColor="@color/option_deactivate_stroke_selected"
+                app:strokeWidth="1dp"
+                tools:text="@tools:sample/lorem" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_option_three"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/option_deactivate_text"
+                android:textSize="16sp"
+                app:backgroundTint="@color/option_deactivate_selected"
+                app:cornerRadius="12dp"
+                app:elevation="4dp"
+                app:strokeColor="@color/option_deactivate_stroke_selected"
+                app:strokeWidth="1dp"
+                tools:text="@tools:sample/lorem" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_option_four"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/manrope_bold"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/option_deactivate_text"
+                android:textSize="16sp"
+                app:backgroundTint="@color/option_deactivate_selected"
+                app:cornerRadius="12dp"
+                app:elevation="4dp"
+                app:strokeColor="@color/option_deactivate_stroke_selected"
+                app:strokeWidth="1dp"
+                tools:text="@tools:sample/lorem" />
+
+
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCheckAnswer"
+        android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="24dp"
+        android:enabled="false"
         android:fontFamily="@font/manrope_bold"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:text="Periksa Jawaban"
-        android:textColor="#FFFFFF"
+        android:text="@string/next"
+        android:textColor="@color/Gray300"
         android:textSize="16sp"
-        app:backgroundTint="#C4C4C4"
-        app:strokeWidth="0dp" />
+        app:backgroundTint="@color/Gray100" />
 
 </LinearLayout>
