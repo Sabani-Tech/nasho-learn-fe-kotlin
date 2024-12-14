@@ -99,7 +99,8 @@
                         android:fontFamily="@font/manrope_medium"
                         android:text="@string/question_title"
                         android:textColor="#111927"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvSoalQuiz"
@@ -109,6 +110,17 @@
                         android:textColor="#111927"
                         android:textSize="18sp"
                         tools:text="Lorem ipsum dolor sit amet consectetur. Sagittis netus enim elit at in auctor. Pellentesque faucibus lacus in mi." />
+
+                    <TextView
+                        android:id="@+id/tvPoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:fontFamily="@font/manrope_medium"
+                        android:textColor="#015869"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="10 Poin" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
