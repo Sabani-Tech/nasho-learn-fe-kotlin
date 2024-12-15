@@ -1,14 +1,18 @@
 package com.learn.nasho.data.remote.api
 
+import com.learn.nasho.data.remote.dto.AnswerDto
 import com.learn.nasho.data.remote.response.CategoriesResponse
 import com.learn.nasho.data.remote.response.CategoryDetailResponse
+import com.learn.nasho.data.remote.response.CorrectionResponse
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
 import com.learn.nasho.data.remote.response.QuestionListResponse
+import com.learn.nasho.data.remote.response.QuizDiscussionResponse
 import com.learn.nasho.data.remote.response.RegisterResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -99,6 +103,48 @@ interface ApiService {
         @Path("category_id") categoryId: String,
         @Path("materi_id") materialId: String
     ): Response<QuestionListResponse>
+
+    @POST("v1/user/category/{category_id}/materi/{materi_id}/quis")
+    suspend fun submitQuiz(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("category_id") categoryId: String,
+        @Path("materi_id") materialId: String,
+        @Body quiz: List<AnswerDto>
+    ): Response<CorrectionResponse>
+
+    @POST("v1/user/category/{category_id}/exam")
+    suspend fun submitExam(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("category_id") categoryId: String,
+        @Query("phase") phase: Int,
+        @Body exam: List<AnswerDto>
+    ): Response<CorrectionResponse>
+
+    @GET("v1/user/category/{category_id}/exam")
+    suspend fun getExamDiscussion(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("category_id") categoryId: String,
+        @Query("phase") phase: Int
+    ): Response<QuizDiscussionResponse>
+
+    @GET("v1/user/category/{category_id}/materi/{materi_id}/quis")
+    suspend fun getQuizDiscussion(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("category_id") categoryId: String,
+        @Path("materi_id") materialId: String
+    ): Response<QuizDiscussionResponse>
 
 //    @Multipart
 //    @POST("v1/stories")
