@@ -1,5 +1,6 @@
 package com.learn.nasho.ui.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.learn.nasho.R
+import com.learn.nasho.data.enums.QuestionType
 import com.learn.nasho.data.remote.dto.AnswerDto
+import com.learn.nasho.data.remote.dto.CorrectionDto
 import com.learn.nasho.data.remote.dto.Option
 import com.learn.nasho.data.remote.dto.QuestionDto
 import com.learn.nasho.data.remote.response.QuestionListResponse
@@ -62,6 +65,10 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
             btnNext.setOnClickListener(this@QuizActivity)
         }
+
+        // Return Submit Question
+        // goToQuizResult(type, data)
+
     }
 
     override fun onClick(view: View) {
@@ -120,14 +127,18 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
     private fun finishQuiz() {
         // FIXME Submit data to server
-        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
+//        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
+        // Submit data answerList.value
 
-        Toast.makeText(
-            this@QuizActivity,
-            "Finish size data: ${answerList.value?.size}",
-            Toast.LENGTH_SHORT
-        ).show()
+        startActivity(Intent(this@QuizActivity, QuizResultActivity::class.java))
         finish()
+    }
+
+    private fun goToQuizResult(type: String, data: CorrectionDto) {
+        val intent = Intent(this@QuizActivity, QuizResultActivity::class.java)
+        intent.putExtra(Constants.CORRECTION_DATA, data)
+        intent.putExtra(Constants.QUESTION_TYPE, type)
+        startActivity(intent)
     }
 
     private fun parseButtonTextToOption(buttonText: String): Option {

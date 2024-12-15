@@ -84,4 +84,7 @@
     <string name="theory">Teori %1$s</string>
     <string name="next">Lanjut</string>
     <string name="finish">Selesai</string>
+    <string name="back">Kembali</string>
+    <string name="discussion_right_answer">Jadi, kunci jawaban yang tepat adalah</string>
+    <string name="discussion_answer">Jawaban kamu adalah ...</string>
 </resources>

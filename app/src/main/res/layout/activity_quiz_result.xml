@@ -8,16 +8,18 @@
     tools:context=".ui.views.QuizResultActivity">
 
     <TextView
+        android:id="@+id/tv_result_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/manrope_bold"
-        android:text="@string/quiz_result"
         android:textColor="#384250"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:text="@string/quiz_result" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -123,13 +125,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="35dp"
                 android:fontFamily="@font/manrope"
                 android:text="@string/motivational_sentences_2"
                 android:textColor="#015869"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
                 app:layout_constraintStart_toStartOf="@+id/tv_quiz_grade"
                 app:layout_constraintTop_toBottomOf="@+id/tv_quiz_grade" />
 
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="-20dp"
@@ -199,7 +204,7 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_true_label" />
 
                     <TextView
-                        android:id="@+id/tvJumlahSalah"
+                        android:id="@+id/tv_false_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/manrope_medium"
