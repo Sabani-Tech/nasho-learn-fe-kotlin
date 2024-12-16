@@ -3,7 +3,7 @@ package com.learn.nasho.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class AnswerDto(
-    @field:SerializedName("id")
+    @field:SerializedName("quis_id")
     val id: String? = null,
 
     @field:SerializedName("point")
