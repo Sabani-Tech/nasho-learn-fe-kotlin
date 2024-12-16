@@ -33,7 +33,7 @@ class MaterialAdapter(
                 append("Materi ")
                 append(position + 1)
             }
-            tvMaterialDesc.text = data.title
+            tvMaterialDesc.text = data.title?.trim()
 
             itemView.setOnClickListener {
                 onItemClickCallback.onItemClicked(position)
