@@ -13,5 +13,10 @@ data class AnswerDto(
     val batch: Int? = null,
 
     @field:SerializedName("answer")
-    val answer: Option? = null,
+    val answer: AnswerKey? = null,
+)
+
+data class AnswerKey(
+    @field:SerializedName("key")
+    val key: String? = null,
 )

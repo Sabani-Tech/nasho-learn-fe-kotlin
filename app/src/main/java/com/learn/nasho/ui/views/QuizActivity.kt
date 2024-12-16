@@ -16,6 +16,7 @@ import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.QuestionType
 import com.learn.nasho.data.remote.dto.AnswerDto
+import com.learn.nasho.data.remote.dto.AnswerKey
 import com.learn.nasho.data.remote.dto.CorrectionDto
 import com.learn.nasho.data.remote.dto.Option
 import com.learn.nasho.data.remote.dto.QuestionDto
@@ -42,7 +43,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
     }
 
     private val currentIndex: MutableLiveData<Int> = MutableLiveData(0)
-    private val selectedAnswer: MutableLiveData<Option> = MutableLiveData(Option())
+    private val selectedAnswer: MutableLiveData<AnswerKey> = MutableLiveData(AnswerKey())
     private val answerList: MutableLiveData<List<AnswerDto>> = MutableLiveData(ArrayList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -245,16 +246,16 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         startActivity(intent)
     }
 
-    private fun parseButtonTextToOption(buttonText: String): Option {
+    private fun parseButtonTextToOption(buttonText: String): AnswerKey {
         // Asumsikan format "A. Pilihan 1"
         val parts = buttonText.split(". ", limit = 2)
         return if (parts.size == 2) {
-            Option(
+            AnswerKey(
                 key = parts[0].trim(),
-                value = parts[1].trim()
+//                value = parts[1].trim()
             )
         } else {
-            Option() // Kembalikan default Option jika format tidak sesuai
+            AnswerKey() // Kembalikan default Option jika format tidak sesuai
         }
     }
 
