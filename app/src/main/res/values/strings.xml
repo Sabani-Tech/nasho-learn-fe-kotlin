@@ -87,4 +87,5 @@
     <string name="back">Kembali</string>
     <string name="discussion_right_answer">Jadi, kunci jawaban yang tepat adalah</string>
     <string name="discussion_answer">Jawaban kamu adalah ...</string>
+    <string name="discussion">Pembahasan</string>
 </resources>
