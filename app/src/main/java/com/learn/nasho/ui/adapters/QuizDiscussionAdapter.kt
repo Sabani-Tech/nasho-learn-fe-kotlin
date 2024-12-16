@@ -9,9 +9,10 @@ import com.learn.nasho.data.remote.dto.QuizDiscussionDto
 import com.learn.nasho.databinding.ItemLayoutDiscussionBinding
 import java.util.Locale
 
-class QuizDiscussionAdapter() : RecyclerView.Adapter<QuizDiscussionAdapter.MyViewHolder>() {
+class QuizDiscussionAdapter(private var disscussionData: List<QuizDiscussionDto>) :
+    RecyclerView.Adapter<QuizDiscussionAdapter.MyViewHolder>() {
 
-    private var oldList = emptyList<QuizDiscussionDto>()
+//    private var oldList = emptyList<QuizDiscussionDto>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
@@ -21,7 +22,7 @@ class QuizDiscussionAdapter() : RecyclerView.Adapter<QuizDiscussionAdapter.MyVie
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val data = oldList[position]
+        val data = disscussionData[position]
         with(holder.binding) {
             tvNo.text = String.format(Locale.getDefault(), "No. %d", (position + 1))
             tvPoint.text = String.format(Locale.getDefault(), "%d poin", data.point)
@@ -75,17 +76,17 @@ class QuizDiscussionAdapter() : RecyclerView.Adapter<QuizDiscussionAdapter.MyVie
     }
 
     override fun getItemCount(): Int {
-        return oldList.size
+        return disscussionData.size
     }
 
     fun getItem(index: Int): QuizDiscussionDto {
-        return oldList[index]
+        return disscussionData[index]
     }
 
-    fun setItems(newList: List<QuizDiscussionDto>) {
-        oldList = newList
-        notifyDataSetChanged()
-    }
+//    fun setItems(newList: List<QuizDiscussionDto>) {
+//        oldList = newList
+//        notifyDataSetChanged()
+//    }
 
     class MyViewHolder(val binding: ItemLayoutDiscussionBinding) :
         RecyclerView.ViewHolder(binding.root)

@@ -54,6 +54,7 @@ class MaterialListActivity : AppCompatActivity() {
     private val categoryId: MutableLiveData<String?> = MutableLiveData("")
     private val lastPositionMaterial1: MutableLiveData<Int?> = MutableLiveData(0)
     private val lastPositionMaterial2: MutableLiveData<Int?> = MutableLiveData(0)
+    private val currentPhase: MutableLiveData<Int?> = MutableLiveData(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,11 +136,19 @@ class MaterialListActivity : AppCompatActivity() {
                 layoutExam2.tvExamDesc.text = getString(R.string.theory, data.type)
 
                 layoutExam1.itemView.setOnClickListener {
-                    categoryId.value?.let { id -> questionListViewModel.getExamQuestions(id, 1) }
+                    val phase = 1
+                    currentPhase.value = phase
+                    categoryId.value?.let { id ->
+                        questionListViewModel.getExamQuestions(id, phase)
+                    }
                 }
 
                 layoutExam2.itemView.setOnClickListener {
-                    categoryId.value?.let { id -> questionListViewModel.getExamQuestions(id, 2) }
+                    val phase = 2
+                    currentPhase.value = phase
+                    categoryId.value?.let { id ->
+                        questionListViewModel.getExamQuestions(id, phase)
+                    }
                 }
 
             }
@@ -396,6 +405,8 @@ class MaterialListActivity : AppCompatActivity() {
         val intent = Intent(this@MaterialListActivity, QuizActivity::class.java)
         intent.putExtra(Constants.QUESTION_DATA, data)
         intent.putExtra(Constants.QUESTION_TYPE, QuestionType.EXAM.type)
+        intent.putExtra(Constants.CATEGORY_ID, categoryId.value)
+        intent.putExtra(Constants.EXAM_PHASE, currentPhase.value)
         startActivity(intent)
     }
 

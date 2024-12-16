@@ -13,10 +13,12 @@ object Constants {
 
     const val CATEGORY_ID = "id_category"
     const val CATEGORY_DATA = "data_category"
+    const val MATERIAL_ID = "id_material"
     const val MATERIAL_DATA = "data_material"
     const val MATERIAL_TYPE = "type_material"
     const val QUESTION_DATA = "data_question"
     const val CORRECTION_DATA = "data_correction"
+    const val DISCUSSION_DATA = "data_discussion"
     const val QUESTION_TYPE = "type_question"
     const val EXAM_PHASE = "phase_exam"
 

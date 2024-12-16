@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -24,7 +21,6 @@ import com.learn.nasho.data.remote.response.QuestionListResponse
 import com.learn.nasho.databinding.ActivityMaterialVideoBinding
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
 import com.learn.nasho.ui.viewmodels.material.QuestionListViewModel
-import com.learn.nasho.ui.views.MaterialListActivity.Companion.TAG
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
 
@@ -77,36 +73,39 @@ class MaterialVideoActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
 
-        questionListViewModel.questionQuizList.observe(this@MaterialVideoActivity) { resultState ->
-            when (resultState) {
-                is ResultState.Success -> {
 
-                    val response = resultState.data
-                    val message = response.message
+            questionListViewModel.questionQuizList.observe(this@MaterialVideoActivity) { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
 
-                    if (response.error == true) {
+                        val response = resultState.data
+                        val message = response.message
+
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@MaterialVideoActivity,
+                                getString(R.string.question_failed, message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
+                            if (categoryId != null && data.id != null) {
+                                goToQuizPage(response, categoryId, data.id)
+                            }
+                        }
+                    }
+
+                    is ResultState.Error -> {
                         Toast.makeText(
                             this@MaterialVideoActivity,
-                            getString(R.string.question_failed, message),
+                            getString(R.string.question_failed, resultState.message),
                             Toast.LENGTH_LONG
                         ).show()
-                    } else {
-                        Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
-                        goToQuizPage(response)
                     }
-                }
 
-                is ResultState.Error -> {
-                    Toast.makeText(
-                        this@MaterialVideoActivity,
-                        getString(R.string.question_failed, resultState.message),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    else -> {}
                 }
-
-                else -> {}
             }
         }
     }
@@ -164,30 +163,36 @@ class MaterialVideoActivity : AppCompatActivity() {
             }
         }
 
-        webView.webViewClient = object : WebViewClient() {
-            override fun onReceivedError(
-                view: WebView?,
-                request: WebResourceRequest?,
-                error: WebResourceError?
-            ) {
-                // Jika terjadi error saat memuat halaman, sembunyikan WebView
-                webView.visibility = View.GONE
-                // Tampilkan pesan kesalahan
-                binding.tvDescMaterial.text = "Webpage not available"
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-            }
-        }
+//        webView.webViewClient = object : WebViewClient() {
+//            override fun onReceivedError(
+//                view: WebView?,
+//                request: WebResourceRequest?,
+//                error: WebResourceError?
+//            ) {
+//                // Jika terjadi error saat memuat halaman, sembunyikan WebView
+//                webView.visibility = View.GONE
+//                // Tampilkan pesan kesalahan
+//                binding.tvDescMaterial.text = "Webpage not available"
+//            }
+//
+//            override fun onPageFinished(view: WebView?, url: String?) {
+//                super.onPageFinished(view, url)
+//            }
+//        }
 
         webView.loadUrl(videoLink)
     }
 
-    private fun goToQuizPage(data: QuestionListResponse) {
+    private fun goToQuizPage(data: QuestionListResponse, categoryId: String, materialId: String) {
         val intent = Intent(this@MaterialVideoActivity, QuizActivity::class.java)
         intent.putExtra(Constants.QUESTION_DATA, data)
         intent.putExtra(Constants.QUESTION_TYPE, QuestionType.QUIZ.type)
+        intent.putExtra(Constants.CATEGORY_ID, categoryId)
+        intent.putExtra(Constants.MATERIAL_ID, materialId)
         startActivity(intent)
+    }
+
+    companion object {
+        var TAG: String = MaterialVideoActivity::class.java.name
     }
 }

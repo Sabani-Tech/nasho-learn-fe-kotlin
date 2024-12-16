@@ -7,12 +7,13 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.button.MaterialButton
-import com.google.gson.Gson
 import com.learn.nasho.R
+import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.QuestionType
 import com.learn.nasho.data.remote.dto.AnswerDto
 import com.learn.nasho.data.remote.dto.CorrectionDto
@@ -20,15 +21,25 @@ import com.learn.nasho.data.remote.dto.Option
 import com.learn.nasho.data.remote.dto.QuestionDto
 import com.learn.nasho.data.remote.response.QuestionListResponse
 import com.learn.nasho.databinding.ActivityQuizBinding
+import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
+import com.learn.nasho.ui.viewmodels.material.SubmitViewModel
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
-import java.util.ArrayList
 import java.util.Locale
 
 class QuizActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var binding: ActivityQuizBinding
     private lateinit var data: List<QuestionDto>
+    private var type: String? = null
+    private var categoryId: String? = null
+    private var materialId: String? = null
+    private var phase: Int = 0
+
+    private lateinit var factory: MaterialViewModelFactory
+    private val submitViewModel: SubmitViewModel by viewModels {
+        factory
+    }
 
     private val currentIndex: MutableLiveData<Int> = MutableLiveData(0)
     private val selectedAnswer: MutableLiveData<Option> = MutableLiveData(Option())
@@ -46,7 +57,11 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         })
 
         val resp: QuestionListResponse? = intent.parcelable(Constants.QUESTION_DATA)
-        val type: String? = intent.getStringExtra(Constants.QUESTION_TYPE)
+        type = intent.getStringExtra(Constants.QUESTION_TYPE)
+        categoryId = intent.getStringExtra(Constants.CATEGORY_ID)
+        materialId = intent.getStringExtra(Constants.MATERIAL_ID)
+        phase = intent.getIntExtra(Constants.EXAM_PHASE, 0)
+
         resp?.let {
 
             Log.d(TAG, "onCreate: data size: ${it.data?.size}")
@@ -69,6 +84,74 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         // Return Submit Question
         // goToQuizResult(type, data)
 
+        submitViewModel.submitQuizQuestion.observe(this@QuizActivity) { resultState ->
+            when (resultState) {
+                is ResultState.Success -> {
+
+                    val response = resultState.data
+                    val message = response.message
+
+                    if (response.error == true) {
+                        Toast.makeText(
+                            this@QuizActivity,
+                            getString(R.string.submit_failed, message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Log.d(TAG, "onCreate: message: $message")
+                        val correctionData = response.data!!
+                        type?.let { typeQuestion ->
+                            goToQuizResult(typeQuestion, correctionData)
+                        }
+                    }
+                }
+
+                is ResultState.Error -> {
+                    Toast.makeText(
+                        this@QuizActivity,
+                        getString(R.string.submit_failed, resultState.message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {}
+            }
+        }
+
+        submitViewModel.submitExamQuestion.observe(this@QuizActivity) { resultState ->
+            when (resultState) {
+                is ResultState.Success -> {
+
+                    val response = resultState.data
+                    val message = response.message
+
+                    if (response.error == true) {
+                        Toast.makeText(
+                            this@QuizActivity,
+                            getString(R.string.submit_failed, message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Log.d(TAG, "onCreate: message: $message")
+                        val correctionData = response.data!!
+                        type?.let { typeQuestion ->
+                            goToQuizResult(typeQuestion, correctionData)
+
+                        }
+                    }
+                }
+
+                is ResultState.Error -> {
+                    Toast.makeText(
+                        this@QuizActivity,
+                        getString(R.string.submit_failed, resultState.message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {}
+            }
+        }
     }
 
     override fun onClick(view: View) {
@@ -129,6 +212,24 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         // FIXME Submit data to server
 //        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
         // Submit data answerList.value
+
+        type?.let { typeQuestion ->
+            when (typeQuestion) {
+                QuestionType.QUIZ.type -> {
+                    answerList.value?.let { data ->
+                        submitViewModel.submitQuiz(categoryId!!, materialId!!, data)
+                    }
+                }
+
+                QuestionType.EXAM.type -> {
+                    answerList.value?.let { data ->
+                        submitViewModel.submitExam(categoryId!!, phase, data)
+                    }
+                }
+
+                else -> {}
+            }
+        }
 
         startActivity(Intent(this@QuizActivity, QuizResultActivity::class.java))
         finish()
