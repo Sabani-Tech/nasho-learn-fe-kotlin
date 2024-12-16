@@ -28,7 +28,7 @@ class QuizDiscussionAdapter(private var disscussionData: List<QuizDiscussionDto>
             tvPoint.text = String.format(Locale.getDefault(), "%d poin", data.point)
             tvQuestion.text = data.question
 
-            tvRightAnswerKey.text = data.rightAnswer?.key
+            btnRightAnswerKey.text = data.rightAnswer?.key
             tvRightAnswerValue.text = data.rightAnswer?.value
 
             val isCorrect = data.point!! > 0
