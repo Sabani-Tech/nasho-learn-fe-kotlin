@@ -247,6 +247,9 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         val intent = Intent(this@QuizActivity, QuizResultActivity::class.java)
         intent.putExtra(Constants.CORRECTION_DATA, data)
         intent.putExtra(Constants.QUESTION_TYPE, type)
+        intent.putExtra(Constants.CATEGORY_ID, categoryId)
+        intent.putExtra(Constants.MATERIAL_ID, materialId)
+        intent.putExtra(Constants.EXAM_PHASE, phase)
         startActivity(intent)
         finish()
     }

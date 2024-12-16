@@ -28,6 +28,12 @@ class QuizResultActivity : AppCompatActivity() {
         factory
     }
 
+
+    private var type: String? = null
+    private var categoryId: String? = null
+    private var materialId: String? = null
+    private var phase: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,10 +43,12 @@ class QuizResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val data: CorrectionDto? = intent.parcelable(Constants.CORRECTION_DATA)
-        val type = intent.getStringExtra(Constants.QUESTION_TYPE)
-        val categoryId = intent.getStringExtra(Constants.CATEGORY_ID)
-        val materialId = intent.getStringExtra(Constants.MATERIAL_ID)
-        val phase = intent.getIntExtra(Constants.EXAM_PHASE, 0)
+        type = intent.getStringExtra(Constants.QUESTION_TYPE)
+        categoryId = intent.getStringExtra(Constants.CATEGORY_ID)
+        materialId = intent.getStringExtra(Constants.MATERIAL_ID)
+        phase = intent.getIntExtra(Constants.EXAM_PHASE, 0)
+
+        Log.d(TAG, "onCreate: categoryId: $categoryId materialId: $materialId phase: $phase")
 
         binding.apply {
             tvResultLabel.text = String.format(Locale.getDefault(), "Hasil %s", type)
@@ -177,6 +185,9 @@ class QuizResultActivity : AppCompatActivity() {
         val intent = Intent(this@QuizResultActivity, QuizDiscussionActivity::class.java)
         intent.putExtra(Constants.DISCUSSION_DATA, data)
         intent.putExtra(Constants.QUESTION_TYPE, type)
+        intent.putExtra(Constants.CATEGORY_ID, categoryId)
+        intent.putExtra(Constants.MATERIAL_ID, materialId)
+        intent.putExtra(Constants.EXAM_PHASE, phase)
         startActivity(intent)
         finish()
     }
