@@ -47,6 +47,9 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        factory = MaterialViewModelFactory.getInstance(this@QuizActivity)
+
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
