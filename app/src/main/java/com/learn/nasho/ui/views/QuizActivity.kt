@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
 import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.QuestionType
@@ -101,6 +102,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                             getString(R.string.submit_failed, message),
                             Toast.LENGTH_LONG
                         ).show()
+                        currentIndex.value = currentIndex.value?.minus(1)
                     } else {
                         Log.d(TAG, "onCreate: message: $message")
                         val correctionData = response.data!!
@@ -116,6 +118,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                         getString(R.string.submit_failed, resultState.message),
                         Toast.LENGTH_LONG
                     ).show()
+                    currentIndex.value = currentIndex.value?.minus(1)
                 }
 
                 else -> {}
@@ -135,12 +138,12 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                             getString(R.string.submit_failed, message),
                             Toast.LENGTH_LONG
                         ).show()
+                        currentIndex.value = currentIndex.value?.minus(1)
                     } else {
                         Log.d(TAG, "onCreate: message: $message")
                         val correctionData = response.data!!
                         type?.let { typeQuestion ->
                             goToQuizResult(typeQuestion, correctionData)
-
                         }
                     }
                 }
@@ -151,6 +154,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                         getString(R.string.submit_failed, resultState.message),
                         Toast.LENGTH_LONG
                     ).show()
+                    currentIndex.value = currentIndex.value?.minus(1)
                 }
 
                 else -> {}
@@ -184,25 +188,25 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
     private fun showQuestions(index: Int) {
         binding.apply {
 
-            if (index == data.size) {
+            if (index >= data.size) {
                 finishQuiz()
                 return
-            }
+            } else {
+                val currentData = data[index]
+                tvQuizTitle.text = currentData.title
+                tvQuestPage.text =
+                    String.format(Locale.getDefault(), "Soal %s/%s", (index + 1), data.size)
+                tvSoalQuiz.text = currentData.question
+                tvPoint.text = String.format(Locale.getDefault(), "%d Point", currentData.point)
 
-            val currentData = data[index]
-            tvQuizTitle.text = currentData.title
-            tvQuestPage.text =
-                String.format(Locale.getDefault(), "Soal %s/%s", (index + 1), data.size)
-            tvSoalQuiz.text = currentData.question
-            tvPoint.text = String.format(Locale.getDefault(), "%d Point", currentData.point)
+                btnOptionOne.text = currentData.option?.let { getCurrentOption(it, 0) }
+                btnOptionTwo.text = currentData.option?.let { getCurrentOption(it, 1) }
+                btnOptionThree.text = currentData.option?.let { getCurrentOption(it, 2) }
+                btnOptionFour.text = currentData.option?.let { getCurrentOption(it, 3) }
 
-            btnOptionOne.text = currentData.option?.let { getCurrentOption(it, 0) }
-            btnOptionTwo.text = currentData.option?.let { getCurrentOption(it, 1) }
-            btnOptionThree.text = currentData.option?.let { getCurrentOption(it, 2) }
-            btnOptionFour.text = currentData.option?.let { getCurrentOption(it, 3) }
-
-            if ((currentIndex.value?.plus(1)) == data.size) {
-                btnNext.text = getString(R.string.finish)
+                if ((currentIndex.value?.plus(1)) == data.size) {
+                    btnNext.text = getString(R.string.finish)
+                }
             }
         }
     }
@@ -214,7 +218,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
     private fun finishQuiz() {
         // FIXME Submit data to server
-//        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
+        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
         // Submit data answerList.value
 
         type?.let { typeQuestion ->
@@ -235,8 +239,8 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
             }
         }
 
-        startActivity(Intent(this@QuizActivity, QuizResultActivity::class.java))
-        finish()
+//        startActivity(Intent(this@QuizActivity, QuizResultActivity::class.java))
+//        finish()
     }
 
     private fun goToQuizResult(type: String, data: CorrectionDto) {
@@ -244,6 +248,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         intent.putExtra(Constants.CORRECTION_DATA, data)
         intent.putExtra(Constants.QUESTION_TYPE, type)
         startActivity(intent)
+        finish()
     }
 
     private fun parseButtonTextToOption(buttonText: String): AnswerKey {
