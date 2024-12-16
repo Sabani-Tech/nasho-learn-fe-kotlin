@@ -24,5 +24,5 @@ object Constants {
 
     const val PLATFORM = "mobile"
     const val VERSION = "1.0"
-    const val CLIENT_KEY = "c837d594-ed49-45a1-a3ea-667f4105352e"
+    const val CLIENT_KEY = "d40056ba-fc84-4a19-9cea-50cf3beeb658"
 }
