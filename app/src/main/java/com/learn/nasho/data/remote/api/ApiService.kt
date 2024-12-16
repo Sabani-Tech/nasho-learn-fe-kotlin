@@ -126,7 +126,7 @@ interface ApiService {
         @Body exam: List<AnswerDto>
     ): Response<CorrectionResponse>
 
-    @GET("v1/user/category/{category_id}/exam")
+    @GET("v1/user/category/{category_id}/exam/result")
     suspend fun getExamDiscussion(
         @Header("Authorization") token: String,
         @Header("X-PLATFORM-NASHO") platform: String,
@@ -136,7 +136,7 @@ interface ApiService {
         @Query("phase") phase: Int
     ): Response<QuizDiscussionResponse>
 
-    @GET("v1/user/category/{category_id}/materi/{materi_id}/quis")
+    @GET("v1/user/category/{category_id}/materi/{materi_id}/quis/result")
     suspend fun getQuizDiscussion(
         @Header("Authorization") token: String,
         @Header("X-PLATFORM-NASHO") platform: String,
