@@ -104,7 +104,7 @@ interface ApiService {
         @Path("materi_id") materialId: String
     ): Response<QuestionListResponse>
 
-    @POST("v1/user/category/{category_id}/materi/{materi_id}/quis")
+    @POST("v1/user/category/{category_id}/materi/{materi_id}/quis/submit")
     suspend fun submitQuiz(
         @Header("Authorization") token: String,
         @Header("X-PLATFORM-NASHO") platform: String,
@@ -115,7 +115,7 @@ interface ApiService {
         @Body quiz: List<AnswerDto>
     ): Response<CorrectionResponse>
 
-    @POST("v1/user/category/{category_id}/exam")
+    @POST("v1/user/category/{category_id}/exam/submit")
     suspend fun submitExam(
         @Header("Authorization") token: String,
         @Header("X-PLATFORM-NASHO") platform: String,
