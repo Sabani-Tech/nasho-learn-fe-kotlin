@@ -19,6 +19,9 @@ data class QuestionDto(
     @field:SerializedName("point")
     val point: Int? = null,
 
+    @field:SerializedName("batch")
+    val batch: Int? = null,
+
     @field:SerializedName("option")
     val option: List<Option>? = null,
 

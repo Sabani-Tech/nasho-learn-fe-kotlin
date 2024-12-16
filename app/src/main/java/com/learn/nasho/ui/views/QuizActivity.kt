@@ -268,6 +268,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                 val answer = AnswerDto(
                     id = currentData.id,
                     point = currentData.point,
+                    batch = currentData.batch,
                     answer = selected
                 )
                 addAnswerToList(answer)
