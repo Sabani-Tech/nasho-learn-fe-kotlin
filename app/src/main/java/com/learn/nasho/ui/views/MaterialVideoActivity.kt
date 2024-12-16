@@ -91,7 +91,15 @@ class MaterialVideoActivity : AppCompatActivity() {
                         } else {
                             Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
                             if (categoryId != null && data.id != null) {
-                                goToQuizPage(response, categoryId, data.id)
+                                if (response.data?.size!! > 0) {
+                                    goToQuizPage(response, categoryId, data.id)
+                                } else {
+                                    Toast.makeText(
+                                        this@MaterialVideoActivity,
+                                        "Data Ujian tidak tersedia",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
                         }
                     }

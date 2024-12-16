@@ -309,7 +309,15 @@ class MaterialListActivity : AppCompatActivity() {
                             ).show()
                         } else {
                             Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
-                            goToExamPage(response)
+                            if (response.data?.size!! > 0) {
+                                goToExamPage(response)
+                            } else {
+                                Toast.makeText(
+                                    this@MaterialListActivity,
+                                    "Data Ujian tidak tersedia",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
 
