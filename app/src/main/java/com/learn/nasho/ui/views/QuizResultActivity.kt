@@ -61,7 +61,7 @@ class QuizResultActivity : AppCompatActivity() {
                         )
                     )
                     tvMotivationalSentences.text = "Kamu Hebat!"
-                    tvMotivationalSentences2.text = "Tetap pertahankan semangatmu ya."
+                    tvMotivationalSentences2.text = "Tetap pertahankan\nsemangatmu ya."
                     imageView.setImageDrawable(
                         ContextCompat.getDrawable(
                             this@QuizResultActivity, R.drawable.ic_quiz_success
@@ -76,7 +76,7 @@ class QuizResultActivity : AppCompatActivity() {
                         )
                     )
                     tvMotivationalSentences.text = "Tetap Semangat!"
-                    tvMotivationalSentences2.text = "Terus semangat, kamu pasti bisa."
+                    tvMotivationalSentences2.text = "Terus semangat,\nkamu pasti bisa."
                     imageView.setImageDrawable(
                         ContextCompat.getDrawable(
                             this@QuizResultActivity, R.drawable.ic_quiz_fail
