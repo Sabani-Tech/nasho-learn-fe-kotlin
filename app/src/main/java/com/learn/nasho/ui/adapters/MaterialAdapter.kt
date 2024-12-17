@@ -47,11 +47,11 @@ class MaterialAdapter(
                 itemView.isEnabled = true
                 llLearLock.root.visibility = View.GONE
 
-                if (readStep > position) {
-                    ivLearnStatus.visibility = View.VISIBLE
-                } else {
-                    ivLearnStatus.visibility = View.GONE
-                }
+//                if (readStep > position) {
+//                    ivLearnStatus.visibility = View.VISIBLE
+//                } else {
+//                    ivLearnStatus.visibility = View.GONE
+//                }
             }
         }
     }

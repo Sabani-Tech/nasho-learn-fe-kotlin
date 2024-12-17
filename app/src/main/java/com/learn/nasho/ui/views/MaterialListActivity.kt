@@ -153,7 +153,7 @@ class MaterialListActivity : AppCompatActivity() {
 
             }
 
-            materialReadViewModel.getMaterialReadStep(materialNumber = 1)
+            /*materialReadViewModel.getMaterialReadStep(materialNumber = 1)
                 .observe(this@MaterialListActivity) {
                     materialAdapterPhase1.setReadStepStatus(it)
                     lastPositionMaterial1.postValue(it)
@@ -164,7 +164,7 @@ class MaterialListActivity : AppCompatActivity() {
                 .observe(this@MaterialListActivity) {
                     materialAdapterPhase2.setReadStepStatus(it)
                     lastPositionMaterial2.postValue(it)
-                }
+                }*/
 
             categoryDetailViewModel.categoryDetail.observe(this@MaterialListActivity) { resultState ->
                 when (resultState) {
@@ -351,7 +351,7 @@ class MaterialListActivity : AppCompatActivity() {
                 val count = materialAdapterPhase1.itemCount
                 goToMaterialDetail(material = data, type = type)
 
-                if (lastPositionMaterial1.value!! < position + 1) {
+                /*if (lastPositionMaterial1.value!! < position + 1) {
                     materialReadViewModel.setMaterialReadStep(
                         materialNumber = phase,
                         step = position + 1
@@ -361,7 +361,7 @@ class MaterialListActivity : AppCompatActivity() {
                 if (position == count - 1) {
                     Log.d(TAG, "handleItemClick: masuk: last")
                     categoryId.value?.let { statusViewModel.updateStatus(it, Status.EXAM1) }
-                }
+                }*/
             }
 
             2 -> {
@@ -370,7 +370,7 @@ class MaterialListActivity : AppCompatActivity() {
                 val count = materialAdapterPhase2.itemCount
                 goToMaterialDetail(material = data, type = type)
 
-                if (lastPositionMaterial2.value!! < position + 1) {
+                /*if (lastPositionMaterial2.value!! < position + 1) {
                     materialReadViewModel.setMaterialReadStep(
                         materialNumber = phase,
                         step = position + 1
@@ -380,7 +380,7 @@ class MaterialListActivity : AppCompatActivity() {
                 if (position == count - 1) {
                     Log.d(TAG, "handleItemClick: masuk: last")
                     categoryId.value?.let { statusViewModel.updateStatus(it, Status.EXAM2) }
-                }
+                }*/
             }
         }
     }
