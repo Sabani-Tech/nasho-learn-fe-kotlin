@@ -402,7 +402,7 @@ class MaterialListActivity : AppCompatActivity() {
     }
 
     private fun goToMaterialDetail(material: MaterialDto, type: String) {
-        val intent = Intent(this@MaterialListActivity, MaterialVideoActivity::class.java)
+        val intent = Intent(this@MaterialListActivity, MaterialDetailsActivity::class.java)
         intent.putExtra(Constants.MATERIAL_DATA, material)
         intent.putExtra(Constants.MATERIAL_TYPE, type)
         intent.putExtra(Constants.CATEGORY_ID, categoryId.value)
