@@ -54,6 +54,11 @@ dependencies {
     // Shimmer Effect
     implementation(libs.shimmer)
 
+    //PDF Viewer
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
+//    implementation("com.github.DImuthuUpe:AndroidPdfViewer:2.8.2")
+//    implementation("com.github.barteksc:AndroidPdfViewer:3.2.0-beta.1")
+
     // retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
