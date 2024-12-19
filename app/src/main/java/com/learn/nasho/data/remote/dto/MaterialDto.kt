@@ -1,8 +1,8 @@
 package com.learn.nasho.data.remote.dto
 
-import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MaterialDto(
@@ -13,11 +13,23 @@ data class MaterialDto(
 	@field:SerializedName("embed")
 	val embed: String? = null,
 
+	@field:SerializedName("phase")
+	val phase: Int? = null,
+
 	@field:SerializedName("judul")
 	val title: String? = null,
 
 	@field:SerializedName("permalink")
 	val permalink: String? = null,
+
+	@field:SerializedName("file_uri")
+	val fileUri: String? = null,
+
+	@field:SerializedName("quis_status")
+	val quizStatus: String? = null,
+
+	@field:SerializedName("urutan")
+	val order: Int? = null,
 
 	@field:SerializedName("isi")
 	val content: String? = null,

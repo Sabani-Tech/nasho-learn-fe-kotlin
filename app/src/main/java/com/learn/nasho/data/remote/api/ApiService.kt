@@ -6,6 +6,7 @@ import com.learn.nasho.data.remote.response.CategoryDetailResponse
 import com.learn.nasho.data.remote.response.CorrectionResponse
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
+import com.learn.nasho.data.remote.response.MaterialDetailResponse
 import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
 import com.learn.nasho.data.remote.response.QuestionListResponse
@@ -73,6 +74,15 @@ interface ApiService {
         @Header("X-CLIENT-KEY-NASHO") clientKey: String,
         @Path("id") categoryId: String
     ): Response<MaterialsResponse>
+
+    @GET("v1/user/materi/{materi_id}")
+    suspend fun getMaterialDetails(
+        @Header("Authorization") token: String,
+        @Header("X-PLATFORM-NASHO") platform: String,
+        @Header("X-VERSION-NASHO") version: String,
+        @Header("X-CLIENT-KEY-NASHO") clientKey: String,
+        @Path("materi_id") materialID: String
+    ): Response<MaterialDetailResponse>
 
     @PUT("v1/user/category/{category_id}/status/{status_category}")
     suspend fun updateStatus(

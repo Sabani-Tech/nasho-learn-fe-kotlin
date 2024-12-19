@@ -1,15 +1,27 @@
 package com.learn.nasho.ui.views
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.github.barteksc.pdfviewer.PDFView
 import com.learn.nasho.R
+import com.learn.nasho.data.ResultState
+import com.learn.nasho.data.enums.QuestionType
+import com.learn.nasho.data.remote.dto.MaterialDto
+import com.learn.nasho.data.remote.response.QuestionListResponse
 import com.learn.nasho.databinding.ActivityMaterialDetailsBinding
+import com.learn.nasho.ui.viewmodels.material.MaterialDetailViewModel
+import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
+import com.learn.nasho.ui.viewmodels.material.QuestionListViewModel
+import com.learn.nasho.utils.Constants
+import com.learn.nasho.utils.parcelable
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -23,17 +35,133 @@ import java.security.MessageDigest
 class MaterialDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMaterialDetailsBinding
 
+    private lateinit var factory: MaterialViewModelFactory
+
+    private val materialDetailViewModel: MaterialDetailViewModel by viewModels {
+        factory
+    }
+
+    private val questionListViewModel: QuestionListViewModel by viewModels {
+        factory
+    }
+
+    private lateinit var dataMaterial: MaterialDto
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        factory = MaterialViewModelFactory.getInstance(this@MaterialDetailsActivity)
+
         binding = ActivityMaterialDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBar.toolbarTitleAppBar)
-        supportActionBar?.title = getString(R.string.app_name)
+        val data: MaterialDto? = intent.parcelable(Constants.MATERIAL_DATA)
+        val type: String? = intent.getStringExtra(Constants.MATERIAL_TYPE)
+        val categoryId: String? = intent.getStringExtra(Constants.CATEGORY_ID)
 
-        val pdfUrl =
-            "https://dev-api.nasholearn.com/assets/1734514356_MATERI_13(INNA_DAN_SAUDARINYA).pdf"
-        downloadAndDisplayPDF(pdfUrl, binding.pdfView, binding.progressBar)
+
+        if (data != null) {
+            dataMaterial = data
+            setSupportActionBar(binding.appBar.toolbarTitleAppBar)
+            supportActionBar?.title = data.title
+
+            materialDetailViewModel.materialDetail.observe(this@MaterialDetailsActivity) { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
+
+                        val response = resultState.data
+                        val message = response.message
+
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@MaterialDetailsActivity,
+                                getString(R.string.material_failed, message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.d(TAG, "onCreate: message: $message")
+                            val material = response.data
+                            material?.let { materialData ->
+
+                                materialData.fileUri?.let { url ->
+                                    downloadAndDisplayPDF(url, binding.pdfView, binding.progressBar)
+                                }
+
+                                materialData.quizStatus?.let {
+                                    if (materialData.quizStatus == "false") {
+                                        binding.btnResultQuiz.visibility = View.GONE
+                                    } else {
+                                        binding.btnResultQuiz.visibility = View.VISIBLE
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        Toast.makeText(
+                            this@MaterialDetailsActivity,
+                            getString(R.string.material_failed, resultState.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {}
+                }
+            }
+
+            questionListViewModel.questionQuizList.observe(this@MaterialDetailsActivity) { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
+
+                        val response = resultState.data
+                        val message = response.message
+
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@MaterialDetailsActivity,
+                                getString(R.string.question_failed, message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
+                            if (categoryId != null && data.id != null) {
+                                if (response.data?.size!! > 0) {
+                                    goToQuizPage(response, categoryId, data.id)
+                                } else {
+                                    Toast.makeText(
+                                        this@MaterialDetailsActivity,
+                                        "Data Ujian tidak tersedia",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        Toast.makeText(
+                            this@MaterialDetailsActivity,
+                            getString(R.string.question_failed, resultState.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {}
+                }
+            }
+
+            binding.btnStartQuiz.setOnClickListener {
+                if (categoryId != null && data.id != null) {
+                    questionListViewModel.getQuizQuestions(categoryId, data.id)
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dataMaterial.id?.let { id -> materialDetailViewModel.getMaterialDetail(id) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -41,7 +169,7 @@ class MaterialDetailsActivity : AppCompatActivity() {
             android.R.id.home -> finish()
 
             R.id.menu_material -> {
-//                startActivity(Intent(this@MainActivity, MapsActivity::class.java))
+//                startActivity(Intent(this@MaterialDetailsActivity, MapsActivity::class.java))
                 Toast.makeText(this@MaterialDetailsActivity, "Masuk video", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -116,6 +244,20 @@ class MaterialDetailsActivity : AppCompatActivity() {
                 .take(files.size - 10)
                 .forEach { it.delete() }
         }
+    }
+
+
+    private fun goToQuizPage(data: QuestionListResponse, categoryId: String, materialId: String) {
+        val intent = Intent(this@MaterialDetailsActivity, QuizActivity::class.java)
+        intent.putExtra(Constants.QUESTION_DATA, data)
+        intent.putExtra(Constants.QUESTION_TYPE, QuestionType.QUIZ.type)
+        intent.putExtra(Constants.CATEGORY_ID, categoryId)
+        intent.putExtra(Constants.MATERIAL_ID, materialId)
+        startActivity(intent)
+    }
+
+    companion object {
+        var TAG: String = MaterialDetailsActivity::class.java.name
     }
 
 }

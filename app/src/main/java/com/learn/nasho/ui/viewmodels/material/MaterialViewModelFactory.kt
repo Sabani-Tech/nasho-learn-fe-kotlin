@@ -27,6 +27,9 @@ class MaterialViewModelFactory(private var materialRepository: MaterialRepositor
             modelClass.isAssignableFrom(MaterialListViewModel::class.java) ->
                 MaterialListViewModel(materialRepository) as T
 
+            modelClass.isAssignableFrom(MaterialDetailViewModel::class.java) ->
+                MaterialDetailViewModel(materialRepository) as T
+
             modelClass.isAssignableFrom(CategoryDetailViewModel::class.java) ->
                 CategoryDetailViewModel(materialRepository) as T
 

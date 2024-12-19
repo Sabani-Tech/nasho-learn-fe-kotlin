@@ -23,6 +23,7 @@ import com.learn.nasho.databinding.ItemLayoutExamBinding
 import com.learn.nasho.ui.adapters.MaterialAdapter
 import com.learn.nasho.ui.adapters.RecyclerViewClickListener
 import com.learn.nasho.ui.viewmodels.material.CategoryDetailViewModel
+import com.learn.nasho.ui.viewmodels.material.MaterialDetailViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialReadViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
 import com.learn.nasho.ui.viewmodels.material.QuestionListViewModel
@@ -264,7 +265,7 @@ class MaterialListActivity : AppCompatActivity() {
                 }
             }
 
-            statusViewModel.status.observe(this@MaterialListActivity) { resultState ->
+            /*statusViewModel.status.observe(this@MaterialListActivity) { resultState ->
                 when (resultState) {
                     is ResultState.Success -> {
 
@@ -292,7 +293,7 @@ class MaterialListActivity : AppCompatActivity() {
 
                     else -> {}
                 }
-            }
+            }*/
 
             questionListViewModel.questionExamList.observe(this@MaterialListActivity) { resultState ->
                 when (resultState) {
