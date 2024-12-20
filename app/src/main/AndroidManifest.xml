@@ -44,12 +44,6 @@
             android:name=".ui.views.MaterialVideoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.views.SharafActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.views.NahwuActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.views.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
