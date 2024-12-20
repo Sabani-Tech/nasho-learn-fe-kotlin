@@ -185,9 +185,6 @@ class QuizResultActivity : AppCompatActivity() {
         val intent = Intent(this@QuizResultActivity, QuizDiscussionActivity::class.java)
         intent.putExtra(Constants.DISCUSSION_DATA, data)
         intent.putExtra(Constants.QUESTION_TYPE, type)
-        intent.putExtra(Constants.CATEGORY_ID, categoryId)
-        intent.putExtra(Constants.MATERIAL_ID, materialId)
-        intent.putExtra(Constants.EXAM_PHASE, phase)
         startActivity(intent)
         finish()
     }

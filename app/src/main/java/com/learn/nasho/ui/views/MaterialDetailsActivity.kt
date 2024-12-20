@@ -16,9 +16,11 @@ import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.QuestionType
 import com.learn.nasho.data.remote.dto.MaterialDto
 import com.learn.nasho.data.remote.response.QuestionListResponse
+import com.learn.nasho.data.remote.response.QuizDiscussionResponse
 import com.learn.nasho.databinding.ActivityMaterialDetailsBinding
 import com.learn.nasho.ui.viewmodels.material.MaterialDetailViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
+import com.learn.nasho.ui.viewmodels.material.QuestionDiscussionViewModel
 import com.learn.nasho.ui.viewmodels.material.QuestionListViewModel
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
@@ -36,12 +38,13 @@ class MaterialDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMaterialDetailsBinding
 
     private lateinit var factory: MaterialViewModelFactory
-
     private val materialDetailViewModel: MaterialDetailViewModel by viewModels {
         factory
     }
-
     private val questionListViewModel: QuestionListViewModel by viewModels {
+        factory
+    }
+    private val questionDiscussionViewModel: QuestionDiscussionViewModel by viewModels {
         factory
     }
 
@@ -155,6 +158,53 @@ class MaterialDetailsActivity : AppCompatActivity() {
                 }
             }
 
+            questionDiscussionViewModel.questionQuizDiscussion.observe(this@MaterialDetailsActivity) { resultState ->
+                when (resultState) {
+                    is ResultState.Success -> {
+
+                        val response = resultState.data
+                        val message = response.message
+
+                        if (response.error == true) {
+                            Toast.makeText(
+                                this@MaterialDetailsActivity,
+                                getString(R.string.question_failed, message),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
+                            if (categoryId != null && data.id != null) {
+                                if (response.data?.size!! > 0) {
+                                    type?.let { typeData -> goToDiscussionPage(typeData, response) }
+                                } else {
+                                    Toast.makeText(
+                                        this@MaterialDetailsActivity,
+                                        "Data Ujian tidak tersedia",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        Toast.makeText(
+                            this@MaterialDetailsActivity,
+                            getString(R.string.question_failed, resultState.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    else -> {}
+                }
+            }
+
+            binding.btnResultQuiz.setOnClickListener {
+                if (categoryId != null && data.id != null) {
+                    questionDiscussionViewModel.getQuizDiscussion(categoryId, data.id)
+                }
+            }
+
             binding.btnStartQuiz.setOnClickListener {
                 if (categoryId != null && data.id != null) {
                     questionListViewModel.getQuizQuestions(categoryId, data.id)
@@ -255,6 +305,14 @@ class MaterialDetailsActivity : AppCompatActivity() {
         intent.putExtra(Constants.MATERIAL_DATA, material)
         intent.putExtra(Constants.MATERIAL_TYPE, type)
         startActivity(intent)
+    }
+
+    private fun goToDiscussionPage(type: String, data: QuizDiscussionResponse) {
+        val intent = Intent(this@MaterialDetailsActivity, QuizDiscussionActivity::class.java)
+        intent.putExtra(Constants.DISCUSSION_DATA, data)
+        intent.putExtra(Constants.QUESTION_TYPE, type)
+        startActivity(intent)
+        finish()
     }
 
     private fun goToQuizPage(data: QuestionListResponse, categoryId: String, materialId: String) {
