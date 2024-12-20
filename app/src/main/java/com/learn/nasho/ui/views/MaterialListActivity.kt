@@ -87,6 +87,16 @@ class MaterialListActivity : AppCompatActivity() {
                             R.drawable.img_onboard_nahwu
                         )
                     )
+                    tvMaterialListTitle2.visibility = View.VISIBLE
+                    llMaterial2.visibility = View.VISIBLE
+                    tvUjianListTitle2.visibility = View.VISIBLE
+                    layoutExam2.root.visibility = View.VISIBLE
+
+                    layoutExam1.tvExamTitle.text = getString(R.string.mid_exam)
+                    layoutExam1.tvExamDesc.text = getString(R.string.theory, data.type)
+
+                    layoutExam2.tvExamTitle.text = getString(R.string.end_exam)
+                    layoutExam2.tvExamDesc.text = getString(R.string.theory, data.type)
                 } else if (data.type == CategoryType.SHARAF.type) {
                     ivIllustration.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -94,6 +104,9 @@ class MaterialListActivity : AppCompatActivity() {
                             R.drawable.img_onboard_sharaf
                         )
                     )
+
+                    layoutExam1.tvExamTitle.text = getString(R.string.exam_type, data.type)
+                    layoutExam1.tvExamDesc.text = getString(R.string.theory, data.type)
                 }
 
                 "${data.type} (${data.typeArab})".also { tvMaterialTitle.text = it }
@@ -129,12 +142,6 @@ class MaterialListActivity : AppCompatActivity() {
                     layoutManager = LinearLayoutManager(this@MaterialListActivity)
                     adapter = materialAdapterPhase2
                 }
-
-                layoutExam1.tvExamTitle.text = getString(R.string.mid_exam)
-                layoutExam1.tvExamDesc.text = getString(R.string.theory, data.type)
-
-                layoutExam2.tvExamTitle.text = getString(R.string.end_exam)
-                layoutExam2.tvExamDesc.text = getString(R.string.theory, data.type)
 
                 layoutExam1.itemView.setOnClickListener {
                     val phase = 1

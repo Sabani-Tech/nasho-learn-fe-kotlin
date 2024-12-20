@@ -83,6 +83,7 @@
     <string name="empty_data">Data anda kosong</string>
     <string name="mid_exam">Ujian Tengah</string>
     <string name="end_exam">Ujian Akhir</string>
+    <string name="exam_type">Ujian  %1$s</string>
     <string name="theory">Teori %1$s</string>
     <string name="next">Lanjut</string>
     <string name="finish">Selesai</string>
