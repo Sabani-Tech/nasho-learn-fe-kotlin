@@ -123,9 +123,9 @@
             android:hint="@string/type_here"
             android:inputType="text|textEmailAddress"
             android:maxLines="1"
-            android:text="ihsan@gmail.com"
             android:textSize="14sp"
-            app:hintEnabled="false" />
+            app:hintEnabled="false"
+            tools:text="ihsan@gmail.com" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -176,9 +176,9 @@
             android:hint="@string/type_here"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:text="Test123!"
             android:textSize="14sp"
-            app:hintEnabled="false" />
+            app:hintEnabled="false"
+            tools:text="Test123!" />
     </com.google.android.material.textfield.TextInputLayout>
 
 

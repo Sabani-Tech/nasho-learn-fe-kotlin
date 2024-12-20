@@ -96,10 +96,7 @@ class SignUpActivity : AppCompatActivity() {
             tilPassword.editText?.doOnTextChanged { text, _, _, _ ->
                 val password = text.toString()
 
-                if (password.length >= 8 && validatePassword(password) && pwDigits(
-                        password
-                    )
-                ) {
+                if (password.length >= 8) {
                     tilPassword.isErrorEnabled = false
                 } else {
                     tilPassword.isErrorEnabled = true
@@ -151,7 +148,7 @@ class SignUpActivity : AppCompatActivity() {
         val confirm = binding.tilPasswordConfirm.editText?.text.toString()
 
         val isEmailValid = validateEmail(email)
-        val isPasswordValid = validatePassword(password)
+        val isPasswordValid = password.isNotEmpty()
         val isConfirmValid = confirm == password
         val isFullName = fullName.isNotEmpty()
 
