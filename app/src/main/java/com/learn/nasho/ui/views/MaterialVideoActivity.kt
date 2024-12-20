@@ -1,26 +1,19 @@
 package com.learn.nasho.ui.views
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.HtmlCompat
-import com.learn.nasho.R
-import com.learn.nasho.data.ResultState
-import com.learn.nasho.data.enums.QuestionType
 import com.learn.nasho.data.remote.dto.MaterialDto
-import com.learn.nasho.data.remote.response.QuestionListResponse
 import com.learn.nasho.databinding.ActivityMaterialVideoBinding
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
-import com.learn.nasho.ui.viewmodels.material.QuestionListViewModel
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
 
@@ -29,9 +22,6 @@ class MaterialVideoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMaterialVideoBinding
 
     private lateinit var factory: MaterialViewModelFactory
-    private val questionListViewModel: QuestionListViewModel by viewModels {
-        factory
-    }
 
     private var fullscreenContainer: FrameLayout? = null
     private var originalSystemUiVisibility: Int = 0
@@ -47,7 +37,6 @@ class MaterialVideoActivity : AppCompatActivity() {
 
         val data: MaterialDto? = intent.parcelable(Constants.MATERIAL_DATA)
         val type: String? = intent.getStringExtra(Constants.MATERIAL_TYPE)
-        val categoryId: String? = intent.getStringExtra(Constants.CATEGORY_ID)
 
         if (data != null) {
 
@@ -60,61 +49,8 @@ class MaterialVideoActivity : AppCompatActivity() {
                 tvDesc.text = type
             }
 
-            binding.apply {
-                initializeWebView(wvVideo, data.embed)
-                val content = data.content?.let {
-                    HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_COMPACT)
-                }
-                tvDescMaterial.text = content
+            initializeWebView(binding.wvVideo, data.embed)
 
-                btnStartQuiz.setOnClickListener {
-                    if (categoryId != null && data.id != null) {
-                        questionListViewModel.getQuizQuestions(categoryId, data.id)
-                    }
-                }
-            }
-
-
-            questionListViewModel.questionQuizList.observe(this@MaterialVideoActivity) { resultState ->
-                when (resultState) {
-                    is ResultState.Success -> {
-
-                        val response = resultState.data
-                        val message = response.message
-
-                        if (response.error == true) {
-                            Toast.makeText(
-                                this@MaterialVideoActivity,
-                                getString(R.string.question_failed, message),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        } else {
-                            Log.d(TAG, "onCreate: questions size: ${response.data?.size}")
-                            if (categoryId != null && data.id != null) {
-                                if (response.data?.size!! > 0) {
-                                    goToQuizPage(response, categoryId, data.id)
-                                } else {
-                                    Toast.makeText(
-                                        this@MaterialVideoActivity,
-                                        "Data Ujian tidak tersedia",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
-
-                    is ResultState.Error -> {
-                        Toast.makeText(
-                            this@MaterialVideoActivity,
-                            getString(R.string.question_failed, resultState.message),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-
-                    else -> {}
-                }
-            }
         }
     }
 
@@ -171,33 +107,24 @@ class MaterialVideoActivity : AppCompatActivity() {
             }
         }
 
-//        webView.webViewClient = object : WebViewClient() {
-//            override fun onReceivedError(
-//                view: WebView?,
-//                request: WebResourceRequest?,
-//                error: WebResourceError?
-//            ) {
-//                // Jika terjadi error saat memuat halaman, sembunyikan WebView
-//                webView.visibility = View.GONE
-//                // Tampilkan pesan kesalahan
-//                binding.tvDescMaterial.text = "Webpage not available"
-//            }
-//
-//            override fun onPageFinished(view: WebView?, url: String?) {
-//                super.onPageFinished(view, url)
-//            }
-//        }
+        webView.webViewClient = object : WebViewClient() {
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                // Jika terjadi error saat memuat halaman, sembunyikan WebView
+                webView.visibility = View.GONE
+                // Tampilkan pesan kesalahan
+                binding.tvDescMaterial.text = "Webpage not available"
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+            }
+        }
 
         webView.loadUrl(videoLink)
-    }
-
-    private fun goToQuizPage(data: QuestionListResponse, categoryId: String, materialId: String) {
-        val intent = Intent(this@MaterialVideoActivity, QuizActivity::class.java)
-        intent.putExtra(Constants.QUESTION_DATA, data)
-        intent.putExtra(Constants.QUESTION_TYPE, QuestionType.QUIZ.type)
-        intent.putExtra(Constants.CATEGORY_ID, categoryId)
-        intent.putExtra(Constants.MATERIAL_ID, materialId)
-        startActivity(intent)
     }
 
     companion object {

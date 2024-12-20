@@ -46,6 +46,7 @@ class MaterialDetailsActivity : AppCompatActivity() {
     }
 
     private lateinit var dataMaterial: MaterialDto
+    private lateinit var typeMaterial: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +63,9 @@ class MaterialDetailsActivity : AppCompatActivity() {
 
         if (data != null) {
             dataMaterial = data
+            if (type != null) {
+                typeMaterial = type
+            }
             setSupportActionBar(binding.appBar.toolbarTitleAppBar)
             supportActionBar?.title = data.title
 
@@ -169,7 +173,7 @@ class MaterialDetailsActivity : AppCompatActivity() {
             android.R.id.home -> finish()
 
             R.id.menu_material -> {
-//                startActivity(Intent(this@MaterialDetailsActivity, MapsActivity::class.java))
+                goToMaterialVideo(dataMaterial, typeMaterial)
                 Toast.makeText(this@MaterialDetailsActivity, "Masuk video", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -246,6 +250,12 @@ class MaterialDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun goToMaterialVideo(material: MaterialDto, type: String) {
+        val intent = Intent(this@MaterialDetailsActivity, MaterialVideoActivity::class.java)
+        intent.putExtra(Constants.MATERIAL_DATA, material)
+        intent.putExtra(Constants.MATERIAL_TYPE, type)
+        startActivity(intent)
+    }
 
     private fun goToQuizPage(data: QuestionListResponse, categoryId: String, materialId: String) {
         val intent = Intent(this@MaterialDetailsActivity, QuizActivity::class.java)
