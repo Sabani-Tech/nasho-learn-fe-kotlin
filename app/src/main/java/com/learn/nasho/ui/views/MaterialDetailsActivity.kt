@@ -92,10 +92,10 @@ class MaterialDetailsActivity : AppCompatActivity() {
                                 }
 
                                 materialData.quizStatus?.let {
-                                    if (materialData.quizStatus == "false") {
-                                        binding.btnResultQuiz.visibility = View.GONE
-                                    } else {
+                                    if (materialData.quizStatus) {
                                         binding.btnResultQuiz.visibility = View.VISIBLE
+                                    } else {
+                                        binding.btnResultQuiz.visibility = View.GONE
                                     }
                                 }
                             }
