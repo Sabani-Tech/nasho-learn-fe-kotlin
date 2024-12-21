@@ -107,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
 
             tilPasswordLogin.editText?.doOnTextChanged { text, _, _, _ ->
                 val password = text.toString()
-                if (validatePassword(password) || password.isEmpty()) {
+                if (password.isEmpty()) {
                     tilPasswordLogin.isErrorEnabled = false
                 } else {
                     tilPasswordLogin.isErrorEnabled = true
@@ -138,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.tilPasswordLogin.editText?.text.toString()
 
         val isEmailValid = validateEmail(email)
-        val isPasswordValid = validatePassword(password)
+        val isPasswordValid =  password.isNotEmpty()
 
         binding.btnLogin.isEnabled = isEmailValid && isPasswordValid
     }
