@@ -94,13 +94,13 @@ class MaterialDetailsActivity : AppCompatActivity() {
                                     downloadAndDisplayPDF(url, binding.pdfView, binding.progressBar)
                                 }
 
-                                materialData.quizStatus?.let {
+                                /*materialData.quizStatus?.let {
                                     if (materialData.quizStatus) {
                                         binding.btnResultQuiz.visibility = View.VISIBLE
                                     } else {
                                         binding.btnResultQuiz.visibility = View.GONE
                                     }
-                                }
+                                }*/
                             }
                         }
                     }
