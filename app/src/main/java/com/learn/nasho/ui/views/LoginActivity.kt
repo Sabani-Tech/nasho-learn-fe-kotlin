@@ -107,12 +107,11 @@ class LoginActivity : AppCompatActivity() {
 
             tilPasswordLogin.editText?.doOnTextChanged { text, _, _, _ ->
                 val password = text.toString()
-                if (password.isEmpty()) {
+                if (password.isNotEmpty()) {
                     tilPasswordLogin.isErrorEnabled = false
                 } else {
                     tilPasswordLogin.isErrorEnabled = true
-                    tilPasswordLogin.error =
-                        "*Password harus mengandung huruf dan angka, dan minimal 8 karakter"
+                    tilPasswordLogin.error = "*Password harus diisi"
                 }
                 validateInput()
             }
@@ -138,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.tilPasswordLogin.editText?.text.toString()
 
         val isEmailValid = validateEmail(email)
-        val isPasswordValid =  password.isNotEmpty()
+        val isPasswordValid = password.isNotEmpty()
 
         binding.btnLogin.isEnabled = isEmailValid && isPasswordValid
     }
