@@ -157,7 +157,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView2"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     app:cardCornerRadius="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +167,8 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:paddingVertical="8dp">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cv_praise"
@@ -176,9 +177,9 @@
                             android:layout_marginStart="27dp"
                             app:cardBackgroundColor="#CEF4F1"
                             app:cardCornerRadius="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_praise_other"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintTop_toTopOf="@+id/tv_praise">
 
                             <ImageView
                                 android:id="@+id/iv_praise"
@@ -195,9 +196,10 @@
                             android:layout_marginHorizontal="8dp"
                             android:fontFamily="@font/manrope_bold"
                             android:textSize="12sp"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_praise_other"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/cv_praise"
-                            app:layout_constraintTop_toTopOf="@+id/cv_praise"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:text="Kamu Hebat!" />
 
                         <TextView
@@ -207,7 +209,7 @@
                             android:layout_marginHorizontal="8dp"
                             android:fontFamily="@font/manrope"
                             android:textSize="11sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/cv_praise"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/cv_praise"
                             tools:text="Terus pertahankan ya" />
