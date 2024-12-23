@@ -5,7 +5,8 @@ import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.locale.datastore.DataStorePreferences
 import com.learn.nasho.data.remote.api.ApiConfig
 import com.learn.nasho.data.remote.api.ApiService
-import com.learn.nasho.data.remote.dto.AnswerDto
+import com.learn.nasho.data.remote.dto.AnswerExamDto
+import com.learn.nasho.data.remote.dto.AnswerQuizDto
 import com.learn.nasho.data.remote.response.CategoriesResponse
 import com.learn.nasho.data.remote.response.CategoryDetailResponse
 import com.learn.nasho.data.remote.response.CorrectionResponse
@@ -312,7 +313,7 @@ class MaterialRepositoryImpl(
         }
 
     override suspend fun submitExam(
-        categoryId: String, phase: Int, exam: List<AnswerDto>
+        categoryId: String, phase: Int, exam: List<AnswerExamDto>
     ): Flow<ResultState<CorrectionResponse>> =
         flow {
             emit(ResultState.Loading)
@@ -355,7 +356,7 @@ class MaterialRepositoryImpl(
         }
 
     override suspend fun submitQuiz(
-        categoryId: String, materialId: String, quiz: List<AnswerDto>
+        categoryId: String, materialId: String, quiz: List<AnswerQuizDto>
     ): Flow<ResultState<CorrectionResponse>> =
         flow {
             emit(ResultState.Loading)

@@ -1,6 +1,7 @@
 package com.learn.nasho.data.remote.api
 
-import com.learn.nasho.data.remote.dto.AnswerDto
+import com.learn.nasho.data.remote.dto.AnswerExamDto
+import com.learn.nasho.data.remote.dto.AnswerQuizDto
 import com.learn.nasho.data.remote.response.CategoriesResponse
 import com.learn.nasho.data.remote.response.CategoryDetailResponse
 import com.learn.nasho.data.remote.response.CorrectionResponse
@@ -122,7 +123,7 @@ interface ApiService {
         @Header("X-CLIENT-KEY-NASHO") clientKey: String,
         @Path("category_id") categoryId: String,
         @Path("materi_id") materialId: String,
-        @Body quiz: List<AnswerDto>
+        @Body quiz: List<AnswerQuizDto>
     ): Response<CorrectionResponse>
 
     @POST("v1/user/category/{category_id}/exam/submit")
@@ -133,7 +134,7 @@ interface ApiService {
         @Header("X-CLIENT-KEY-NASHO") clientKey: String,
         @Path("category_id") categoryId: String,
         @Query("phase") phase: Int,
-        @Body exam: List<AnswerDto>
+        @Body exam: List<AnswerExamDto>
     ): Response<CorrectionResponse>
 
     @GET("v1/user/category/{category_id}/exam/result")

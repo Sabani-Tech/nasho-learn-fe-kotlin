@@ -12,12 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.button.MaterialButton
-import com.google.gson.Gson
 import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.QuestionType
-import com.learn.nasho.data.remote.dto.AnswerDto
-import com.learn.nasho.data.remote.dto.AnswerKey
+import com.learn.nasho.data.remote.dto.AnswerExamDto
+import com.learn.nasho.data.remote.dto.AnswerKeyDto
+import com.learn.nasho.data.remote.dto.AnswerQuizDto
 import com.learn.nasho.data.remote.dto.CorrectionDto
 import com.learn.nasho.data.remote.dto.Option
 import com.learn.nasho.data.remote.dto.QuestionDto
@@ -44,8 +44,9 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
     }
 
     private val currentIndex: MutableLiveData<Int> = MutableLiveData(0)
-    private val selectedAnswer: MutableLiveData<AnswerKey> = MutableLiveData(AnswerKey())
-    private val answerList: MutableLiveData<List<AnswerDto>> = MutableLiveData(ArrayList())
+    private val selectedAnswer: MutableLiveData<AnswerKeyDto> = MutableLiveData(AnswerKeyDto())
+    private val answerListQuiz: MutableLiveData<List<AnswerQuizDto>> = MutableLiveData(ArrayList())
+    private val answerListExam: MutableLiveData<List<AnswerExamDto>> = MutableLiveData(ArrayList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -218,19 +219,19 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
     private fun finishQuiz() {
         // FIXME Submit data to server
-        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
+//        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
         // Submit data answerList.value
 
         type?.let { typeQuestion ->
             when (typeQuestion) {
                 QuestionType.QUIZ.type -> {
-                    answerList.value?.let { data ->
+                    answerListQuiz.value?.let { data ->
                         submitViewModel.submitQuiz(categoryId!!, materialId!!, data)
                     }
                 }
 
                 QuestionType.EXAM.type -> {
-                    answerList.value?.let { data ->
+                    answerListExam.value?.let { data ->
                         submitViewModel.submitExam(categoryId!!, phase, data)
                     }
                 }
@@ -254,16 +255,16 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         finish()
     }
 
-    private fun parseButtonTextToOption(buttonText: String): AnswerKey {
+    private fun parseButtonTextToOption(buttonText: String): AnswerKeyDto {
         // Asumsikan format "A. Pilihan 1"
         val parts = buttonText.split(". ", limit = 2)
         return if (parts.size == 2) {
-            AnswerKey(
+            AnswerKeyDto(
                 key = parts[0].trim(),
 //                value = parts[1].trim()
             )
         } else {
-            AnswerKey() // Kembalikan default Option jika format tidak sesuai
+            AnswerKeyDto() // Kembalikan default Option jika format tidak sesuai
         }
     }
 
@@ -272,23 +273,53 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
             val currentData = data[index]
             selectedAnswer.value?.let { selected ->
 
+                type?.let { typeQuestion ->
+                    when (typeQuestion) {
+                        QuestionType.QUIZ.type -> {
+                            answerListQuiz.value?.let { data ->
 
-                val answer = AnswerDto(
-                    id = currentData.id,
-                    point = currentData.point,
-                    batch = currentData.batch,
-                    answer = selected
-                )
-                addAnswerToList(answer)
+                                val answer = AnswerQuizDto(
+                                    id = currentData.id,
+                                    point = currentData.point,
+                                    batch = currentData.batch,
+                                    answer = selected
+                                )
+                                addAnswerQuizToList(answer)
+                            }
+                        }
+
+                        QuestionType.EXAM.type -> {
+                            answerListExam.value?.let { data ->
+
+                                val answer = AnswerExamDto(
+                                    id = currentData.id,
+                                    point = currentData.point,
+                                    batch = currentData.batch,
+                                    answer = selected
+                                )
+                                addAnswerExamToList(answer)
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
             }
         }
     }
 
-    private fun addAnswerToList(answer: AnswerDto) {
-        val currentList = answerList.value ?: emptyList()
+    private fun addAnswerQuizToList(answer: AnswerQuizDto) {
+        val currentList = answerListQuiz.value ?: emptyList()
         val updatedList = currentList.toMutableList()
         updatedList.add(answer)
-        answerList.value = updatedList
+        answerListQuiz.value = updatedList
+    }
+
+    private fun addAnswerExamToList(answer: AnswerExamDto) {
+        val currentList = answerListExam.value ?: emptyList()
+        val updatedList = currentList.toMutableList()
+        updatedList.add(answer)
+        answerListExam.value = updatedList
     }
 
     private fun setButtonNextEnable(button: MaterialButton) {

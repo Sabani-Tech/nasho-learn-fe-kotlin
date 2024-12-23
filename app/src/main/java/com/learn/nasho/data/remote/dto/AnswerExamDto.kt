@@ -2,8 +2,8 @@ package com.learn.nasho.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class AnswerDto(
-    @field:SerializedName("id")
+data class AnswerExamDto(
+    @field:SerializedName("exam_id")
     val id: String? = null,
 
     @field:SerializedName("point")
@@ -13,10 +13,5 @@ data class AnswerDto(
     val batch: Int? = null,
 
     @field:SerializedName("answer")
-    val answer: AnswerKey? = null,
-)
-
-data class AnswerKey(
-    @field:SerializedName("key")
-    val key: String? = null,
+    val answer: AnswerKeyDto? = null,
 )
