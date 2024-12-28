@@ -23,11 +23,8 @@ import com.learn.nasho.databinding.ItemLayoutExamBinding
 import com.learn.nasho.ui.adapters.MaterialAdapter
 import com.learn.nasho.ui.adapters.RecyclerViewClickListener
 import com.learn.nasho.ui.viewmodels.material.CategoryDetailViewModel
-import com.learn.nasho.ui.viewmodels.material.MaterialDetailViewModel
-import com.learn.nasho.ui.viewmodels.material.MaterialReadViewModel
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory
 import com.learn.nasho.ui.viewmodels.material.QuestionListViewModel
-import com.learn.nasho.ui.viewmodels.material.StatusViewModel
 import com.learn.nasho.utils.Constants
 import com.learn.nasho.utils.parcelable
 
@@ -42,19 +39,11 @@ class MaterialListActivity : AppCompatActivity() {
     private val categoryDetailViewModel: CategoryDetailViewModel by viewModels {
         factory
     }
-    private val materialReadViewModel: MaterialReadViewModel by viewModels {
-        factory
-    }
-    private val statusViewModel: StatusViewModel by viewModels {
-        factory
-    }
     private val questionListViewModel: QuestionListViewModel by viewModels {
         factory
     }
 
     private val categoryId: MutableLiveData<String?> = MutableLiveData("")
-    private val lastPositionMaterial1: MutableLiveData<Int?> = MutableLiveData(0)
-    private val lastPositionMaterial2: MutableLiveData<Int?> = MutableLiveData(0)
     private val currentPhase: MutableLiveData<Int?> = MutableLiveData(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,11 +101,9 @@ class MaterialListActivity : AppCompatActivity() {
                 "${data.type} (${data.typeArab})".also { tvMaterialTitle.text = it }
                 tvDesc.text = data.desc
 
-                // Setup Phase 1 Adapter
                 materialAdapterPhase1 =
                     MaterialAdapter(object : RecyclerViewClickListener {
                         override fun onItemClicked(position: Int) {
-                            // Handle click for Phase 1
                             data.type?.let {
                                 handleItemClick(position, phase = 1, it)
                             }
@@ -127,11 +114,9 @@ class MaterialListActivity : AppCompatActivity() {
                 rvMaterial1.adapter = materialAdapterPhase1
 
 
-                // Setup Phase 2 Adapter
                 materialAdapterPhase2 =
                     MaterialAdapter(object : RecyclerViewClickListener {
                         override fun onItemClicked(position: Int) {
-                            // Handle click for Phase 2
                             data.type?.let {
                                 handleItemClick(position, phase = 2, it)
                             }
@@ -160,19 +145,6 @@ class MaterialListActivity : AppCompatActivity() {
                 }
 
             }
-
-            /*materialReadViewModel.getMaterialReadStep(materialNumber = 1)
-                .observe(this@MaterialListActivity) {
-                    materialAdapterPhase1.setReadStepStatus(it)
-                    lastPositionMaterial1.postValue(it)
-                    Log.d("MaterialListActivity", "onCreate: getMaterialReadStep: $it")
-                }
-
-            materialReadViewModel.getMaterialReadStep(materialNumber = 2)
-                .observe(this@MaterialListActivity) {
-                    materialAdapterPhase2.setReadStepStatus(it)
-                    lastPositionMaterial2.postValue(it)
-                }*/
 
             categoryDetailViewModel.categoryDetail.observe(this@MaterialListActivity) { resultState ->
                 when (resultState) {
@@ -203,57 +175,35 @@ class MaterialListActivity : AppCompatActivity() {
                             }
 
                             when (resultData.status) {
-                                Status.MATERIAL1.type -> {
-                                    resultData.exam1Status?.let {
-                                        lockExam(binding.layoutExam1, true, it)
-                                    }
-                                    materialAdapterPhase2.setLockItem(true)
-                                    resultData.exam2Status?.let {
-                                        lockExam(binding.layoutExam2, true, it)
-                                    }
-
-                                }
 
                                 Status.EXAM1.type -> {
-                                    resultData.exam1Status?.let {
-                                        lockExam(binding.layoutExam1, false, it)
+                                    resultData.exam1Status?.let { passed ->
+                                        lockExam(binding.layoutExam1, false, passed)
                                     }
                                     materialAdapterPhase2.setLockItem(true)
-                                    resultData.exam2Status?.let {
-                                        lockExam(binding.layoutExam2, true, it)
+                                    resultData.exam2Status?.let { passed ->
+                                        lockExam(binding.layoutExam2, true, passed)
                                     }
-
-                                }
-
-                                Status.MATERIAL2.type -> {
-                                    resultData.exam1Status?.let {
-                                        lockExam(binding.layoutExam1, false, it)
-                                    }
-                                    materialAdapterPhase2.setLockItem(false)
-                                    resultData.exam2Status?.let {
-                                        lockExam(binding.layoutExam2, true, it)
-                                    }
-
                                 }
 
                                 Status.EXAM2.type -> {
-                                    resultData.exam1Status?.let {
-                                        lockExam(binding.layoutExam1, false, it)
+                                    resultData.exam1Status?.let { passed ->
+                                        lockExam(binding.layoutExam1, false, passed)
                                     }
                                     materialAdapterPhase2.setLockItem(false)
-                                    resultData.exam2Status?.let {
-                                        lockExam(binding.layoutExam2, false, it)
+                                    resultData.exam2Status?.let { passed ->
+                                        lockExam(binding.layoutExam2, false, passed)
                                     }
                                 }
 
                                 else -> {
                                     materialAdapterPhase1.setLockItem(true)
-                                    resultData.exam1Status?.let {
-                                        lockExam(binding.layoutExam1, true, it)
+                                    resultData.exam1Status?.let { passed ->
+                                        lockExam(binding.layoutExam1, true, passed)
                                     }
                                     materialAdapterPhase2.setLockItem(true)
-                                    resultData.exam2Status?.let {
-                                        lockExam(binding.layoutExam2, true, it)
+                                    resultData.exam2Status?.let { passed ->
+                                        lockExam(binding.layoutExam2, true, passed)
                                     }
                                 }
                             }
@@ -271,36 +221,6 @@ class MaterialListActivity : AppCompatActivity() {
                     else -> {}
                 }
             }
-
-            /*statusViewModel.status.observe(this@MaterialListActivity) { resultState ->
-                when (resultState) {
-                    is ResultState.Success -> {
-
-                        val response = resultState.data
-                        val message = response.message
-
-                        if (response.error == true) {
-                            Toast.makeText(
-                                this@MaterialListActivity,
-                                getString(R.string.update_status_failed, message),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        } else {
-                            Log.d(TAG, "onCreate: message: $message")
-                        }
-                    }
-
-                    is ResultState.Error -> {
-                        Toast.makeText(
-                            this@MaterialListActivity,
-                            getString(R.string.update_status_failed, resultState.message),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-
-                    else -> {}
-                }
-            }*/
 
             questionListViewModel.questionExamList.observe(this@MaterialListActivity) { resultState ->
                 when (resultState) {
@@ -348,52 +268,21 @@ class MaterialListActivity : AppCompatActivity() {
         categoryId.value?.let { categoryDetailViewModel.getCategoryDetailById(it) }
     }
 
-    // Handle different list clicks based on the phase
     private fun handleItemClick(position: Int, phase: Int, type: String) {
-
-        // Do something different based on phase
         when (phase) {
             1 -> {
-                // Handle click for Phase 1 item
                 val data = materialAdapterPhase1.getItem(position)
-                val count = materialAdapterPhase1.itemCount
                 goToMaterialDetail(material = data, type = type)
-
-                /*if (lastPositionMaterial1.value!! < position + 1) {
-                    materialReadViewModel.setMaterialReadStep(
-                        materialNumber = phase,
-                        step = position + 1
-                    )
-                }
-
-                if (position == count - 1) {
-                    Log.d(TAG, "handleItemClick: masuk: last")
-                    categoryId.value?.let { statusViewModel.updateStatus(it, Status.EXAM1) }
-                }*/
             }
 
             2 -> {
-                // Handle click for Phase 2 item
                 val data = materialAdapterPhase2.getItem(position)
-                val count = materialAdapterPhase2.itemCount
                 goToMaterialDetail(material = data, type = type)
-
-                /*if (lastPositionMaterial2.value!! < position + 1) {
-                    materialReadViewModel.setMaterialReadStep(
-                        materialNumber = phase,
-                        step = position + 1
-                    )
-                }
-
-                if (position == count - 1) {
-                    Log.d(TAG, "handleItemClick: masuk: last")
-                    categoryId.value?.let { statusViewModel.updateStatus(it, Status.EXAM2) }
-                }*/
             }
         }
     }
 
-    private fun lockExam(item: ItemLayoutExamBinding, lock: Boolean, status: Boolean) {
+    private fun lockExam(item: ItemLayoutExamBinding, lock: Boolean, passed: Boolean) {
         if (lock) {
             item.llLearLock.root.visibility = View.VISIBLE
             item.itemView.isEnabled = false
@@ -401,7 +290,7 @@ class MaterialListActivity : AppCompatActivity() {
         } else {
             item.llLearLock.root.visibility = View.GONE
             item.itemView.isEnabled = true
-            if (status) {
+            if (passed) {
                 item.ivLearnStatus.visibility = View.VISIBLE
             } else {
                 item.ivLearnStatus.visibility = View.GONE

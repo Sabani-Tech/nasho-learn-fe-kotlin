@@ -12,8 +12,6 @@ import java.util.Locale
 class QuizDiscussionAdapter(private var disscussionData: List<QuizDiscussionDto>) :
     RecyclerView.Adapter<QuizDiscussionAdapter.MyViewHolder>() {
 
-//    private var oldList = emptyList<QuizDiscussionDto>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             ItemLayoutDiscussionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -78,15 +76,6 @@ class QuizDiscussionAdapter(private var disscussionData: List<QuizDiscussionDto>
     override fun getItemCount(): Int {
         return disscussionData.size
     }
-
-    fun getItem(index: Int): QuizDiscussionDto {
-        return disscussionData[index]
-    }
-
-//    fun setItems(newList: List<QuizDiscussionDto>) {
-//        oldList = newList
-//        notifyDataSetChanged()
-//    }
 
     class MyViewHolder(val binding: ItemLayoutDiscussionBinding) :
         RecyclerView.ViewHolder(binding.root)

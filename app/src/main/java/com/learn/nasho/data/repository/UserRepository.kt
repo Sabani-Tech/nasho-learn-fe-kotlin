@@ -1,7 +1,6 @@
 package com.learn.nasho.data.repository
 
 import com.learn.nasho.data.ResultState
-import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.LoginResponse
 import com.learn.nasho.data.remote.response.ProfileResponse
 import com.learn.nasho.data.remote.response.RegisterResponse
@@ -25,7 +24,6 @@ interface UserRepository {
     fun getTokenAccess(): Flow<String>
 
     suspend fun clearTokenData(): Flow<Boolean>
-    suspend fun setLogout(isLogout : Boolean): Flow<Boolean>
 
     fun getProfileUserData(): Flow<String>
 }

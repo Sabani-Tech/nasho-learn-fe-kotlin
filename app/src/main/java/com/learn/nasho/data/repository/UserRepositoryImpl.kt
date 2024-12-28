@@ -69,9 +69,7 @@ class UserRepositoryImpl(
                         val token = resp.data?.token
                         saveUserTokenAccess(token.toString()).collect { isSaved ->
                             if (isSaved) {
-                                setLogout(false).collect {
-                                    emit(ResultState.Success(resp))
-                                }
+                                emit(ResultState.Success(resp))
                             } else {
                                 emit(ResultState.Error("Failed to save token"))
                             }
@@ -147,11 +145,6 @@ class UserRepositoryImpl(
     override suspend fun clearTokenData(): Flow<Boolean> {
         return dataStorePref.clearTokenData()
     }
-
-    override suspend fun setLogout(isLogout: Boolean): Flow<Boolean> {
-        return dataStorePref.setLogout(isLogout)
-    }
-
 
     private suspend fun saveUserTokenAccess(token: String): Flow<Boolean> {
         return dataStorePref.saveUserTokenAccess(token)

@@ -144,10 +144,5 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateEmail(email: String): Boolean {
         return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex())
-
-    }
-
-    private fun validatePassword(password: String): Boolean {
-        return password.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$".toRegex())
     }
 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.remote.response.MaterialDetailResponse
-import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.repository.MaterialRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest

@@ -1,16 +1,12 @@
 package com.learn.nasho.utils
 
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 
 object Constants {
     val USER_TOKEN = stringPreferencesKey("token_access")
-    val USER_LOGOUT = booleanPreferencesKey("user_logout")
     val USER_PROFILE_DATA = stringPreferencesKey("data_user")
-    val READ_MATERIAL1 = intPreferencesKey("material1_read_step")
-    val READ_MATERIAL2 = intPreferencesKey("material2_read_step")
 
+    const val NASHO_PREF_KEY = "nasho_preferences"
     const val CATEGORY_ID = "id_category"
     const val CATEGORY_DATA = "data_category"
     const val MATERIAL_ID = "id_material"

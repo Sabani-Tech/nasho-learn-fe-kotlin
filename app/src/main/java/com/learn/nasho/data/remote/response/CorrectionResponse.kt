@@ -1,7 +1,6 @@
 package com.learn.nasho.data.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.learn.nasho.data.remote.dto.CategoryDto
 import com.learn.nasho.data.remote.dto.CorrectionDto
 
 data class CorrectionResponse(

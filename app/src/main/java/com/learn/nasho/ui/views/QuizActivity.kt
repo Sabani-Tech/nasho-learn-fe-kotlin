@@ -68,10 +68,10 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         materialId = intent.getStringExtra(Constants.MATERIAL_ID)
         phase = intent.getIntExtra(Constants.EXAM_PHASE, 0)
 
-        resp?.let {
+        resp?.let { questionList ->
 
-            Log.d(TAG, "onCreate: data size: ${it.data?.size}")
-            it.data?.let { dataQuiz ->
+            Log.d(TAG, "onCreate: data size: ${questionList.data?.size}")
+            questionList.data?.let { dataQuiz ->
                 data = dataQuiz
                 binding.tvQuizHeader.text = type
                 currentIndex.value?.let { index -> showQuestions(index) }
@@ -86,9 +86,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
             btnNext.setOnClickListener(this@QuizActivity)
         }
-
-        // Return Submit Question
-        // goToQuizResult(type, data)
 
         submitViewModel.submitQuizQuestion.observe(this@QuizActivity) { resultState ->
             when (resultState) {
@@ -200,10 +197,18 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                 tvSoalQuiz.text = currentData.question
                 tvPoint.text = String.format(Locale.getDefault(), "%d Point", currentData.point)
 
-                btnOptionOne.text = currentData.option?.let { getCurrentOption(it, 0) }
-                btnOptionTwo.text = currentData.option?.let { getCurrentOption(it, 1) }
-                btnOptionThree.text = currentData.option?.let { getCurrentOption(it, 2) }
-                btnOptionFour.text = currentData.option?.let { getCurrentOption(it, 3) }
+                btnOptionOne.text = currentData.option?.let { options ->
+                    getCurrentOption(options, 0)
+                }
+                btnOptionTwo.text = currentData.option?.let { options ->
+                    getCurrentOption(options, 1)
+                }
+                btnOptionThree.text = currentData.option?.let { options ->
+                    getCurrentOption(options, 2)
+                }
+                btnOptionFour.text = currentData.option?.let { options ->
+                    getCurrentOption(options, 3)
+                }
 
                 if ((currentIndex.value?.plus(1)) == data.size) {
                     btnNext.text = getString(R.string.finish)
@@ -218,10 +223,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun finishQuiz() {
-        // FIXME Submit data to server
-//        Log.d(TAG, "finishQuiz: Finish data: ${Gson().toJson(answerList.value)}")
-        // Submit data answerList.value
-
         type?.let { typeQuestion ->
             when (typeQuestion) {
                 QuestionType.QUIZ.type -> {
@@ -239,9 +240,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                 else -> {}
             }
         }
-
-//        startActivity(Intent(this@QuizActivity, QuizResultActivity::class.java))
-//        finish()
     }
 
     private fun goToQuizResult(type: String, data: CorrectionDto) {
@@ -256,15 +254,13 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun parseButtonTextToOption(buttonText: String): AnswerKeyDto {
-        // Asumsikan format "A. Pilihan 1"
         val parts = buttonText.split(". ", limit = 2)
         return if (parts.size == 2) {
             AnswerKeyDto(
                 key = parts[0].trim(),
-//                value = parts[1].trim()
             )
         } else {
-            AnswerKeyDto() // Kembalikan default Option jika format tidak sesuai
+            AnswerKeyDto()
         }
     }
 
@@ -276,8 +272,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                 type?.let { typeQuestion ->
                     when (typeQuestion) {
                         QuestionType.QUIZ.type -> {
-                            answerListQuiz.value?.let { data ->
-
+                            answerListQuiz.value?.let {
                                 val answer = AnswerQuizDto(
                                     id = currentData.id,
                                     point = currentData.point,
@@ -289,8 +284,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                         }
 
                         QuestionType.EXAM.type -> {
-                            answerListExam.value?.let { data ->
-
+                            answerListExam.value?.let {
                                 val answer = AnswerExamDto(
                                     id = currentData.id,
                                     point = currentData.point,

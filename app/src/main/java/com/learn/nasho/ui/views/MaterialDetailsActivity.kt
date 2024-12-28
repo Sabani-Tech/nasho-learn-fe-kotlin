@@ -93,14 +93,6 @@ class MaterialDetailsActivity : AppCompatActivity() {
                                 materialData.fileUri?.let { url ->
                                     downloadAndDisplayPDF(url, binding.pdfView, binding.progressBar)
                                 }
-
-                                /*materialData.quizStatus?.let {
-                                    if (materialData.quizStatus) {
-                                        binding.btnResultQuiz.visibility = View.VISIBLE
-                                    } else {
-                                        binding.btnResultQuiz.visibility = View.GONE
-                                    }
-                                }*/
                             }
                         }
                     }
@@ -224,8 +216,6 @@ class MaterialDetailsActivity : AppCompatActivity() {
 
             R.id.menu_material -> {
                 goToMaterialVideo(dataMaterial, typeMaterial)
-                Toast.makeText(this@MaterialDetailsActivity, "Masuk video", Toast.LENGTH_SHORT)
-                    .show()
             }
 
         }
@@ -243,15 +233,12 @@ class MaterialDetailsActivity : AppCompatActivity() {
         val file = File(cacheDir, fileName)
 
         if (file.exists()) {
-            // File sudah ada di cache
             runOnUiThread {
                 pdfView.fromFile(file).load()
             }
         } else {
-            // Tampilkan ProgressBar
             runOnUiThread { progressBar.visibility = View.VISIBLE }
 
-            // File belum ada, download dari URL
             val client = OkHttpClient()
             val request = Request.Builder().url(url).build()
 
@@ -268,18 +255,14 @@ class MaterialDetailsActivity : AppCompatActivity() {
 
                         inputStream.use { input -> outputStream.use { output -> input.copyTo(output) } }
 
-                        // Tampilkan PDF setelah download selesai
                         runOnUiThread {
-                            // Sembunyikan ProgressBar
                             progressBar.visibility = View.GONE
-                            // Tampilkan PDF
                             pdfView.fromFile(file).load()
                         }
                     }
                 }
             })
 
-            // Bersihkan file cache lama
             cleanOldCacheFiles()
         }
     }

@@ -57,10 +57,10 @@ class MaterialVideoActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun initializeWebView(webView: WebView, videoLink: String?) {
         if (videoLink.isNullOrEmpty()) {
-            // Jika videoLink null atau kosong, sembunyikan WebView
             webView.visibility = View.GONE
-            // Tampilkan pesan bahwa video tidak tersedia
-            binding.tvDescMaterial.text = "Video is not available"
+            "Video is not available".also { text ->
+                binding.tvDescMaterial.text = text
+            }
             return
         }
 
@@ -113,10 +113,10 @@ class MaterialVideoActivity : AppCompatActivity() {
                 request: WebResourceRequest?,
                 error: WebResourceError?
             ) {
-                // Jika terjadi error saat memuat halaman, sembunyikan WebView
                 webView.visibility = View.GONE
-                // Tampilkan pesan kesalahan
-                binding.tvDescMaterial.text = "Webpage not available"
+                "Webpage not available".also { text ->
+                    binding.tvDescMaterial.text = text
+                }
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -125,9 +125,5 @@ class MaterialVideoActivity : AppCompatActivity() {
         }
 
         webView.loadUrl(videoLink)
-    }
-
-    companion object {
-        var TAG: String = MaterialVideoActivity::class.java.name
     }
 }

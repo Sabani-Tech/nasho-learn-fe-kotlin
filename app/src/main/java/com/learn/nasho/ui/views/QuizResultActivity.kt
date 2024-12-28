@@ -11,7 +11,6 @@ import com.learn.nasho.R
 import com.learn.nasho.data.ResultState
 import com.learn.nasho.data.enums.QuestionType
 import com.learn.nasho.data.remote.dto.CorrectionDto
-import com.learn.nasho.data.remote.dto.QuizDiscussionDto
 import com.learn.nasho.data.remote.response.QuizDiscussionResponse
 import com.learn.nasho.databinding.ActivityQuizResultBinding
 import com.learn.nasho.ui.viewmodels.material.MaterialViewModelFactory

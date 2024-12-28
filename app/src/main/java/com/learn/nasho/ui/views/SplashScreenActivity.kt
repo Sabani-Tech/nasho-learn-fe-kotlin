@@ -14,18 +14,10 @@ import com.learn.nasho.R
 import com.learn.nasho.databinding.ActivitySplashScreenBinding
 import com.learn.nasho.ui.viewmodels.user.TokenAccessViewModel
 import com.learn.nasho.ui.viewmodels.user.UserViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
-
-
     private lateinit var binding: ActivitySplashScreenBinding
-
-    private val activityScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,18 +37,10 @@ class SplashScreenActivity : AppCompatActivity() {
             factory
         }
 
-
         displayAppVersion()
 
-//        activityScope.launch(Dispatchers.Main) {
-//            delay(2000)
-//            val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
-
-        tokenAccessViewModel.getTokenAccess().observe(this@SplashScreenActivity) {
-            if (it.isNullOrEmpty()) {
+        tokenAccessViewModel.getTokenAccess().observe(this@SplashScreenActivity) { result ->
+            if (result.isNullOrEmpty()) {
                 startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
             } else {
                 startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
