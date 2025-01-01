@@ -74,6 +74,12 @@ class QuizResultActivity : AppCompatActivity() {
                             this@QuizResultActivity, R.drawable.ic_quiz_success
                         )
                     )
+                    tvQuizGrade.setTextColor(
+                        ContextCompat.getColor(
+                            this@QuizResultActivity,
+                            R.color.Success50
+                        )
+                    )
 
 
                 } else {
@@ -87,6 +93,12 @@ class QuizResultActivity : AppCompatActivity() {
                     imageView.setImageDrawable(
                         ContextCompat.getDrawable(
                             this@QuizResultActivity, R.drawable.ic_quiz_fail
+                        )
+                    )
+                    tvQuizGrade.setTextColor(
+                        ContextCompat.getColor(
+                            this@QuizResultActivity,
+                            R.color.Error50
                         )
                     )
                 }
