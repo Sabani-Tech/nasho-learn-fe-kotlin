@@ -20,7 +20,6 @@ class QuizDiscussionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val resp: QuizDiscussionResponse? = intent.parcelable(Constants.DISCUSSION_DATA)
-        val type = intent.getStringExtra(Constants.QUESTION_TYPE)
 
         if (resp != null) {
             binding.apply {

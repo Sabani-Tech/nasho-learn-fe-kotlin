@@ -1,8 +1,6 @@
 package com.learn.nasho.ui.alerts
 
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,7 +11,6 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.learn.nasho.databinding.FragmentAlertLogoutBinding
 import com.learn.nasho.ui.viewmodels.user.LogoutViewModel
-import com.learn.nasho.ui.views.LoginActivity
 
 
 class LogoutAlert(logoutViewModel: LogoutViewModel) : DialogFragment() {
@@ -54,33 +51,10 @@ class LogoutAlert(logoutViewModel: LogoutViewModel) : DialogFragment() {
 
         binding.btnYes.setOnClickListener {
             viewModel.logoutUser()
-
-/*            // Dismiss the dialog
-            dismiss()
-
-            // Clear access token from SharedPreferences
-            clearAccessToken()
-
-            // Start login activity
-            startLoginActivity()*/
         }
     }
 
     fun dismissDialog() {
         dismiss()
-    }
-
-    private fun clearAccessToken() {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.remove("accessToken")
-        editor.apply()
-    }
-
-    private fun startLoginActivity() {
-        val intent = Intent(requireActivity(), LoginActivity::class.java)
-        startActivity(intent)
-        requireActivity().finishAffinity()
     }
 }

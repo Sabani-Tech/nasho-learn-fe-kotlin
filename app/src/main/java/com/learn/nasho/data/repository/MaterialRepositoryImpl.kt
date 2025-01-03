@@ -12,7 +12,6 @@ import com.learn.nasho.data.remote.response.CategoryDetailResponse
 import com.learn.nasho.data.remote.response.CorrectionResponse
 import com.learn.nasho.data.remote.response.GeneralResponse
 import com.learn.nasho.data.remote.response.MaterialDetailResponse
-import com.learn.nasho.data.remote.response.MaterialsResponse
 import com.learn.nasho.data.remote.response.QuestionListResponse
 import com.learn.nasho.data.remote.response.QuizDiscussionResponse
 import com.learn.nasho.utils.Constants
@@ -103,46 +102,6 @@ class MaterialRepositoryImpl(
             }
         }
 
-    override suspend fun getMaterialListByCategory(categoryId: String): Flow<ResultState<MaterialsResponse>> =
-        flow {
-            emit(ResultState.Loading)
-            try {
-                val token = getTokenAccess().first()
-                if (token.isBlank()) {
-                    emit(ResultState.Error("Token is empty, Re-Login"))
-                } else {
-                    val response =
-                        apiService.getMaterialListByCategory(
-                            ApiConfig.getAuthHeader(token),
-                            Constants.PLATFORM,
-                            Constants.VERSION,
-                            Constants.CLIENT_KEY,
-                            categoryId
-                        )
-                    if (response.isSuccessful) {
-                        response.body()?.let { data ->
-                            if (data.error == true) {
-                                emit(ResultState.Error(data.message ?: "Unknown error"))
-                            } else {
-                                emit(ResultState.Success(data))
-                            }
-                        } ?: run {
-                            emit(ResultState.Error("Unknown error"))
-                        }
-                    } else {
-                        val errorBody = response.errorBody()?.string()
-                        val errorResponse = errorBody?.let {
-                            Gson().fromJson(it, GeneralResponse::class.java)
-                        }
-                        emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(ResultState.Error(e.message.toString()))
-            }
-        }
-
     override suspend fun getMaterialDetail(materialId: String): Flow<ResultState<MaterialDetailResponse>> =
         flow {
             emit(ResultState.Loading)
@@ -158,51 +117,6 @@ class MaterialRepositoryImpl(
                             Constants.VERSION,
                             Constants.CLIENT_KEY,
                             materialId
-                        )
-                    if (response.isSuccessful) {
-                        response.body()?.let { data ->
-                            if (data.error == true) {
-                                emit(ResultState.Error(data.message ?: "Unknown error"))
-                            } else {
-                                emit(ResultState.Success(data))
-                            }
-                        } ?: run {
-                            emit(ResultState.Error("Unknown error"))
-                        }
-                    } else {
-                        val errorBody = response.errorBody()?.string()
-                        val errorResponse = errorBody?.let {
-                            Gson().fromJson(it, GeneralResponse::class.java)
-                        }
-                        emit(ResultState.Error(errorResponse?.message ?: "Unknown error"))
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(ResultState.Error(e.message.toString()))
-            }
-        }
-
-
-    override suspend fun updateStatus(
-        categoryId: String,
-        status: String
-    ): Flow<ResultState<GeneralResponse>> =
-        flow {
-            emit(ResultState.Loading)
-            try {
-                val token = getTokenAccess().first()
-                if (token.isBlank()) {
-                    emit(ResultState.Error("Token is empty, Re-Login"))
-                } else {
-                    val response =
-                        apiService.updateStatus(
-                            ApiConfig.getAuthHeader(token),
-                            Constants.PLATFORM,
-                            Constants.VERSION,
-                            Constants.CLIENT_KEY,
-                            categoryId,
-                            status
                         )
                     if (response.isSuccessful) {
                         response.body()?.let { data ->
@@ -481,23 +395,6 @@ class MaterialRepositoryImpl(
                 emit(ResultState.Error(e.message.toString()))
             }
         }
-
-    override suspend fun setMaterialReadStep(materialNumber: Int, step: Int): Flow<Boolean> {
-        return if (materialNumber == 1) {
-            dataStorePref.setMaterial1ReadStep(step = step)
-        } else {
-            dataStorePref.setMaterial2ReadStep(step = step)
-        }
-    }
-
-    override fun getMaterialReadStep(materialNumber: Int): Flow<Int> {
-        return if (materialNumber == 1) {
-            dataStorePref.getMaterial1ReadStep()
-        } else {
-            dataStorePref.getMaterial2ReadStep()
-        }
-    }
-
 
     private fun getTokenAccess(): Flow<String> {
         return dataStorePref.getUserTokenAccess()

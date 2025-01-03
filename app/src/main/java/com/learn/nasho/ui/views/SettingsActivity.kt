@@ -2,7 +2,6 @@ package com.learn.nasho.ui.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -10,18 +9,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import com.learn.nasho.R
-import com.learn.nasho.data.ResultState
-import com.learn.nasho.data.remote.dto.ProfileDto
 import com.learn.nasho.databinding.ActivitySettingsBinding
 import com.learn.nasho.ui.alerts.LogoutAlert
 import com.learn.nasho.ui.viewmodels.user.LogoutViewModel
 import com.learn.nasho.ui.viewmodels.user.ProfileUserViewModel
-import com.learn.nasho.ui.viewmodels.user.ProfileViewModel
 import com.learn.nasho.ui.viewmodels.user.UserViewModelFactory
 import com.learn.nasho.utils.getDataProfileFromJson
-import com.learn.nasho.utils.hideLoading
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {

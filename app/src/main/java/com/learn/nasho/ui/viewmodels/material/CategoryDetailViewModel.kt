@@ -1,6 +1,5 @@
 package com.learn.nasho.ui.viewmodels.material
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +26,7 @@ class CategoryDetailViewModel(private val materialRepository: MaterialRepository
                 .catch { exception ->
                     _categoryDetail.postValue(ResultState.Error(exception.message.toString()))
                 }
-                .collectLatest { result -> _categoryDetail.postValue(result)}
+                .collectLatest { result -> _categoryDetail.postValue(result) }
         }
     }
 }
