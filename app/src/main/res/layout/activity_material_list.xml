@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.views.MaterialListActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/custom_app_bar_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/iv_illustration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            tools:src="@drawable/img_onboard_nahwu" />
+
+        <TextView
+            android:id="@+id/tv_material_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="#015869"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_illustration"
+            tools:text="@string/nahwu_text_arab" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/manrope_medium"
+            android:textColor="#4D5761"
+            app:layout_constraintEnd_toEndOf="@+id/tv_material_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_material_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_title"
+            tools:text="@string/nahwu_desc" />
+
+        <TextView
+            android:id="@+id/tv_material_list_title_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/material"
+            android:textColor="#111927"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_desc"
+            app:layout_constraintStart_toStartOf="@+id/tv_desc"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
+
+        <LinearLayout
+            android:id="@+id/ll_material_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/tv_material_list_title_1"
+            app:layout_constraintStart_toStartOf="@+id/tv_material_list_title_1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_material_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_layout_material" />
+
+            <TextView
+                android:id="@+id/tv_empty_material_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:text="@string/empty_data"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_ujian_list_title_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/ujian"
+            android:textColor="#111927"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/ll_material_1"
+            app:layout_constraintStart_toStartOf="@+id/ll_material_1"
+            app:layout_constraintTop_toBottomOf="@+id/ll_material_1" />
+
+        <include
+            android:id="@+id/layout_exam_1"
+            layout="@layout/item_layout_exam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="43dp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_ujian_list_title_1"
+            app:layout_constraintStart_toStartOf="@+id/tv_ujian_list_title_1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ujian_list_title_1" />
+
+        <TextView
+            android:id="@+id/tv_material_list_title_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/material"
+            android:textColor="#111927"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/layout_exam_1"
+            app:layout_constraintStart_toStartOf="@+id/layout_exam_1"
+            app:layout_constraintTop_toBottomOf="@+id/layout_exam_1" />
+
+        <LinearLayout
+            android:id="@+id/ll_material_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/tv_material_list_title_2"
+            app:layout_constraintStart_toStartOf="@+id/tv_material_list_title_2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_material_list_title_2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_material_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_layout_material" />
+
+            <TextView
+                android:id="@+id/tv_empty_material_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:text="@string/empty_data"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_ujian_list_title_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/manrope_bold"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:text="@string/ujian"
+            android:textColor="#111927"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/ll_material_2"
+            app:layout_constraintStart_toStartOf="@+id/ll_material_2"
+            app:layout_constraintTop_toBottomOf="@+id/ll_material_2" />
+
+        <include
+            android:id="@+id/layout_exam_2"
+            layout="@layout/item_layout_exam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginBottom="43dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_ujian_list_title_2"
+            app:layout_constraintStart_toStartOf="@+id/tv_ujian_list_title_2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ujian_list_title_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

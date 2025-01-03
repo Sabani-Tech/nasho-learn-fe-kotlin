@@ -54,4 +54,26 @@
     <color name="Error700">#B71F33</color>
     <color name="Error800">#93142F</color>
     <color name="Error900">#7A0C2D</color>
+
+
+    <color name="option_activate_text">#384250</color>
+    <color name="option_activate_stroke_selected">#55C2BE</color>
+    <color name="option_activate_selected">#CEF4F1</color>
+    <color name="option_deactivate_text">#384250</color>
+    <color name="option_deactivate_stroke_selected">#D0D0D0</color>
+    <color name="option_deactivate_selected">#FCFCFD</color>
+
+    <color name="bg_shimmer">#BFBFBF</color>
+    <color name="bg_lock_color">#CC828282</color>
+    <color name="green_main_color">#015869</color>
+    <color name="orange_main_color">#E57D1A</color>
+    <color name="blue_main_color">#374F75</color>
+
+    <color name="card_correct">#E8F4F3</color>
+    <color name="text_correct">#015869</color>
+    <color name="icon_correct">#CEF4F1</color>
+
+    <color name="card_incorrect">#F8DADA</color>
+    <color name="text_incorrect">#840202</color>
+    <color name="icon_incorrect">#C25555</color>
 </resources>

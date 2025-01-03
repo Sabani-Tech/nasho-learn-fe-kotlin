@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.views.SignUpActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/custom_app_bar_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_full_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/manrope_semibold"
+        android:text="@string/full_name"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_full_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_full_name_label"
+        android:layout_marginHorizontal="24dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/stroke_till_selector"
+        app:boxStrokeErrorColor="@color/stroke_till_selector"
+        app:boxStrokeWidth="1dp"
+        app:errorIconDrawable="@null"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_full_name_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_full_name_label"
+        app:startIconCheckable="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/type_here"
+            android:inputType="text|textCapWords"
+            android:maxLines="1"
+            android:textSize="14sp"
+            app:hintEnabled="false" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_email_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/til_full_name"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/manrope_semibold"
+        android:text="@string/email"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_email_label"
+        android:layout_marginHorizontal="24dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/stroke_till_selector"
+        app:boxStrokeErrorColor="@color/stroke_till_selector"
+        app:boxStrokeWidth="1dp"
+        app:errorIconDrawable="@null"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/type_here"
+            android:inputType="text|textEmailAddress"
+            android:maxLines="1"
+            android:textSize="14sp"
+            app:hintEnabled="false" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/til_email"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/password" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_password"
+        android:layout_marginHorizontal="24dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/stroke_till_selector"
+        app:boxStrokeErrorColor="@color/stroke_till_selector"
+        app:boxStrokeWidth="1dp"
+        app:errorIconDrawable="@null"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
+        app:startIconCheckable="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/type_here"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textSize="14sp"
+            app:hintEnabled="false" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_password_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/til_password"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/password_confirm" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_password_confirm"
+        android:layout_marginHorizontal="24dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/stroke_till_selector"
+        app:boxStrokeErrorColor="@color/stroke_till_selector"
+        app:boxStrokeWidth="1dp"
+        app:errorIconDrawable="@null"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
+        app:startIconCheckable="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/type_here"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textSize="14sp"
+            app:hintEnabled="false" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="32dp"
+        android:enabled="false"
+        android:fontFamily="@font/manrope_medium"
+        android:text="@string/register"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/bg_button_selector"
+        app:cornerRadius="30dp" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</RelativeLayout>

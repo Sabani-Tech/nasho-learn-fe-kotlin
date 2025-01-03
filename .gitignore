@@ -24,3 +24,4 @@ local.properties
 .idea/kotlinc.xml
 .idea/deploymentTargetSelector.xml
 .idea/migrations.xml
+.idea

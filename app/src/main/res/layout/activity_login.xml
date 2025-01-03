@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.views.LoginActivity">
 
     <ImageView
@@ -124,7 +124,8 @@
             android:inputType="text|textEmailAddress"
             android:maxLines="1"
             android:textSize="14sp"
-            app:hintEnabled="false" />
+            app:hintEnabled="false"
+            tools:text="ihsan@gmail.com" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -176,7 +177,8 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:textSize="14sp"
-            app:hintEnabled="false" />
+            app:hintEnabled="false"
+            tools:text="Test123!" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -233,5 +235,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_do_not_have_account"
         app:layout_constraintStart_toEndOf="@+id/tv_do_not_have_account"
         app:layout_constraintTop_toTopOf="@+id/tv_do_not_have_account" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

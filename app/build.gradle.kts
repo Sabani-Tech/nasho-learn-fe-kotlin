@@ -15,6 +15,10 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String", "BASE_URL_DEV", "\"https://dev-api.nasholearn.com/api/\"")
+        buildConfigField("String", "BASE_URL_PRD", "\"https://api.nasholearn.com/api/\"")
+        buildConfigField("String", "BASE_URL_LOCAL", "\"http://192.168.1.16/nasho-learn-be-laravel/application/public/api/\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,7 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         buildConfig = true
     }
@@ -47,6 +51,34 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Shimmer Effect
+    implementation(libs.shimmer)
+
+    //PDF Viewer
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
+//    implementation("com.github.DImuthuUpe:AndroidPdfViewer:2.8.2")
+//    implementation("com.github.barteksc:AndroidPdfViewer:3.2.0-beta.1")
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    // datastore
+    implementation(libs.androidx.datastore.preferences)
+
+    //coroutine support
+    implementation(libs.androidx.lifecycle.viewmodel.ktx) //viewModelScope
+    implementation(libs.androidx.lifecycle.livedata.ktx) //liveData
+
+    // Android KTX
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    // Testing Fragments in Isolation
+    debugImplementation(libs.androidx.fragment.testing)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

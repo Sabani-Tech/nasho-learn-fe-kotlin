@@ -2,15 +2,20 @@ package com.learn.nasho.ui.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.lifecycleScope
 import com.learn.nasho.R
+import com.learn.nasho.data.ResultState
 import com.learn.nasho.databinding.ActivityLoginBinding
+import com.learn.nasho.ui.viewmodels.user.LoginViewModel
+import com.learn.nasho.ui.viewmodels.user.ProfileViewModel
+import com.learn.nasho.ui.viewmodels.user.UserViewModelFactory
+import com.learn.nasho.utils.hideLoading
+import com.learn.nasho.utils.showLoading
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -21,6 +26,73 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val factory: UserViewModelFactory = UserViewModelFactory.getInstance(this@LoginActivity)
+        val loginViewModel: LoginViewModel by viewModels {
+            factory
+        }
+        val profileViewModel: ProfileViewModel by viewModels {
+            factory
+        }
+
+        loginViewModel.login.observe(this) { resultState ->
+            when (resultState) {
+                is ResultState.Success -> {
+                    hideLoading(binding.loading)
+                    val response = resultState.data
+                    if (response.error == true) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.login_failed, response.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        profileViewModel.getProfileUser()
+                    }
+                }
+
+                is ResultState.Error -> {
+                    hideLoading(binding.loading)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.login_failed, resultState.message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {}
+            }
+        }
+
+        profileViewModel.profile.observe(this) { resultState ->
+            when (resultState) {
+                is ResultState.Success -> {
+                    hideLoading(binding.loading)
+                    val response = resultState.data
+                    if (response.error == true) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.login_failed, response.message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }
+                }
+
+                is ResultState.Error -> {
+                    hideLoading(binding.loading)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.login_failed, resultState.message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {}
+            }
+        }
+
         binding.apply {
             tilEmailLogin.editText?.doOnTextChanged { text, _, _, _ ->
                 val email = text.toString()
@@ -28,68 +100,34 @@ class LoginActivity : AppCompatActivity() {
                     tilEmailLogin.isErrorEnabled = false
                 } else {
                     tilEmailLogin.isErrorEnabled = true
-                    tilEmailLogin.error = "Email harus sesuai format penulisan"
+                    tilEmailLogin.error = "*Email harus sesuai format penulisan"
                 }
                 validateInput()
             }
 
             tilPasswordLogin.editText?.doOnTextChanged { text, _, _, _ ->
                 val password = text.toString()
-                if (validatePassword(password) || password.isEmpty()) {
+                if (password.isNotEmpty()) {
                     tilPasswordLogin.isErrorEnabled = false
                 } else {
                     tilPasswordLogin.isErrorEnabled = true
-                    tilPasswordLogin.error =
-                        "Password harus mengandung huruf dan angka, dan minimal 8 karakter"
+                    tilPasswordLogin.error = "*Password harus diisi"
                 }
                 validateInput()
             }
 
             btnLogin.setOnClickListener {
-                val email = tilEmailLogin.editText?.text.toString().trim()
-                val password = tilPasswordLogin.editText?.text.toString().trim()
+                lifecycleScope.launch {
+                    val email = tilEmailLogin.editText?.text.toString().trim()
+                    val password = tilPasswordLogin.editText?.text.toString().trim()
 
-                Toast.makeText(this@LoginActivity, "Login Berhasil! \n $email", Toast.LENGTH_SHORT)
-                    .show()
-
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-
-
-//                authViewModel.login(email, password).observe(this@Login, Observer { result ->
-//                    when (result) {
-//                        is Result.Loading -> {
-//                            // Show loading indicator
-//                        }
-//
-//                        is Result.Success -> {
-//                            sPref.putString("token", result.data.data.accessToken)
-//                            Log.d("Token", "token: ${result.data.data.accessToken}")
-//                            sPref.apply()
-//                            Toast.makeText(this@Login, "Login successful!", Toast.LENGTH_SHORT)
-//                                .show()
-//                            val intent = Intent(this@Login, Home::class.java)
-//                            startActivity(intent)
-//                            finish()
-//                        }
-//
-//                        is Result.Error -> {
-//
-//                            Toast.makeText(this@Login, result.errorMessage, Toast.LENGTH_SHORT)
-//                                .show()
-//                        }
-//
-//                        else -> {
-//                            // Handle other cases if needed
-//                        }
-//                    }
-//                })
+                    loginViewModel.loginUser(email, password)
+                    showLoading(loading)
+                }
             }
 
             tvRegister.setOnClickListener {
-                Toast.makeText(this@LoginActivity, "Go to Register", Toast.LENGTH_SHORT).show()
-//                startActivity(Intent(this@LoginActivity, SignUp::class.java))
+                startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
             }
         }
     }
@@ -99,17 +137,17 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.tilPasswordLogin.editText?.text.toString()
 
         val isEmailValid = validateEmail(email)
-        val isPasswordValid = validatePassword(password)
+        val isPasswordValid = password.isNotEmpty()
 
         binding.btnLogin.isEnabled = isEmailValid && isPasswordValid
     }
 
     private fun validateEmail(email: String): Boolean {
-        return email.contains("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex())
+        return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex())
 
     }
 
     private fun validatePassword(password: String): Boolean {
-        return password.contains("^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{8,}\$".toRegex())
+        return password.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$".toRegex())
     }
 }

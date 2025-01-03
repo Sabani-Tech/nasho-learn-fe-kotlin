@@ -6,11 +6,14 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.learn.nasho.R
 import com.learn.nasho.databinding.ActivitySplashScreenBinding
+import com.learn.nasho.ui.viewmodels.user.TokenAccessViewModel
+import com.learn.nasho.ui.viewmodels.user.UserViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -36,14 +39,31 @@ class SplashScreenActivity : AppCompatActivity() {
             insets
         }
 
+        val factory: UserViewModelFactory =
+            UserViewModelFactory.getInstance(this@SplashScreenActivity)
+        val tokenAccessViewModel: TokenAccessViewModel by viewModels {
+            factory
+        }
+
+
         displayAppVersion()
 
-        activityScope.launch(Dispatchers.Main) {
-            delay(2000)
-            val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-            startActivity(intent)
+//        activityScope.launch(Dispatchers.Main) {
+//            delay(2000)
+//            val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+
+        tokenAccessViewModel.getTokenAccess().observe(this@SplashScreenActivity) {
+            if (it.isNullOrEmpty()) {
+                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
+            } else {
+                startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+            }
             finish()
         }
+
     }
 
     private fun displayAppVersion() {

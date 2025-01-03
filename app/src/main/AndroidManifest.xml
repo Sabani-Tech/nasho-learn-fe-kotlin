@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,7 +14,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NashoLearn"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.views.MaterialDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.MaterialListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.QuizDiscussionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.QuizResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.QuizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.views.MaterialVideoActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.views.SplashScreenActivity"
             android:exported="true">
