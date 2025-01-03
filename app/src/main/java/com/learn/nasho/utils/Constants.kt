@@ -18,7 +18,7 @@ object Constants {
     const val QUESTION_TYPE = "type_question"
     const val EXAM_PHASE = "phase_exam"
 
-    const val PLATFORM = "mobile"
+    const val PLATFORM = "mobile-prod"
     const val VERSION = "1.0"
-    const val CLIENT_KEY = "d40056ba-fc84-4a19-9cea-50cf3beeb658"
+    const val CLIENT_KEY = "187dec0e-3ccf-48b7-88cb-5fc52bcec34a"
 }
