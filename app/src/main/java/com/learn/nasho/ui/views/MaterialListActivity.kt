@@ -104,8 +104,9 @@ class MaterialListActivity : AppCompatActivity() {
                 materialAdapterPhase1 =
                     MaterialAdapter(object : RecyclerViewClickListener {
                         override fun onItemClicked(position: Int) {
-                            data.type?.let {
-                                handleItemClick(position, phase = 1, it)
+                            data.type?.let { typeData ->
+                                val materialData = materialAdapterPhase1.getItem(position)
+                                goToMaterialDetail(material = materialData, type = typeData)
                             }
                         }
                     })
@@ -117,8 +118,9 @@ class MaterialListActivity : AppCompatActivity() {
                 materialAdapterPhase2 =
                     MaterialAdapter(object : RecyclerViewClickListener {
                         override fun onItemClicked(position: Int) {
-                            data.type?.let {
-                                handleItemClick(position, phase = 2, it)
+                            data.type?.let { typeData ->
+                                val materialData = materialAdapterPhase2.getItem(position)
+                                goToMaterialDetail(material = materialData, type = typeData)
                             }
                         }
                     })
@@ -177,9 +179,6 @@ class MaterialListActivity : AppCompatActivity() {
                             when (resultData.status) {
 
                                 Status.EXAM1.type -> {
-                                    resultData.exam1Status?.let { passed ->
-                                        lockExam(binding.layoutExam1, false, passed)
-                                    }
                                     materialAdapterPhase2.setLockItem(true)
                                     resultData.exam2Status?.let { passed ->
                                         lockExam(binding.layoutExam2, true, passed)
@@ -187,25 +186,12 @@ class MaterialListActivity : AppCompatActivity() {
                                 }
 
                                 Status.EXAM2.type -> {
-                                    resultData.exam1Status?.let { passed ->
-                                        lockExam(binding.layoutExam1, false, passed)
-                                    }
                                     materialAdapterPhase2.setLockItem(false)
                                     resultData.exam2Status?.let { passed ->
                                         lockExam(binding.layoutExam2, false, passed)
                                     }
                                 }
 
-                                else -> {
-                                    materialAdapterPhase1.setLockItem(true)
-                                    resultData.exam1Status?.let { passed ->
-                                        lockExam(binding.layoutExam1, true, passed)
-                                    }
-                                    materialAdapterPhase2.setLockItem(true)
-                                    resultData.exam2Status?.let { passed ->
-                                        lockExam(binding.layoutExam2, true, passed)
-                                    }
-                                }
                             }
                         }
                     }
@@ -266,20 +252,6 @@ class MaterialListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         categoryId.value?.let { categoryDetailViewModel.getCategoryDetailById(it) }
-    }
-
-    private fun handleItemClick(position: Int, phase: Int, type: String) {
-        when (phase) {
-            1 -> {
-                val data = materialAdapterPhase1.getItem(position)
-                goToMaterialDetail(material = data, type = type)
-            }
-
-            2 -> {
-                val data = materialAdapterPhase2.getItem(position)
-                goToMaterialDetail(material = data, type = type)
-            }
-        }
     }
 
     private fun lockExam(item: ItemLayoutExamBinding, lock: Boolean, passed: Boolean) {
