@@ -46,8 +46,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
     private val currentIndex: MutableLiveData<Int> = MutableLiveData(0)
     private val selectedAnswer: MutableLiveData<AnswerKeyDto> = MutableLiveData(AnswerKeyDto())
 
-    //    private val answerListQuiz: MutableLiveData<List<AnswerQuizDto>> = MutableLiveData(ArrayList())
-//    private val answerListExam: MutableLiveData<List<AnswerExamDto>> = MutableLiveData(ArrayList())
     private val answerListQuiz = ArrayList<AnswerQuizDto>()
     private val answerListExam = ArrayList<AnswerExamDto>()
 
@@ -247,18 +245,10 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
             when (typeQuestion) {
                 QuestionType.QUIZ.type -> {
                     submitViewModel.submitQuiz(categoryId!!, materialId!!, answerListQuiz)
-
-//                    answerListQuiz.value?.let { data ->
-//                        submitViewModel.submitQuiz(categoryId!!, materialId!!, data)
-//                    }
-
                 }
 
                 QuestionType.EXAM.type -> {
                     submitViewModel.submitExam(categoryId!!, phase, answerListExam)
-//                    answerListExam.value?.let { data ->
-//                        submitViewModel.submitExam(categoryId!!, phase, data)
-//                    }
                 }
 
                 else -> {}
@@ -291,7 +281,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                                 batch = currentData.batch,
                                 answer = selected
                             )
-//                            addAnswerQuizToList(answer)
                             answerListQuiz.add(answer)
 
                         }
@@ -304,7 +293,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                                 batch = currentData.batch,
                                 answer = selected
                             )
-//                            addAnswerExamToList(answer)
                             answerListExam.add(answer)
 
                         }
@@ -315,20 +303,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
             }
         }
     }
-
-//    private fun addAnswerQuizToList(answer: AnswerQuizDto) {
-//        val currentList = answerListQuiz.value ?: emptyList()
-//        val updatedList = currentList.toMutableList()
-//        updatedList.add(answer)
-//        answerListQuiz.value = updatedList
-//    }
-
-//    private fun addAnswerExamToList(answer: AnswerExamDto) {
-//        val currentList = answerListExam.value ?: emptyList()
-//        val updatedList = currentList.toMutableList()
-//        updatedList.add(answer)
-//        answerListExam.value = updatedList
-//    }
 
     private fun setButtonNextEnable(button: MaterialButton) {
         button.apply {
