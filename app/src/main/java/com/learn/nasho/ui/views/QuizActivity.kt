@@ -74,7 +74,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
             questionList.data?.let { dataQuiz ->
                 data = dataQuiz
                 binding.tvQuizHeader.text = type
-                currentIndex.value?.let { index -> showQuestions(index) }
+                currentIndex.value?.let { index -> validateQuestions(index) }
             }
         }
 
@@ -174,7 +174,7 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
             if (clickedButton.id == R.id.btn_next) {
                 saveCurrentAnswer()
                 currentIndex.value = currentIndex.value?.plus(1)
-                currentIndex.value?.let { index -> showQuestions(index) }
+                currentIndex.value?.let { index -> validateQuestions(index) }
             } else {
                 selectedAnswer.value = parseButtonTextToOption(clickedButton.text.toString())
                 setButtonOptionActivate(clickedButton)
@@ -183,40 +183,44 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
-    private fun showQuestions(index: Int) {
-        binding.apply {
-
-            if (index >= data.size) {
-                finishQuiz()
-                return
-            } else {
-                val currentData = data[index]
-                tvQuizTitle.text = currentData.title
-                tvQuestPage.text =
-                    String.format(Locale.getDefault(), "Soal %s/%s", (index + 1), data.size)
-                tvSoalQuiz.text = currentData.question
-                tvPoint.text = String.format(Locale.getDefault(), "%d Point", currentData.point)
-
-                btnOptionOne.text = currentData.option?.let { options ->
-                    getCurrentOption(options, 0)
-                }
-                btnOptionTwo.text = currentData.option?.let { options ->
-                    getCurrentOption(options, 1)
-                }
-                btnOptionThree.text = currentData.option?.let { options ->
-                    getCurrentOption(options, 2)
-                }
-                btnOptionFour.text = currentData.option?.let { options ->
-                    getCurrentOption(options, 3)
-                }
-
-                if ((currentIndex.value?.plus(1)) == data.size) {
-                    btnNext.text = getString(R.string.finish)
-                }
-            }
+    private fun validateQuestions(index: Int) {
+        if (index >= data.size) {
+            finishQuiz()
+            return
+        } else {
+            showQuestion(index)
         }
     }
 
+    private fun showQuestion(index: Int) {
+        binding.apply {
+            val currentData = data[index]
+            tvQuizTitle.text = currentData.title
+            tvQuestPage.text =
+                String.format(Locale.getDefault(), "Soal %s/%s", (index + 1), data.size)
+            tvSoalQuiz.text = currentData.question
+            tvPoint.text = String.format(Locale.getDefault(), "%d Point", currentData.point)
+
+            btnOptionOne.text = currentData.option?.let { options ->
+                getCurrentOption(options, 0)
+            }
+            btnOptionTwo.text = currentData.option?.let { options ->
+                getCurrentOption(options, 1)
+            }
+            btnOptionThree.text = currentData.option?.let { options ->
+                getCurrentOption(options, 2)
+            }
+            btnOptionFour.text = currentData.option?.let { options ->
+                getCurrentOption(options, 3)
+            }
+
+            if ((currentIndex.value?.plus(1)) == data.size) {
+                btnNext.text = getString(R.string.finish)
+            } else {
+                btnNext.text = getString(R.string.next)
+            }
+        }
+    }
 
     private fun getCurrentOption(options: List<Option>, index: Int): String {
         return "${options[index].key}. ${options[index].value}"
@@ -272,27 +276,26 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                 type?.let { typeQuestion ->
                     when (typeQuestion) {
                         QuestionType.QUIZ.type -> {
-                            answerListQuiz.value?.let {
-                                val answer = AnswerQuizDto(
-                                    id = currentData.id,
-                                    point = currentData.point,
-                                    batch = currentData.batch,
-                                    answer = selected
-                                )
-                                addAnswerQuizToList(answer)
-                            }
+                            val answer = AnswerQuizDto(
+                                id = currentData.id,
+                                point = currentData.point,
+                                batch = currentData.batch,
+                                answer = selected
+                            )
+                            addAnswerQuizToList(answer)
+
                         }
 
                         QuestionType.EXAM.type -> {
-                            answerListExam.value?.let {
-                                val answer = AnswerExamDto(
-                                    id = currentData.id,
-                                    point = currentData.point,
-                                    batch = currentData.batch,
-                                    answer = selected
-                                )
-                                addAnswerExamToList(answer)
-                            }
+
+                            val answer = AnswerExamDto(
+                                id = currentData.id,
+                                point = currentData.point,
+                                batch = currentData.batch,
+                                answer = selected
+                            )
+                            addAnswerExamToList(answer)
+
                         }
 
                         else -> {}
