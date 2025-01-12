@@ -45,8 +45,11 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
 
     private val currentIndex: MutableLiveData<Int> = MutableLiveData(0)
     private val selectedAnswer: MutableLiveData<AnswerKeyDto> = MutableLiveData(AnswerKeyDto())
-    private val answerListQuiz: MutableLiveData<List<AnswerQuizDto>> = MutableLiveData(ArrayList())
-    private val answerListExam: MutableLiveData<List<AnswerExamDto>> = MutableLiveData(ArrayList())
+
+    //    private val answerListQuiz: MutableLiveData<List<AnswerQuizDto>> = MutableLiveData(ArrayList())
+//    private val answerListExam: MutableLiveData<List<AnswerExamDto>> = MutableLiveData(ArrayList())
+    private val answerListQuiz = ArrayList<AnswerQuizDto>()
+    private val answerListExam = ArrayList<AnswerExamDto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -222,23 +225,40 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
+    // ex : {key: A, value: CEK DULU} => "A. CEK"
     private fun getCurrentOption(options: List<Option>, index: Int): String {
         return "${options[index].key}. ${options[index].value}"
+    }
+
+    // ex : "A. CEK DULU" => {key: A}
+    private fun parseButtonTextToOption(buttonText: String): AnswerKeyDto {
+        val parts = buttonText.split(". ", limit = 2) // "A. CEK" => [A, CEK DULU]
+        return if (parts.size == 2) {
+            AnswerKeyDto(
+                key = parts[0].trim()
+            )
+        } else {
+            AnswerKeyDto()
+        }
     }
 
     private fun finishQuiz() {
         type?.let { typeQuestion ->
             when (typeQuestion) {
                 QuestionType.QUIZ.type -> {
-                    answerListQuiz.value?.let { data ->
-                        submitViewModel.submitQuiz(categoryId!!, materialId!!, data)
-                    }
+                    submitViewModel.submitQuiz(categoryId!!, materialId!!, answerListQuiz)
+
+//                    answerListQuiz.value?.let { data ->
+//                        submitViewModel.submitQuiz(categoryId!!, materialId!!, data)
+//                    }
+
                 }
 
                 QuestionType.EXAM.type -> {
-                    answerListExam.value?.let { data ->
-                        submitViewModel.submitExam(categoryId!!, phase, data)
-                    }
+                    submitViewModel.submitExam(categoryId!!, phase, answerListExam)
+//                    answerListExam.value?.let { data ->
+//                        submitViewModel.submitExam(categoryId!!, phase, data)
+//                    }
                 }
 
                 else -> {}
@@ -257,17 +277,6 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         finish()
     }
 
-    private fun parseButtonTextToOption(buttonText: String): AnswerKeyDto {
-        val parts = buttonText.split(". ", limit = 2)
-        return if (parts.size == 2) {
-            AnswerKeyDto(
-                key = parts[0].trim(),
-            )
-        } else {
-            AnswerKeyDto()
-        }
-    }
-
     private fun saveCurrentAnswer() {
         currentIndex.value?.let { index ->
             val currentData = data[index]
@@ -282,7 +291,8 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                                 batch = currentData.batch,
                                 answer = selected
                             )
-                            addAnswerQuizToList(answer)
+//                            addAnswerQuizToList(answer)
+                            answerListQuiz.add(answer)
 
                         }
 
@@ -294,7 +304,8 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
                                 batch = currentData.batch,
                                 answer = selected
                             )
-                            addAnswerExamToList(answer)
+//                            addAnswerExamToList(answer)
+                            answerListExam.add(answer)
 
                         }
 
@@ -305,19 +316,19 @@ class QuizActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
-    private fun addAnswerQuizToList(answer: AnswerQuizDto) {
-        val currentList = answerListQuiz.value ?: emptyList()
-        val updatedList = currentList.toMutableList()
-        updatedList.add(answer)
-        answerListQuiz.value = updatedList
-    }
+//    private fun addAnswerQuizToList(answer: AnswerQuizDto) {
+//        val currentList = answerListQuiz.value ?: emptyList()
+//        val updatedList = currentList.toMutableList()
+//        updatedList.add(answer)
+//        answerListQuiz.value = updatedList
+//    }
 
-    private fun addAnswerExamToList(answer: AnswerExamDto) {
-        val currentList = answerListExam.value ?: emptyList()
-        val updatedList = currentList.toMutableList()
-        updatedList.add(answer)
-        answerListExam.value = updatedList
-    }
+//    private fun addAnswerExamToList(answer: AnswerExamDto) {
+//        val currentList = answerListExam.value ?: emptyList()
+//        val updatedList = currentList.toMutableList()
+//        updatedList.add(answer)
+//        answerListExam.value = updatedList
+//    }
 
     private fun setButtonNextEnable(button: MaterialButton) {
         button.apply {
